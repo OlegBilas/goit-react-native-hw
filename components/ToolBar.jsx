@@ -1,28 +1,17 @@
 import React from "react";
-import { Image, Pressable, StyleSheet, Text, View } from "react-native";
+import { Pressable, StyleSheet, View } from "react-native";
 import { commonStyles } from "./commonStyles";
+
+import { Feather } from "@expo/vector-icons";
 
 export default function ToolBar() {
   return (
     <View style={styles.container}>
-      <Pressable style={{}}>
-        <Image
-          source={require("../assets/images/grid.png")}
-          style={styles.icon}
-        />
+      <Feather name="grid" size={40} color="#212121" style={styles.icon} />
+      <Pressable style={styles.button}>
+        <Feather name="plus" size={13} color="white" />
       </Pressable>
-      <Pressable style={styles.buttonCentral}>
-        <Image
-          source={require("../assets/images/plus.png")}
-          style={styles.iconCentral}
-        />
-      </Pressable>
-      <Pressable style={{}}>
-        <Image
-          source={require("../assets/images/user.png")}
-          style={styles.icon}
-        />
-      </Pressable>
+      <Feather name="user" size={40} color="#212121" />
     </View>
   );
 }
@@ -41,7 +30,7 @@ const styles = StyleSheet.create({
     borderTopWidth: 1,
     borderTopColor: "grey",
   },
-  buttonCentral: {
+  button: {
     width: 70,
     height: 40,
     justifyContent: "center",
@@ -49,9 +38,6 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     backgroundColor: commonStyles.styleVariables.accentColor,
   },
-  icon: {
-    width: 40,
-    height: 40,
-  },
+
   iconCentral: { width: 13, height: 13 },
 });

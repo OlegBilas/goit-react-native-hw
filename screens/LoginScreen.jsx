@@ -12,16 +12,15 @@ import HeroButton from "../components/HeroButton";
 import RegistrationLink from "../components/RegistrationLink";
 import MainBackground from "../components/MainBackground";
 
-function RegistrationScreen() {
+function LoginScreen() {
   return (
     <View style={{ flex: 1 }}>
       <MainBackground>
         <View style={styles.container}>
           <KeyboardAvoidingView style={styles.form}>
-            <AvatarWrapper Add={false} />
             <Title
               customStyles={{
-                marginTop: 92,
+                marginTop: 32,
                 marginBottom: 12,
               }}
             >
@@ -58,4 +57,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default RegistrationScreen;
+export default LoginScreen;

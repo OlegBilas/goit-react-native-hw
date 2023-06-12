@@ -8,16 +8,14 @@ function RegistrationLink({ children }) {
       style={[styles.link]}
       // onPress={() => alert("Simple Button pressed")}
     >
-      <Text style={[commonStyles.fonts, styles.text]}>
-        Вже є акаунт? Увійти
-      </Text>
+      <Text style={[commonStyles.fonts, styles.text]}>{children}</Text>
     </Pressable>
   );
 }
 
 const styles = StyleSheet.create({
   link: {
-    width: 159,
+    width: 252,
     height: 19,
     marginTop: 16,
     marginLeft: "auto",

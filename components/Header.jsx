@@ -1,22 +1,13 @@
 import React from "react";
-import { Image, Pressable, StyleSheet, Text, View } from "react-native";
+import { StyleSheet, Text, View } from "react-native";
+import { Feather, Octicons } from "@expo/vector-icons";
 
 export default function Header() {
   return (
     <View style={styles.container}>
-      <Pressable style={{ marginLeft: 10 }}>
-        <Image
-          source={require("../assets/images/arrow-left.png")}
-          style={styles.icon}
-        />
-      </Pressable>
+      <Octicons name="arrow-left" size={24} color="#212121" />
       <Text style={styles.title}>Публікації</Text>
-      <Pressable style={{ marginRight: 10 }}>
-        <Image
-          source={require("../assets/images/log-out.png")}
-          style={styles.icon}
-        />
-      </Pressable>
+      <Feather name="log-out" size={24} color="#212121" />
     </View>
   );
 }
