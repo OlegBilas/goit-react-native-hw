@@ -13,7 +13,7 @@ export default function App() {
     return null;
   }
 
-  // return <RegistrationScreen />;
+  return <RegistrationScreen />;
   // return <LoginScreen />;
-  return <PostsScreen />;
+  // return <PostsScreen />;
 }
