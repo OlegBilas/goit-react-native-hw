@@ -18,21 +18,20 @@ function RegistrationScreen() {
       <MainBackground>
         <View style={styles.container}>
           <KeyboardAvoidingView style={styles.form}>
-            <AvatarWrapper Add={true} />
+            <AvatarWrapper Add={false} />
             <Title
               customStyles={{
                 marginTop: 92,
                 marginBottom: 12,
               }}
             >
-              Реєстрація
+              Увійти
             </Title>
-            <RegistrationInput Placeholder="Логін" />
             <RegistrationInput Placeholder="Адреса електронної пошти" />
             <RegistrationInput Placeholder="Пароль" />
           </KeyboardAvoidingView>
-          <HeroButton>Зареєструватися</HeroButton>
-          <RegistrationLink>Вже є акаунт? Увійти</RegistrationLink>
+          <HeroButton>Увійти</HeroButton>
+          <RegistrationLink>Немає акаунту? Зареєструватися</RegistrationLink>
         </View>
       </MainBackground>
     </View>
