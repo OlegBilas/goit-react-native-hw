@@ -4,7 +4,7 @@ import Mountains from "../assets/images/mountains.png";
 
 function MainBackground({ children }) {
   return (
-    <ImageBackground source={Mountains} imageStyle={styles.background}>
+    <ImageBackground source={Mountains} style={styles.background}>
       {children}
     </ImageBackground>
   );
@@ -13,7 +13,8 @@ function MainBackground({ children }) {
 const styles = StyleSheet.create({
   background: {
     flex: 1,
-    width: "100%",
+    resizeMode: "cover",
+    justifyContent: "center",
   },
 });
 export default MainBackground;

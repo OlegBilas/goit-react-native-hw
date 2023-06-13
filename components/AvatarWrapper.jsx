@@ -3,11 +3,11 @@ import React from "react";
 import Avatar from "./Avatar";
 import { Ionicons } from "@expo/vector-icons";
 
-function AvatarWrapper({ Add }) {
+function AvatarWrapper({ add }) {
   return (
     <View style={styles.avatarWrapper}>
       <Avatar />
-      {Add ? (
+      {add ? (
         <Ionicons
           name="add-circle-outline"
           size={25}
@@ -35,12 +35,9 @@ const styles = StyleSheet.create({
   },
 
   icon: {
-    // width: 25,
-    // height: 25,
     position: "absolute",
     bottom: 14,
     right: 0,
-    backgroundColor: "transperent",
   },
 });
 export default AvatarWrapper;

@@ -15,12 +15,10 @@ function RegistrationLink({ children }) {
 
 const styles = StyleSheet.create({
   link: {
-    width: 252,
     height: 19,
     marginTop: 16,
     marginLeft: "auto",
     marginRight: "auto",
-    textAlign: "center",
   },
   text: {
     color: "#1B4371",

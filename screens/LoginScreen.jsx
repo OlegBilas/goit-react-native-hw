@@ -14,7 +14,7 @@ import MainBackground from "../components/MainBackground";
 
 function LoginScreen() {
   return (
-    <View style={{ flex: 1 }}>
+    <View style={{ width: "100%" }}>
       <MainBackground>
         <View style={styles.container}>
           <KeyboardAvoidingView style={styles.form}>
@@ -26,8 +26,8 @@ function LoginScreen() {
             >
               Увійти
             </Title>
-            <RegistrationInput Placeholder="Адреса електронної пошти" />
-            <RegistrationInput Placeholder="Пароль" />
+            <RegistrationInput placeholder="Адреса електронної пошти" />
+            <RegistrationInput placeholder="Пароль" />
           </KeyboardAvoidingView>
           <HeroButton>Увійти</HeroButton>
           <RegistrationLink>Немає акаунту? Зареєструватися</RegistrationLink>
