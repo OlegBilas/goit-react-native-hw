@@ -10,7 +10,7 @@ function RegistrationScreen() {
     <MainBackground>
       <KeyboardAvoidingView
         style={styles.keyboardAvoidingViewStyles}
-        behavior={Platform.OS === "ios" ? "padding" : "height"}
+        behavior="height"
       >
         <View style={styles.container}>
           <View style={styles.form}>

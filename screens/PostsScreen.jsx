@@ -1,28 +1,42 @@
 import React from "react";
-import { StyleSheet, Text, View } from "react-native";
+import {
+  Platform,
+  SafeAreaView,
+  StatusBar,
+  StyleSheet,
+  Text,
+  View,
+} from "react-native";
 import Avatar from "../components/Avatar";
 import Header from "../components/Header";
 import ToolBar from "../components/ToolBar";
 
 export default function PostsScreen() {
   return (
-    <View style={styles.container}>
-      <Header />
-      <View style={styles.posts}>
-        <View style={styles.avatarWrapper}>
-          <Avatar customStyles={{ width: 60, height: 60, marginRight: 8 }} />
-          <View>
-            <Text>Natali Romanova</Text>
-            <Text>email@example.com</Text>
+    <SafeAreaView style={styles.androidSafeArea}>
+      <View style={styles.container}>
+        <Header />
+        <View style={styles.posts}>
+          <View style={styles.avatarWrapper}>
+            <Avatar customStyles={{ width: 60, height: 60, marginRight: 8 }} />
+            <View>
+              <Text>Natali Romanova</Text>
+              <Text>email@example.com</Text>
+            </View>
           </View>
         </View>
+        <ToolBar />
       </View>
-      <ToolBar />
-    </View>
+    </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
+  androidSafeArea: {
+    flex: 1,
+    backgroundColor: "white",
+    paddingTop: Platform.OS === "android" ? StatusBar.currentHeight : 0,
+  },
   container: {
     flex: 1,
     width: "100%",

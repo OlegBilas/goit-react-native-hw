@@ -14,46 +14,52 @@ import MainBackground from "../components/MainBackground";
 
 function LoginScreen() {
   return (
-    <View style={{ width: "100%" }}>
-      <MainBackground>
+    <MainBackground>
+      <KeyboardAvoidingView
+        style={styles.keyboardAvoidingViewStyles}
+        behavior="height"
+      >
         <View style={styles.container}>
-          <KeyboardAvoidingView style={styles.form}>
+          <View style={styles.form}>
             <Title
               customStyles={{
-                marginTop: 32,
+                marginTop: 92,
                 marginBottom: 12,
               }}
             >
               Увійти
             </Title>
+
             <RegistrationInput placeholder="Адреса електронної пошти" />
             <RegistrationInput placeholder="Пароль" />
-          </KeyboardAvoidingView>
+          </View>
           <HeroButton>Увійти</HeroButton>
           <RegistrationLink>Немає акаунту? Зареєструватися</RegistrationLink>
         </View>
-      </MainBackground>
-    </View>
+      </KeyboardAvoidingView>
+    </MainBackground>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
     width: "100%",
-    minHeight: 549,
-    marginTop: 263,
-    flex: 1,
+    height: 549,
     color: "#212121",
     backgroundColor: "#fff",
     borderTopLeftRadius: 25,
     borderTopRightRadius: 25,
   },
-
   form: {
     paddingLeft: 16,
     paddingRight: 16,
     justifyContent: "space-between",
     gap: 18,
+  },
+  keyboardAvoidingViewStyles: {
+    flex: 1,
+    justifyContent: "flex-end",
+    alignItems: "center",
   },
 });
 
