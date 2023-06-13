@@ -1,13 +1,7 @@
-import {
-  StyleSheet,
-  View,
-  ImageBackground,
-  KeyboardAvoidingView,
-} from "react-native";
+import { StyleSheet, View, KeyboardAvoidingView, Platform } from "react-native";
 
 import Title from "../components/Title";
 import RegistrationInput from "../components/RegistrationInput";
-import AvatarWrapper from "../components/AvatarWrapper";
 import HeroButton from "../components/HeroButton";
 import RegistrationLink from "../components/RegistrationLink";
 import MainBackground from "../components/MainBackground";
@@ -17,7 +11,7 @@ function LoginScreen() {
     <MainBackground>
       <KeyboardAvoidingView
         style={styles.keyboardAvoidingViewStyles}
-        behavior="height"
+        behavior={Platform.OS === "ios" ? "padding" : "height"}
       >
         <View style={styles.container}>
           <View style={styles.form}>
