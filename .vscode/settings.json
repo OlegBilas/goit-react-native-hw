@@ -1,4 +1,5 @@
 {
+  "json.schemaDownload.enable": false,
   "formattingToggle.affects": [
     "editor.formatOnPaste",
     "editor.formatOnSave",
