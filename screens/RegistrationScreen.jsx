@@ -25,7 +25,7 @@ function RegistrationScreen() {
   const [showPassword, setShowPassword] = useState(false);
 
   const handlePressShowButton = () => {
-    setShowPassword(true);
+    setShowPassword((prevState) => !prevState);
   };
 
   const HandleLogin = () => {
@@ -39,8 +39,8 @@ function RegistrationScreen() {
   };
 
   return (
-    <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-      <MainBackground>
+    <MainBackground>
+      <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
         <KeyboardAvoidingView
           style={styles.keyboardAvoidingViewStyles}
           behavior={Platform.OS === "ios" ? "padding" : "height"}
@@ -77,22 +77,23 @@ function RegistrationScreen() {
                   secureTextEntry={!showPassword}
                   onChangeText={setPassword}
                 ></RegistrationInput>
-                {!showPassword && (
-                  <Pressable
-                    style={styles.showButton}
-                    onPress={handlePressShowButton}
-                  >
-                    <Text style={styles.showButtonText}>Показати</Text>
-                  </Pressable>
-                )}
+
+                <Pressable
+                  style={styles.showButton}
+                  onPress={handlePressShowButton}
+                >
+                  <Text style={styles.showButtonText}>
+                    {!showPassword ? "Показати" : "Приховати"}
+                  </Text>
+                </Pressable>
               </View>
             </View>
             <HeroButton onPress={HandleLogin}>Зареєструватися</HeroButton>
             <RegistrationLink>Вже є акаунт? Увійти</RegistrationLink>
           </View>
         </KeyboardAvoidingView>
-      </MainBackground>
-    </TouchableWithoutFeedback>
+      </TouchableWithoutFeedback>
+    </MainBackground>
   );
 }
 const styles = StyleSheet.create({
