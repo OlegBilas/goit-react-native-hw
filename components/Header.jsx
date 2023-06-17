@@ -1,13 +1,18 @@
 import React from "react";
 import { StyleSheet, Text, View } from "react-native";
 import { Feather, Octicons } from "@expo/vector-icons";
+import { commonStyles } from "./commonStyles";
 
 export default function Header() {
   return (
     <View style={styles.container}>
-      <Octicons name="arrow-left" size={24} color="#212121" />
+      <Octicons
+        name="arrow-left"
+        size={24}
+        color={commonStyles.vars.colorText}
+      />
       <Text style={styles.title}>Публікації</Text>
-      <Feather name="log-out" size={24} color="#212121" />
+      <Feather name="log-out" size={24} color={commonStyles.vars.colorText} />
     </View>
   );
 }
@@ -27,7 +32,7 @@ const styles = StyleSheet.create({
     fontSize: 17,
     lineHeight: 22,
     textAlign: "center",
-    color: "#212121",
+    color: commonStyles.vars.colorText,
   },
 
   icon: {

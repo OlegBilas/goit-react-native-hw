@@ -1,13 +1,42 @@
-import { StyleSheet, View, KeyboardAvoidingView, Platform } from "react-native";
+import {
+  StyleSheet,
+  View,
+  KeyboardAvoidingView,
+  Platform,
+  Keyboard,
+  TouchableWithoutFeedback,
+  Text,
+  Alert,
+} from "react-native";
 
 import Title from "../components/Title";
 import RegistrationInput from "../components/RegistrationInput";
 import HeroButton from "../components/HeroButton";
 import RegistrationLink from "../components/RegistrationLink";
 import MainBackground from "../components/MainBackground";
+import { useState } from "react";
+import { commonStyles } from "../components/commonStyles";
+import { Pressable } from "react-native";
 
 function LoginScreen() {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
+
+  const handlePressShowButton = () => {
+    setShowPassword(true);
+  };
+
+  const HandleLogin = () => {
+    Alert.alert(
+      "Дані логінізації:",
+      `
+      електронна пошта: ${email}
+      пароль: ${password}`
+    );
+  };
   return (
+    // <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
     <MainBackground>
       <KeyboardAvoidingView
         style={styles.keyboardAvoidingViewStyles}
@@ -23,15 +52,37 @@ function LoginScreen() {
             >
               Увійти
             </Title>
-
-            <RegistrationInput placeholder="Адреса електронної пошти" />
-            <RegistrationInput placeholder="Пароль" />
+            <RegistrationInput
+              name="email"
+              value={email}
+              placeholder="Адреса електронної пошти"
+              keyboardType={"email-address"}
+              onChangeText={setEmail}
+            />
+            <View>
+              <RegistrationInput
+                name="password"
+                value={password}
+                placeholder="Пароль"
+                secureTextEntry={!showPassword}
+                onChangeText={setPassword}
+              ></RegistrationInput>
+              {!showPassword && (
+                <Pressable
+                  style={styles.showButton}
+                  onPress={handlePressShowButton}
+                >
+                  <Text style={styles.showButtonText}>Показати</Text>
+                </Pressable>
+              )}
+            </View>
           </View>
-          <HeroButton>Увійти</HeroButton>
+          <HeroButton onPress={HandleLogin}>Увійти</HeroButton>
           <RegistrationLink>Немає акаунту? Зареєструватися</RegistrationLink>
         </View>
       </KeyboardAvoidingView>
     </MainBackground>
+    /* </TouchableWithoutFeedback> */
   );
 }
 
@@ -39,8 +90,8 @@ const styles = StyleSheet.create({
   container: {
     width: "100%",
     height: 549,
-    color: "#212121",
-    backgroundColor: "#fff",
+    color: commonStyles.vars.colorText,
+    backgroundColor: commonStyles.vars.colorWhite,
     borderTopLeftRadius: 25,
     borderTopRightRadius: 25,
   },
@@ -48,13 +99,20 @@ const styles = StyleSheet.create({
     paddingLeft: 16,
     paddingRight: 16,
     justifyContent: "space-between",
-    gap: 18,
+    gap: 16,
   },
   keyboardAvoidingViewStyles: {
     flex: 1,
     justifyContent: "flex-end",
     alignItems: "center",
   },
+  showButton: {
+    position: "absolute",
+    top: "50%",
+    right: 16,
+    transform: [{ translateY: -8 }],
+  },
+  showButtonText: { ...commonStyles.fonts, color: "#1B4371" },
 });
 
 export default LoginScreen;

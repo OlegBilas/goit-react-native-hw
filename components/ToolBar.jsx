@@ -36,7 +36,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     borderRadius: 20,
-    backgroundColor: commonStyles.styleVariables.accentColor,
+    backgroundColor: commonStyles.vars.accentColor,
   },
 
   iconCentral: { width: 13, height: 13 },
