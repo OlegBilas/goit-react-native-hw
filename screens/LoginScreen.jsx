@@ -36,53 +36,53 @@ function LoginScreen() {
     );
   };
   return (
-    // <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-    <MainBackground>
-      <KeyboardAvoidingView
-        style={styles.keyboardAvoidingViewStyles}
-        behavior={Platform.OS === "ios" ? "padding" : "height"}
-      >
-        <View style={styles.container}>
-          <View style={styles.form}>
-            <Title
-              customStyles={{
-                marginTop: 92,
-                marginBottom: 12,
-              }}
-            >
-              Увійти
-            </Title>
-            <RegistrationInput
-              name="email"
-              value={email}
-              placeholder="Адреса електронної пошти"
-              keyboardType={"email-address"}
-              onChangeText={setEmail}
-            />
-            <View>
+    <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+      <MainBackground>
+        <KeyboardAvoidingView
+          style={styles.keyboardAvoidingViewStyles}
+          behavior={Platform.OS === "ios" ? "padding" : "height"}
+        >
+          <View style={styles.container}>
+            <View style={styles.form}>
+              <Title
+                customStyles={{
+                  marginTop: 92,
+                  marginBottom: 12,
+                }}
+              >
+                Увійти
+              </Title>
               <RegistrationInput
-                name="password"
-                value={password}
-                placeholder="Пароль"
-                secureTextEntry={!showPassword}
-                onChangeText={setPassword}
-              ></RegistrationInput>
-              {!showPassword && (
-                <Pressable
-                  style={styles.showButton}
-                  onPress={handlePressShowButton}
-                >
-                  <Text style={styles.showButtonText}>Показати</Text>
-                </Pressable>
-              )}
+                name="email"
+                value={email}
+                placeholder="Адреса електронної пошти"
+                keyboardType={"email-address"}
+                onChangeText={setEmail}
+              />
+              <View>
+                <RegistrationInput
+                  name="password"
+                  value={password}
+                  placeholder="Пароль"
+                  secureTextEntry={!showPassword}
+                  onChangeText={setPassword}
+                ></RegistrationInput>
+                {!showPassword && (
+                  <Pressable
+                    style={styles.showButton}
+                    onPress={handlePressShowButton}
+                  >
+                    <Text style={styles.showButtonText}>Показати</Text>
+                  </Pressable>
+                )}
+              </View>
             </View>
+            <HeroButton onPress={HandleLogin}>Увійти</HeroButton>
+            <RegistrationLink>Немає акаунту? Зареєструватися</RegistrationLink>
           </View>
-          <HeroButton onPress={HandleLogin}>Увійти</HeroButton>
-          <RegistrationLink>Немає акаунту? Зареєструватися</RegistrationLink>
-        </View>
-      </KeyboardAvoidingView>
-    </MainBackground>
-    /* </TouchableWithoutFeedback> */
+        </KeyboardAvoidingView>
+      </MainBackground>
+    </TouchableWithoutFeedback>
   );
 }
 
