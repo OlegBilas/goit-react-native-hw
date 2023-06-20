@@ -17,6 +17,7 @@ import MainBackground from "../components/MainBackground";
 import { useState } from "react";
 import { commonStyles } from "../components/commonStyles";
 import { Pressable } from "react-native";
+import { useNavigation } from "@react-navigation/native";
 
 function LoginScreen() {
   const [email, setEmail] = useState("");
@@ -27,6 +28,7 @@ function LoginScreen() {
     setShowPassword((prevState) => !prevState);
   };
 
+  const navigation = useNavigation();
   const HandleLogin = () => {
     Alert.alert(
       "Дані логінізації:",
@@ -34,6 +36,7 @@ function LoginScreen() {
       електронна пошта: ${email}
       пароль: ${password}`
     );
+    navigation.navigate("Home");
   };
   return (
     <MainBackground>
@@ -78,7 +81,10 @@ function LoginScreen() {
               </View>
             </View>
             <HeroButton onPress={HandleLogin}>Увійти</HeroButton>
-            <RegistrationLink>Немає акаунту? Зареєструватися</RegistrationLink>
+            <View style={styles.textWrapper}>
+              <Text style={styles.text}>Немає акаунту? </Text>
+              <RegistrationLink>Зареєструватися</RegistrationLink>
+            </View>
           </View>
         </KeyboardAvoidingView>
       </TouchableWithoutFeedback>
@@ -113,6 +119,17 @@ const styles = StyleSheet.create({
     transform: [{ translateY: -8 }],
   },
   showButtonText: { ...commonStyles.fonts, color: "#1B4371" },
+  textWrapper: {
+    flexDirection: "row",
+    height: 19,
+    marginTop: 16,
+    marginLeft: "auto",
+    marginRight: "auto",
+  },
+  text: {
+    ...commonStyles.fonts,
+    color: "#1B4371",
+  },
 });
 
 export default LoginScreen;

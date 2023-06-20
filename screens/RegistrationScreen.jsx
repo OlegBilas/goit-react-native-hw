@@ -17,6 +17,7 @@ import RegistrationLink from "../components/RegistrationLink";
 import MainBackground from "../components/MainBackground";
 import { commonStyles } from "../components/commonStyles";
 import { useState } from "react";
+import { useNavigation } from "@react-navigation/native";
 
 function RegistrationScreen() {
   const [login, setLogin] = useState("");
@@ -28,6 +29,7 @@ function RegistrationScreen() {
     setShowPassword((prevState) => !prevState);
   };
 
+  const navigation = useNavigation();
   const HandleLogin = () => {
     Alert.alert(
       "Реєстраційні дані:",
@@ -36,6 +38,7 @@ function RegistrationScreen() {
       електронна пошта: ${email}
       пароль: ${password}`
     );
+    navigation.navigate("Home");
   };
 
   return (
@@ -89,7 +92,10 @@ function RegistrationScreen() {
               </View>
             </View>
             <HeroButton onPress={HandleLogin}>Зареєструватися</HeroButton>
-            <RegistrationLink>Вже є акаунт? Увійти</RegistrationLink>
+            <View style={styles.textWrapper}>
+              <Text style={styles.text}>Вже є акаунт? </Text>
+              <RegistrationLink>Увійти</RegistrationLink>
+            </View>
           </View>
         </KeyboardAvoidingView>
       </TouchableWithoutFeedback>
@@ -123,5 +129,13 @@ const styles = StyleSheet.create({
     transform: [{ translateY: -8 }],
   },
   showButtonText: { ...commonStyles.fonts, color: "#1B4371" },
+  textWrapper: {
+    flexDirection: "row",
+    height: 19,
+    marginTop: 16,
+    marginLeft: "auto",
+    marginRight: "auto",
+  },
+  text: { ...commonStyles.fonts, color: "#1B4371" },
 });
 export default RegistrationScreen;

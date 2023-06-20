@@ -7,7 +7,7 @@ import { Feather } from "@expo/vector-icons";
 export default function ToolBar() {
   return (
     <View style={styles.container}>
-      <Feather name="grid" size={40} color="#212121" style={styles.icon} />
+      <Feather name="grid" size={40} color="#212121" />
       <Pressable style={styles.button}>
         <Feather name="plus" size={13} color="white" />
       </Pressable>
@@ -38,6 +38,4 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     backgroundColor: commonStyles.vars.colorAccent,
   },
-
-  iconCentral: { width: 13, height: 13 },
 });
