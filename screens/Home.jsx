@@ -25,7 +25,6 @@ const Home = () => {
                   focused
                     ? styles.button
                     : {
-                        color: commonStyles.vars.colorWhite,
                         color: commonStyles.vars.colorText,
                       }
                 }
@@ -33,20 +32,17 @@ const Home = () => {
             );
           } else if (route.name === "CreatePost") {
             return (
-              <View style={styles.button}>
-                <Feather
-                  name="plus"
-                  size={13}
-                  style={
-                    focused
-                      ? styles.button
-                      : {
-                          color: commonStyles.vars.colorWhite,
-                          color: commonStyles.vars.colorText,
-                        }
-                  }
-                />
-              </View>
+              <Feather
+                name="plus"
+                size={13}
+                style={
+                  focused
+                    ? styles.button
+                    : {
+                        color: commonStyles.vars.colorText,
+                      }
+                }
+              />
             );
           } else if (route.name === "Profile") {
             return (
@@ -57,7 +53,6 @@ const Home = () => {
                   focused
                     ? styles.button
                     : {
-                        color: commonStyles.vars.colorWhite,
                         color: commonStyles.vars.colorText,
                       }
                 }
@@ -109,6 +104,8 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     borderRadius: 20,
+    color: commonStyles.vars.colorWhite,
+    backgroundColor: commonStyles.vars.colorAccent,
   },
 });
 
