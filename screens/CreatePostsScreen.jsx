@@ -50,7 +50,7 @@ function CreatePostsScreen() {
         <TextInput
           placeholder="Місцевість.."
           placeholderTextColor={commonStyles.vars.colorGray}
-          style={styles.name}
+          style={styles.input}
         />
       </View>
       <HeroButton style={{ marginBottom: 120 }}>Опублікувати</HeroButton>
@@ -101,7 +101,7 @@ const styles = StyleSheet.create({
     color: commonStyles.vars.colorGray,
     height: 19,
   },
-  input: { width: 343, height: 50, ...commonStyles.fonts, marginBottom: 16 },
+  input: { ...commonStyles.fonts, height: 50, marginBottom: 16 },
   mapPin: {
     position: "absolute",
     top: "50%",
