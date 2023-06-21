@@ -86,7 +86,19 @@ function LoginScreen() {
                 </Pressable>
               </View>
             </View>
-            <HeroButton onPress={handleLogin}>Увійти</HeroButton>
+            <HeroButton
+              color11={commonStyles.vars.colorWhite}
+              style={{
+                marginTop: 43,
+                marginLeft: 16,
+                marginRight: 16,
+                backgroundColor: commonStyles.vars.colorAccent,
+                // color: commonStyles.vars.colorWhite,
+              }}
+              onPress={handleLogin}
+            >
+              Увійти
+            </HeroButton>
             <View style={styles.textWrapper}>
               <Text style={styles.text}>Немає акаунту? </Text>
               <RegistrationLink>Зареєструватися</RegistrationLink>

@@ -50,11 +50,20 @@ function CreatePostsScreen() {
         <TextInput
           placeholder="Місцевість.."
           placeholderTextColor={commonStyles.vars.colorGray}
-          style={styles.input}
+          style={[styles.input, { paddingLeft: 28 }]}
         />
       </View>
-      <HeroButton style={{ marginBottom: 120 }}>Опублікувати</HeroButton>
-      <View>
+      <HeroButton
+        color={commonStyles.vars.colorGray}
+        style={{
+          marginTop: 0,
+          marginBottom: 120,
+          backgroundColor: "#F6F6F6",
+        }}
+      >
+        Опублікувати
+      </HeroButton>
+      <View style={styles.buttonWrapper}>
         <Feather name="trash-2" size={24} color={commonStyles.vars.colorGray} />
       </View>
     </View>
@@ -77,10 +86,6 @@ const styles = StyleSheet.create({
   backgroundPhoto: {
     width: 343,
     height: 240,
-    // borderTopRightRadius: 8,
-    // borderTopLeftRadius: 8,
-    // borderBottomLeftRadius: 8,
-    // borderBottomRightRadius: 8,
     borderRadius: 8,
     resizeMode: "cover",
     flex: 1,
@@ -101,21 +106,23 @@ const styles = StyleSheet.create({
     color: commonStyles.vars.colorGray,
     height: 19,
   },
-  input: { ...commonStyles.fonts, height: 50, marginBottom: 16 },
+  input: { ...commonStyles.fonts, height: 50, marginBottom: 16, padding: 4 },
   mapPin: {
     position: "absolute",
     top: "50%",
     left: 0,
-    // transform: [{ translateY: -8 }],
+    transform: [{ translateY: 12 }],
   },
   buttonWrapper: {
     width: 70,
     height: 40,
+    marginLeft: "auto",
+    marginRight: "auto",
     display: "flex",
     justifyContent: "center",
     alignItems: "center",
     borderRadius: 20,
-    backgroundColor: commonStyles.vars.colorGray,
+    backgroundColor: "#F6F6F6",
   },
 });
 
