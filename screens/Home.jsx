@@ -79,30 +79,31 @@ const Home = () => {
       <Tabs.Screen
         name="CreatePost"
         component={CreatePostsScreen}
-        // options={({ navigation }) => ({
-        //   headerLeft: () => (
-        //     <Octicons
-        //       name="arrow-left"
-        //       size={24}
-        //       color={commonStyles.vars.colorText}
-        //       onPress={navigation.goBack}
-        //     />
-        //   ),
-        // })}
+        options={({ navigation }) => ({
+          title: "Створити публікацію",
+          headerLeft: () => (
+            <Octicons
+              name="arrow-left"
+              size={24}
+              color={commonStyles.vars.colorText}
+              onPress={navigation.goBack}
+            />
+          ),
+        })}
       />
       <Tabs.Screen
         name="Profile"
         component={ProfileScreen}
-        // options={({ navigation }) => ({
-        //   headerLeft: () => (
-        //     <Feather
-        //       name="log-out"
-        //       size={24}
-        //       color={commonStyles.vars.colorText}
-        //       onPress={navigation.navigate("Login")}
-        //     />
-        //   ),
-        // })}
+        options={({ navigation }) => ({
+          headerLeft: () => (
+            <Feather
+              name="log-out"
+              size={24}
+              color={commonStyles.vars.colorText}
+              onPress={navigation.navigate("Login")}
+            />
+          ),
+        })}
       />
     </Tabs.Navigator>
   );
