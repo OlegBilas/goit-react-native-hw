@@ -8,8 +8,8 @@ import {
   View,
 } from "react-native";
 import Avatar from "../components/Avatar";
-import Header from "../components/Header";
-import ToolBar from "../components/ToolBar";
+// import Header from "../components/Header";
+// import ToolBar from "../components/ToolBar";
 
 export default function PostsScreen() {
   return (

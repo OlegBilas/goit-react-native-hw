@@ -30,9 +30,7 @@ const Home = () => {
           return (
             <View
               style={
-                focused
-                  ? styles.buttonTabWrapperActive
-                  : styles.buttonTabWrapper
+                focused ? styles.buttonWrapperActive : styles.buttonWrapper
               }
             >
               <Feather
@@ -73,26 +71,24 @@ const Home = () => {
               name="log-out"
               size={24}
               color={commonStyles.vars.colorText}
-              style={{ marginRight: 10 }}
-              onPress={navigation.navigate("Home")}
+              onPress={navigation.navigate("Login")}
             />
           ),
         })}
       />
       <Tabs.Screen
-        name="Створити публікацію"
+        name="CreatePost"
         component={CreatePostsScreen}
-        options={({ navigation }) => ({
-          headerLeft: () => (
-            <Octicons
-              name="arrow-left"
-              size={24}
-              color={commonStyles.vars.colorText}
-              style={{ marginLeft: 10 }}
-              onPress={navigation.goBack}
-            />
-          ),
-        })}
+        // options={({ navigation }) => ({
+        //   headerLeft: () => (
+        //     <Octicons
+        //       name="arrow-left"
+        //       size={24}
+        //       color={commonStyles.vars.colorText}
+        //       onPress={navigation.goBack}
+        //     />
+        //   ),
+        // })}
       />
       <Tabs.Screen
         name="Profile"
@@ -103,7 +99,6 @@ const Home = () => {
         //       name="log-out"
         //       size={24}
         //       color={commonStyles.vars.colorText}
-        //       style={{ marginLeft: 10 }}
         //       onPress={navigation.navigate("Login")}
         //     />
         //   ),
@@ -114,7 +109,7 @@ const Home = () => {
 };
 
 const styles = StyleSheet.create({
-  buttonTabWrapperActive: {
+  buttonWrapperActive: {
     width: 70,
     height: 40,
     display: "flex",
@@ -123,7 +118,7 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     backgroundColor: commonStyles.vars.colorAccent,
   },
-  buttonTabWrapper: {
+  buttonWrapper: {
     backgroundColor: commonStyles.vars.colorWhite,
   },
 });
