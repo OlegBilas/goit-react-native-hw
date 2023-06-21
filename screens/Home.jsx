@@ -1,5 +1,5 @@
 import React from "react";
-import { View, Pressable, StyleSheet } from "react-native";
+import { View, StyleSheet } from "react-native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 
 import { Feather } from "@expo/vector-icons";
@@ -15,97 +15,57 @@ const Home = () => {
     <Tabs.Navigator
       initialRouteName="Posts"
       screenOptions={({ route }) => ({
-        tabBarIcon: ({ focused }) => {
+        tabBarIcon: ({ focused, color, size }) => {
+          let iconName;
           if (route.name === "Posts") {
-            return (
-              <Feather
-                name="grid"
-                size={40}
-                style={
-                  focused
-                    ? styles.button
-                    : {
-                        color: commonStyles.vars.colorText,
-                      }
-                }
-              />
-            );
+            iconName = "grid";
           } else if (route.name === "CreatePost") {
-            return (
-              <Feather
-                name="plus"
-                size={13}
-                style={
-                  focused
-                    ? styles.button
-                    : {
-                        color: commonStyles.vars.colorText,
-                      }
-                }
-              />
-            );
+            iconName = "plus";
           } else if (route.name === "Profile") {
-            return (
-              <Feather
-                name="user"
-                size={40}
-                style={
-                  focused
-                    ? styles.button
-                    : {
-                        color: commonStyles.vars.colorText,
-                      }
-                }
-              />
-            );
+            iconName = "user";
           }
+          return (
+            <View
+              style={
+                focused ? styles.buttonWrapperActive : styles.buttonWrapper
+              }
+            >
+              <Feather
+                name={iconName}
+                size={24}
+                color={focused ? commonStyles.vars.colorWhite : "#616161"}
+              />
+            </View>
+          );
         },
         tabBarShowLabel: false,
-        tabBarActiveTintColor: commonStyles.vars.colorAccent,
-        tabBarInactiveTintColor: commonStyles.vars.colorText,
-        tabBarStyle: styles.tabBarStyle,
+        tabBarActiveTintColor: commonStyles.vars.colorWhite,
+        tabBarInactiveTintColor: "#616161",
+        tabBarStyle: {
+          height: 83,
+          paddingBottom: 9,
+        },
       })}
     >
       <Tabs.Screen name="Posts" component={PostsScreen} />
-      <Tabs.Screen
-        name="CreatePost"
-        component={CreatePostsScreen}
-        options={{
-          tabBarStyle: { display: "none" },
-        }}
-      />
+      <Tabs.Screen name="CreatePost" component={CreatePostsScreen} />
       <Tabs.Screen name="Profile" component={ProfileScreen} />
     </Tabs.Navigator>
   );
 };
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  tabBarStyle: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center",
-    height: 83,
-    width: "100%",
-    paddingTop: 9,
-    paddingBottom: 34,
-    paddingLeft: 82,
-    paddingRight: 82,
-    // borderTopWidth: 1,
-    // borderTopColor: "grey",
-  },
-  button: {
+  buttonWrapperActive: {
     width: 70,
     height: 40,
+    display: "flex",
     justifyContent: "center",
     alignItems: "center",
     borderRadius: 20,
-    color: commonStyles.vars.colorWhite,
     backgroundColor: commonStyles.vars.colorAccent,
+  },
+  buttonWrapper: {
+    backgroundColor: commonStyles.vars.colorWhite,
   },
 });
 
