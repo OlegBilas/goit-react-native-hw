@@ -73,13 +73,14 @@ const Home = () => {
               name="log-out"
               size={24}
               color={commonStyles.vars.colorText}
+              style={{ marginRight: 10 }}
               onPress={navigation.navigate("Home")}
             />
           ),
         })}
       />
       <Tabs.Screen
-        name="CreatePost"
+        name="Створити публікацію"
         component={CreatePostsScreen}
         options={({ navigation }) => ({
           headerLeft: () => (
@@ -87,6 +88,7 @@ const Home = () => {
               name="arrow-left"
               size={24}
               color={commonStyles.vars.colorText}
+              style={{ marginLeft: 10 }}
               onPress={navigation.goBack}
             />
           ),
@@ -95,16 +97,17 @@ const Home = () => {
       <Tabs.Screen
         name="Profile"
         component={ProfileScreen}
-        options={({ navigation }) => ({
-          headerLeft: () => (
-            <Feather
-              name="log-out"
-              size={24}
-              color={commonStyles.vars.colorText}
-              onPress={navigation.navigate("Login")}
-            />
-          ),
-        })}
+        // options={({ navigation }) => ({
+        //   headerLeft: () => (
+        //     <Feather
+        //       name="log-out"
+        //       size={24}
+        //       color={commonStyles.vars.colorText}
+        //       style={{ marginLeft: 10 }}
+        //       onPress={navigation.navigate("Login")}
+        //     />
+        //   ),
+        // })}
       />
     </Tabs.Navigator>
   );
