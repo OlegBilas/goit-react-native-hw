@@ -29,7 +29,13 @@ function LoginScreen() {
   };
 
   const navigation = useNavigation();
-  const HandleLogin = () => {
+  const handleLogin = () => {
+    if (email === "" || password === "") {
+      return Alert.alert(
+        "Not corect data",
+        `Please, fill all fields with non empty data`
+      );
+    }
     Alert.alert(
       "Дані логінізації:",
       `
@@ -80,7 +86,7 @@ function LoginScreen() {
                 </Pressable>
               </View>
             </View>
-            <HeroButton onPress={HandleLogin}>Увійти</HeroButton>
+            <HeroButton onPress={handleLogin}>Увійти</HeroButton>
             <View style={styles.textWrapper}>
               <Text style={styles.text}>Немає акаунту? </Text>
               <RegistrationLink>Зареєструватися</RegistrationLink>

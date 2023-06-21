@@ -30,7 +30,14 @@ function RegistrationScreen() {
   };
 
   const navigation = useNavigation();
-  const HandleLogin = () => {
+  const handleLogin = () => {
+    if (login === "" || email === "" || password === "") {
+      return Alert.alert(
+        "Not corect data",
+        `Please, fill all fields with non empty data`
+      );
+    }
+
     Alert.alert(
       "Реєстраційні дані:",
       `
@@ -91,7 +98,7 @@ function RegistrationScreen() {
                 </Pressable>
               </View>
             </View>
-            <HeroButton onPress={HandleLogin}>Зареєструватися</HeroButton>
+            <HeroButton onPress={handleLogin}>Зареєструватися</HeroButton>
             <View style={styles.textWrapper}>
               <Text style={styles.text}>Вже є акаунт? </Text>
               <RegistrationLink>Увійти</RegistrationLink>

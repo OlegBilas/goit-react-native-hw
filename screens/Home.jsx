@@ -2,15 +2,18 @@ import React from "react";
 import { View, StyleSheet } from "react-native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 
-import { Feather } from "@expo/vector-icons";
+import { Octicons, Feather } from "@expo/vector-icons";
 import { commonStyles } from "../components/commonStyles";
 
 import PostsScreen from "./PostsScreen";
 import CreatePostsScreen from "./CreatePostsScreen";
 import ProfileScreen from "./ProfileScreen";
+import { useNavigation } from "@react-navigation/native";
 
 const Tabs = createBottomTabNavigator();
 const Home = () => {
+  const navigation = useNavigation();
+
   return (
     <Tabs.Navigator
       initialRouteName="Posts"
@@ -27,7 +30,9 @@ const Home = () => {
           return (
             <View
               style={
-                focused ? styles.buttonWrapperActive : styles.buttonWrapper
+                focused
+                  ? styles.buttonTabWrapperActive
+                  : styles.buttonTabWrapper
               }
             >
               <Feather
@@ -45,17 +50,68 @@ const Home = () => {
           height: 83,
           paddingBottom: 9,
         },
+        headerTitleAlign: "center",
+        headerTintColor: commonStyles.vars.colorText,
+        headerTitleStyle: {
+          fontFamily: "Roboto-500",
+          fontSize: 17,
+          lineHeight: 22,
+          textAlign: "center",
+        },
+        // headerStyle: {
+        //   height: 44,
+        // },
       })}
     >
-      <Tabs.Screen name="Posts" component={PostsScreen} />
-      <Tabs.Screen name="CreatePost" component={CreatePostsScreen} />
-      <Tabs.Screen name="Profile" component={ProfileScreen} />
+      <Tabs.Screen
+        name="Posts"
+        component={PostsScreen}
+        options={({ navigation }) => ({
+          title: "Публікації",
+          headerRight: () => (
+            <Feather
+              name="log-out"
+              size={24}
+              color={commonStyles.vars.colorText}
+              onPress={navigation.navigate("Home")}
+            />
+          ),
+        })}
+      />
+      <Tabs.Screen
+        name="CreatePost"
+        component={CreatePostsScreen}
+        options={({ navigation }) => ({
+          headerLeft: () => (
+            <Octicons
+              name="arrow-left"
+              size={24}
+              color={commonStyles.vars.colorText}
+              onPress={navigation.goBack}
+            />
+          ),
+        })}
+      />
+      <Tabs.Screen
+        name="Profile"
+        component={ProfileScreen}
+        options={({ navigation }) => ({
+          headerLeft: () => (
+            <Feather
+              name="log-out"
+              size={24}
+              color={commonStyles.vars.colorText}
+              onPress={navigation.navigate("Login")}
+            />
+          ),
+        })}
+      />
     </Tabs.Navigator>
   );
 };
 
 const styles = StyleSheet.create({
-  buttonWrapperActive: {
+  buttonTabWrapperActive: {
     width: 70,
     height: 40,
     display: "flex",
@@ -64,7 +120,7 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     backgroundColor: commonStyles.vars.colorAccent,
   },
-  buttonWrapper: {
+  buttonTabWrapper: {
     backgroundColor: commonStyles.vars.colorWhite,
   },
 });
