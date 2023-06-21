@@ -8,12 +8,9 @@ import { commonStyles } from "../components/commonStyles";
 import PostsScreen from "./PostsScreen";
 import CreatePostsScreen from "./CreatePostsScreen";
 import ProfileScreen from "./ProfileScreen";
-import { useNavigation } from "@react-navigation/native";
 
 const Tabs = createBottomTabNavigator();
 const Home = () => {
-  const navigation = useNavigation();
-
   return (
     <Tabs.Navigator
       initialRouteName="Posts"
@@ -56,9 +53,6 @@ const Home = () => {
           lineHeight: 22,
           textAlign: "center",
         },
-        // headerStyle: {
-        //   height: 44,
-        // },
       })}
     >
       <Tabs.Screen
@@ -71,7 +65,8 @@ const Home = () => {
               name="log-out"
               size={24}
               color={commonStyles.vars.colorText}
-              onPress={navigation.navigate("Login")}
+              style={{ marginRight: 10 }}
+              onPress={() => navigation.navigate("Login")}
             />
           ),
         })}
@@ -86,24 +81,29 @@ const Home = () => {
               name="arrow-left"
               size={24}
               color={commonStyles.vars.colorText}
-              onPress={navigation.goBack}
+              style={{ marginLeft: 10 }}
+              onPress={() => navigation.navigate("Posts")}
             />
           ),
+          tabBarStyle: {
+            display: "none",
+          },
         })}
       />
       <Tabs.Screen
         name="Profile"
         component={ProfileScreen}
-        options={({ navigation }) => ({
-          headerLeft: () => (
-            <Feather
-              name="log-out"
-              size={24}
-              color={commonStyles.vars.colorText}
-              onPress={navigation.navigate("Login")}
-            />
-          ),
-        })}
+        // options={({ navigation }) => ({
+        //   headerRight: () => (
+        //     <Feather
+        //       name="log-out"
+        //       size={24}
+        //       color={commonStyles.vars.colorText}
+        //       style={{ marginRight: 10 }}
+        //       onPress={() => navigation.navigate("Login")}
+        //     />
+        //   ),
+        // })}
       />
     </Tabs.Navigator>
   );

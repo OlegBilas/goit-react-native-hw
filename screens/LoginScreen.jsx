@@ -36,12 +36,12 @@ function LoginScreen() {
         `Please, fill all fields with non empty data`
       );
     }
-    Alert.alert(
-      "Дані логінізації:",
-      `
-      електронна пошта: ${email}
-      пароль: ${password}`
-    );
+    // Alert.alert(
+    //   "Дані логінізації:",
+    //   `
+    //   електронна пошта: ${email}
+    //   пароль: ${password}`
+    // );
     navigation.navigate("Home");
   };
   return (

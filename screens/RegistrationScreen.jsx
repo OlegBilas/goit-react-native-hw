@@ -38,13 +38,13 @@ function RegistrationScreen() {
       );
     }
 
-    Alert.alert(
-      "Реєстраційні дані:",
-      `
-      логін: ${login}
-      електронна пошта: ${email}
-      пароль: ${password}`
-    );
+    // Alert.alert(
+    //   "Реєстраційні дані:",
+    //   `
+    //   логін: ${login}
+    //   електронна пошта: ${email}
+    //   пароль: ${password}`
+    // );
     navigation.navigate("Home");
   };
 
