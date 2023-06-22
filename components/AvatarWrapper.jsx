@@ -3,9 +3,9 @@ import React from "react";
 import Avatar from "./Avatar";
 import { Ionicons } from "@expo/vector-icons";
 
-function AvatarWrapper({ add }) {
+function AvatarWrapper({ add, customStyles = {} }) {
   return (
-    <View style={styles.avatarWrapper}>
+    <View style={[styles.avatarWrapper, customStyles]}>
       <Avatar />
       {add ? (
         <Ionicons
@@ -29,9 +29,6 @@ const styles = StyleSheet.create({
     width: 132,
     height: 120,
     position: "absolute",
-    top: "-32%",
-    left: "50%",
-    transform: [{ translateX: -50 }, { translateY: 50 }],
   },
 
   icon: {

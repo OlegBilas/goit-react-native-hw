@@ -11,61 +11,75 @@ import { commonStyles } from "../components/commonStyles";
 import backgroundPhoto from "../assets/images/background-photo.png";
 import { MaterialCommunityIcons, Feather } from "@expo/vector-icons";
 import HeroButton from "../components/HeroButton";
+import { KeyboardAvoidingView } from "react-native";
+import { TouchableWithoutFeedback } from "react-native";
+import { Keyboard } from "react-native";
 
 function CreatePostsScreen() {
   return (
     <View style={styles.container}>
-      <View style={styles.imageWrapper}>
-        <ImageBackground
-          source={backgroundPhoto}
-          style={styles.backgroundPhoto}
+      <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+        <KeyboardAvoidingView
+          style={styles.keyboardAvoidingViewStyles}
+          behavior={Platform.OS === "ios" ? "padding" : "height"}
         >
-          <Pressable
-            style={[
-              styles.buttonPhoto,
-              { backgroundColor: commonStyles.vars.colorWhite },
-            ]}
+          <View style={styles.imageWrapper}>
+            <ImageBackground
+              source={backgroundPhoto}
+              style={styles.backgroundPhoto}
+            >
+              <Pressable
+                style={[
+                  styles.buttonPhoto,
+                  { backgroundColor: commonStyles.vars.colorWhite },
+                ]}
+              >
+                <MaterialCommunityIcons
+                  name="camera"
+                  size={24}
+                  color={commonStyles.vars.colorGray}
+                />
+              </Pressable>
+            </ImageBackground>
+            <Text style={styles.text}>Завантажте фото</Text>
+          </View>
+          <View style={{ marginTop: 32, marginBottom: 16 }}>
+            <TextInput
+              placeholder="Назва..."
+              placeholderTextColor={commonStyles.vars.colorGray}
+              style={styles.input}
+            />
+            <Feather
+              name="map-pin"
+              size={24}
+              color={commonStyles.vars.colorGray}
+              style={styles.mapPin}
+            />
+            <TextInput
+              placeholder="Місцевість.."
+              placeholderTextColor={commonStyles.vars.colorGray}
+              style={[styles.input, { paddingLeft: 28 }]}
+            />
+          </View>
+          <HeroButton
+            style={{
+              marginTop: 0,
+              marginBottom: 120,
+              backgroundColor: "#F6F6F6",
+              color: commonStyles.vars.colorGray,
+            }}
           >
-            <MaterialCommunityIcons
-              name="camera"
+            Опублікувати
+          </HeroButton>
+          <View style={styles.buttonWrapper}>
+            <Feather
+              name="trash-2"
               size={24}
               color={commonStyles.vars.colorGray}
             />
-          </Pressable>
-        </ImageBackground>
-        <Text style={styles.text}>Завантажте фото</Text>
-      </View>
-      <View style={{ marginTop: 32, marginBottom: 16 }}>
-        <TextInput
-          placeholder="Назва..."
-          placeholderTextColor={commonStyles.vars.colorGray}
-          style={styles.input}
-        />
-        <Feather
-          name="map-pin"
-          size={24}
-          color={commonStyles.vars.colorGray}
-          style={styles.mapPin}
-        />
-        <TextInput
-          placeholder="Місцевість.."
-          placeholderTextColor={commonStyles.vars.colorGray}
-          style={[styles.input, { paddingLeft: 28 }]}
-        />
-      </View>
-      <HeroButton
-        style={{
-          marginTop: 0,
-          marginBottom: 120,
-          backgroundColor: "#F6F6F6",
-          color: commonStyles.vars.colorGray,
-        }}
-      >
-        Опублікувати
-      </HeroButton>
-      <View style={styles.buttonWrapper}>
-        <Feather name="trash-2" size={24} color={commonStyles.vars.colorGray} />
-      </View>
+          </View>
+        </KeyboardAvoidingView>
+      </TouchableWithoutFeedback>
     </View>
   );
 }
@@ -79,6 +93,10 @@ const styles = StyleSheet.create({
     paddingRight: 16,
     color: commonStyles.vars.colorText,
     backgroundColor: commonStyles.vars.colorWhite,
+  },
+  keyboardAvoidingViewStyles: {
+    flex: 1,
+    justifyContent: "flex-end",
   },
   imageWrapper: { width: "100%", height: 267 },
   backgroundPhoto: {

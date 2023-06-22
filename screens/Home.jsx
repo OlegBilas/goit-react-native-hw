@@ -93,6 +93,7 @@ const Home = () => {
       <Tabs.Screen
         name="Profile"
         component={ProfileScreen}
+        options={{ headerShown: false }}
         // options={({ navigation }) => ({
         //   headerRight: () => (
         //     <Feather

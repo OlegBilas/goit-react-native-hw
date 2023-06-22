@@ -57,7 +57,14 @@ function RegistrationScreen() {
         >
           <View style={styles.container}>
             <View style={styles.form}>
-              <AvatarWrapper add={true} />
+              <AvatarWrapper
+                customStyles={{
+                  top: "-32%",
+                  left: "50%",
+                  transform: [{ translateX: -50 }, { translateY: 50 }],
+                }}
+                add={true}
+              />
               <Title
                 customStyles={{
                   marginTop: 92,
