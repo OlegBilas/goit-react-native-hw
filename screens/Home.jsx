@@ -64,8 +64,8 @@ const Home = () => {
             <Feather
               name="log-out"
               size={24}
-              color={commonStyles.vars.colorText}
-              style={{ marginRight: 10 }}
+              color={commonStyles.vars.colorGray}
+              style={{ marginRight: 16 }}
               onPress={() => navigation.navigate("Login")}
             />
           ),
@@ -80,8 +80,8 @@ const Home = () => {
             <Octicons
               name="arrow-left"
               size={24}
-              color={commonStyles.vars.colorText}
-              style={{ marginLeft: 10 }}
+              color={commonStyles.vars.colorGray}
+              style={{ marginLeft: 16 }}
               onPress={() => navigation.navigate("Posts")}
             />
           ),

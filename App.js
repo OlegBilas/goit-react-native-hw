@@ -7,6 +7,7 @@ import { createStackNavigator } from "@react-navigation/stack";
 import { NavigationContainer } from "@react-navigation/native";
 import CommentsScreen from "./screens/CommentsScreen";
 import { Octicons } from "@expo/vector-icons";
+import { commonStyles } from "./components/commonStyles";
 
 export default function App() {
   const [fontsLoaded] = useFonts({
@@ -20,25 +21,34 @@ export default function App() {
   const MainStack = createStackNavigator();
   return (
     <NavigationContainer>
-      <MainStack.Navigator
-        initialRouteName="Login"
-        screenOptions={{ headerShown: false }}
-      >
-        <MainStack.Screen name="Registration" component={RegistrationScreen} />
-        <MainStack.Screen name="Login" component={LoginScreen} />
-        <MainStack.Screen name="Home" component={Home} />
+      <MainStack.Navigator initialRouteName="Login">
+        <MainStack.Screen
+          name="Registration"
+          component={RegistrationScreen}
+          options={{ headerShown: false }}
+        />
+        <MainStack.Screen
+          name="Login"
+          component={LoginScreen}
+          options={{ headerShown: false }}
+        />
+        <MainStack.Screen
+          name="Home"
+          component={Home}
+          options={{ headerShown: false }}
+        />
         <MainStack.Screen
           name="Comments"
           component={CommentsScreen}
           options={({ navigation }) => ({
             title: "Коментарі",
-            // headerStyle: { height: 88 },
+            headerTitleAlign: "center",
             headerLeft: () => (
               <Octicons
                 name="arrow-left"
                 size={24}
                 color={commonStyles.vars.colorText}
-                style={{ marginLeft: 10 }}
+                style={{ marginLeft: 16 }}
                 onPress={() => navigation.navigate("Posts")}
               />
             ),
