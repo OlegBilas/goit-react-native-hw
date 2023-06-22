@@ -94,17 +94,6 @@ const Home = () => {
         name="Profile"
         component={ProfileScreen}
         options={{ headerShown: false }}
-        // options={({ navigation }) => ({
-        //   headerRight: () => (
-        //     <Feather
-        //       name="log-out"
-        //       size={24}
-        //       color={commonStyles.vars.colorText}
-        //       style={{ marginRight: 10 }}
-        //       onPress={() => navigation.navigate("Login")}
-        //     />
-        //   ),
-        // })}
       />
     </Tabs.Navigator>
   );
