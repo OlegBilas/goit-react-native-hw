@@ -8,14 +8,11 @@ import {
   View,
 } from "react-native";
 import Avatar from "../components/Avatar";
-// import Header from "../components/Header";
-// import ToolBar from "../components/ToolBar";
 
 export default function PostsScreen() {
   return (
     <SafeAreaView style={styles.androidSafeArea}>
       <View style={styles.container}>
-        {/* <Header /> */}
         <View style={styles.posts}>
           <View style={styles.avatarWrapper}>
             <Avatar customStyles={{ width: 60, height: 60, marginRight: 8 }} />
@@ -25,7 +22,6 @@ export default function PostsScreen() {
             </View>
           </View>
         </View>
-        {/* <ToolBar /> */}
       </View>
     </SafeAreaView>
   );

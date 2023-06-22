@@ -98,7 +98,18 @@ function RegistrationScreen() {
                 </Pressable>
               </View>
             </View>
-            <HeroButton onPress={handleLogin}>Зареєструватися</HeroButton>
+            <HeroButton
+              style={{
+                marginTop: 43,
+                marginLeft: 16,
+                marginRight: 16,
+                backgroundColor: commonStyles.vars.colorAccent,
+                color: commonStyles.vars.colorWhite,
+              }}
+              onPress={handleLogin}
+            >
+              Зареєструватися
+            </HeroButton>
             <View style={styles.textWrapper}>
               <Text style={styles.text}>Вже є акаунт? </Text>
               <RegistrationLink>Увійти</RegistrationLink>

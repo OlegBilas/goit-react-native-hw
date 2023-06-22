@@ -35,7 +35,7 @@ function CreatePostsScreen() {
         </ImageBackground>
         <Text style={styles.text}>Завантажте фото</Text>
       </View>
-      <View style={{ marginTop: 32, marginBottom: 32 }}>
+      <View style={{ marginTop: 32, marginBottom: 16 }}>
         <TextInput
           placeholder="Назва..."
           placeholderTextColor={commonStyles.vars.colorGray}
@@ -54,11 +54,11 @@ function CreatePostsScreen() {
         />
       </View>
       <HeroButton
-        color={commonStyles.vars.colorGray}
         style={{
           marginTop: 0,
           marginBottom: 120,
           backgroundColor: "#F6F6F6",
+          color: commonStyles.vars.colorGray,
         }}
       >
         Опублікувати
@@ -73,8 +73,6 @@ function CreatePostsScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    // marginLeft: "auto",
-    // marginRight: "auto",
     paddingTop: 32,
     paddingBottom: 32,
     paddingLeft: 16,
@@ -82,7 +80,7 @@ const styles = StyleSheet.create({
     color: commonStyles.vars.colorText,
     backgroundColor: commonStyles.vars.colorWhite,
   },
-  imageWrapper: { width: "100%", height: 267, marginBottom: 32 },
+  imageWrapper: { width: "100%", height: 267 },
   backgroundPhoto: {
     width: 343,
     height: 240,
@@ -99,14 +97,20 @@ const styles = StyleSheet.create({
     width: 60,
     height: 60,
     borderRadius: 50,
-    zIndex: 1,
   },
   text: {
     ...commonStyles.fonts,
     color: commonStyles.vars.colorGray,
     height: 19,
   },
-  input: { ...commonStyles.fonts, height: 50, marginBottom: 16, padding: 4 },
+  input: {
+    ...commonStyles.fonts,
+    height: 50,
+    marginBottom: 16,
+    padding: 4,
+    borderBottomWidth: 1,
+    borderBottomColor: commonStyles.vars.colorGray,
+  },
   mapPin: {
     position: "absolute",
     top: "50%",
