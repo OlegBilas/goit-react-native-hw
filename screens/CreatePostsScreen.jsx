@@ -17,25 +17,62 @@ import { Keyboard } from "react-native";
 
 import { Camera } from "expo-camera";
 import * as MediaLibrary from "expo-media-library";
+import MapView, { Marker } from "react-native-maps";
+import * as Location from "expo-location";
+import { useIsFocused, useNavigation } from "@react-navigation/native";
 
 function CreatePostsScreen() {
   const [hasPermission, setHasPermission] = useState(null);
   const [cameraRef, setCameraRef] = useState(null);
   const [type, setType] = useState(Camera.Constants.Type.back);
+  const [location, setLocation] = useState(null);
+
+  const [cameraPhoto, setCameraPhoto] = useState(false);
+  const [name, setName] = useState(null);
+  const [place, setPlace] = useState(null);
+
+  const navigation = useNavigation();
+  const focused = useIsFocused();
 
   useEffect(() => {
     (async () => {
-      const { status } = await Camera.requestCameraPermissionsAsync();
+      //get status Camera
+      const { statusCamera } = await Camera.requestCameraPermissionsAsync();
       await MediaLibrary.requestPermissionsAsync();
 
-      setHasPermission(status === "granted");
+      setHasPermission(statusCamera === "granted");
     })();
   }, []);
 
   if (hasPermission === null) {
     return <View />;
   }
-  // console.log(hasPermission, Camera.Constants.Type.front);
+  const stylesForHeroButton =
+    name && place && cameraPhoto
+      ? {
+          backgroundColor: commonStyles.vars.colorAccent,
+          color: commonStyles.vars.colorWhite,
+        }
+      : { backgroundColor: "#F6F6F6", color: commonStyles.vars.colorGray };
+
+  const handlePressPublicationButton = async () => {
+    //get status of location
+    const { statusLocation } =
+      await Location.requestBackgroundPermissionsAsync();
+    if (statusLocation !== "granted") {
+      console.log("Permission to access location was denied");
+    }
+
+    const location = await Location.getCurrentPositionAsync({});
+    const coords = {
+      latitude: location.coords.latitude,
+      longitude: location.coords.longitude,
+    };
+    setLocation(coords);
+
+    navigation.navigate("PostsScreen");
+  };
+
   return (
     <View style={styles.container}>
       <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
@@ -45,25 +82,28 @@ function CreatePostsScreen() {
         >
           <View style={styles.cameraWrapper}>
             {hasPermission ? (
-              <Camera
-                style={styles.backgroundCamera}
-                type={type}
-                ref={setCameraRef}
-              >
-                <View style={styles.buttonPhoto}>
-                  <MaterialCommunityIcons
-                    name="camera"
-                    size={24}
-                    color={commonStyles.vars.colorGray}
-                    onPress={async () => {
-                      if (cameraRef) {
-                        const { uri } = await cameraRef.takePictureAsync();
-                        await MediaLibrary.createAssetAsync(uri);
-                      }
-                    }}
-                  />
-                </View>
-              </Camera>
+              focused && (
+                <Camera
+                  style={styles.backgroundCamera}
+                  type={type}
+                  ref={setCameraRef}
+                >
+                  <View style={styles.buttonPhoto}>
+                    <MaterialCommunityIcons
+                      name="camera"
+                      size={24}
+                      color={commonStyles.vars.colorGray}
+                      onPress={async () => {
+                        if (cameraRef) {
+                          const { uri } = await cameraRef.takePictureAsync();
+                          await MediaLibrary.createAssetAsync(uri);
+                          setCameraPhoto(true);
+                        }
+                      }}
+                    />
+                  </View>
+                </Camera>
+              )
             ) : (
               <ImageBackground
                 source={backgroundPhoto}
@@ -79,6 +119,8 @@ function CreatePostsScreen() {
               placeholder="Назва..."
               placeholderTextColor={commonStyles.vars.colorGray}
               style={styles.input}
+              value={name}
+              onChangeText={setName}
             />
             <Feather
               name="map-pin"
@@ -90,15 +132,19 @@ function CreatePostsScreen() {
               placeholder="Місцевість.."
               placeholderTextColor={commonStyles.vars.colorGray}
               style={[styles.input, { paddingLeft: 28 }]}
+              value={place}
+              onChangeText={setPlace}
             />
           </View>
           <HeroButton
             style={{
               marginTop: 0,
               marginBottom: 120,
-              backgroundColor: "#F6F6F6",
-              color: commonStyles.vars.colorGray,
+              ...stylesForHeroButton,
             }}
+            onPress={() =>
+              name && place && cameraPhoto && handlePressPublicationButton()
+            }
           >
             Опублікувати
           </HeroButton>
@@ -107,6 +153,11 @@ function CreatePostsScreen() {
               name="trash-2"
               size={24}
               color={commonStyles.vars.colorGray}
+              onPress={() => {
+                setName(null);
+                setPlace(null);
+                setCameraPhoto(false);
+              }}
             />
           </View>
         </KeyboardAvoidingView>
