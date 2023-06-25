@@ -8,6 +8,8 @@ import { NavigationContainer } from "@react-navigation/native";
 import CommentsScreen from "./screens/CommentsScreen";
 import { Octicons } from "@expo/vector-icons";
 import { commonStyles } from "./components/commonStyles";
+import PostCard from "./components/PostCard";
+import MapScreen from "./screens/MapScreen";
 
 export default function App() {
   const [fontsLoaded] = useFonts({
@@ -38,6 +40,16 @@ export default function App() {
           options={{ headerShown: false }}
         />
         <MainStack.Screen
+          name="PostCard"
+          component={PostCard}
+          options={{ headerShown: false }}
+        />
+        <MainStack.Screen
+          name="Map"
+          component={MapScreen}
+          options={{ headerShown: false }}
+        />
+        <MainStack.Screen
           name="Comments"
           component={CommentsScreen}
           options={({ navigation }) => ({
@@ -48,7 +60,7 @@ export default function App() {
                 name="arrow-left"
                 size={24}
                 color={commonStyles.vars.colorText}
-                style={{ marginLeft: 16 ,padding: 5 }}
+                style={{ marginLeft: 16, padding: 5 }}
                 onPress={() => navigation.navigate("Posts")}
               />
             ),

@@ -32,7 +32,9 @@ function CommentsScreen() {
 }
 const styles = StyleSheet.create({
   container: {
+    width: "100%",
     flex: 1,
+
     paddingTop: 32,
     paddingBottom: 16,
     paddingLeft: 16,
@@ -43,6 +45,8 @@ const styles = StyleSheet.create({
   backgroundPhoto: {
     width: 343,
     height: 240,
+    marginLeft: "auto",
+    marginRight: "auto",
     marginBottom: 32,
     borderRadius: 8,
     resizeMode: "cover",

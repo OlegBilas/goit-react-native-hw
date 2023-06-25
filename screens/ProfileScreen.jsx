@@ -25,7 +25,7 @@ function ProfileScreen() {
           size={24}
           color={commonStyles.vars.colorGray}
           style={styles.logOut}
-          onPress={() => navigation.navigate("Comments")}
+          onPress={() => navigation.navigate("PostCard")}
         />
         <Title
           customStyles={{
