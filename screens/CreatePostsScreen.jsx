@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {
   ImageBackground,
   StyleSheet,
@@ -15,7 +15,27 @@ import { KeyboardAvoidingView } from "react-native";
 import { TouchableWithoutFeedback } from "react-native";
 import { Keyboard } from "react-native";
 
+import { Camera } from "expo-camera";
+import * as MediaLibrary from "expo-media-library";
+
 function CreatePostsScreen() {
+  const [hasPermission, setHasPermission] = useState(null);
+  const [cameraRef, setCameraRef] = useState(null);
+  const [type, setType] = useState(Camera.Constants.Type.back);
+
+  useEffect(() => {
+    (async () => {
+      const { status } = await Camera.requestCameraPermissionsAsync();
+      await MediaLibrary.requestPermissionsAsync();
+
+      setHasPermission(status === "granted");
+    })();
+  }, []);
+
+  if (hasPermission === null) {
+    return <View />;
+  }
+  // console.log(hasPermission, Camera.Constants.Type.front);
   return (
     <View style={styles.container}>
       <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
@@ -23,24 +43,35 @@ function CreatePostsScreen() {
           style={styles.keyboardAvoidingViewStyles}
           behavior={Platform.OS === "ios" ? "padding" : "height"}
         >
-          <View style={styles.imageWrapper}>
-            <ImageBackground
-              source={backgroundPhoto}
-              style={styles.backgroundPhoto}
-            >
-              <Pressable
-                style={[
-                  styles.buttonPhoto,
-                  { backgroundColor: commonStyles.vars.colorWhite },
-                ]}
+          <View style={styles.cameraWrapper}>
+            {hasPermission ? (
+              <Camera
+                style={styles.backgroundCamera}
+                type={type}
+                ref={setCameraRef}
               >
-                <MaterialCommunityIcons
-                  name="camera"
-                  size={24}
-                  color={commonStyles.vars.colorGray}
-                />
-              </Pressable>
-            </ImageBackground>
+                <View style={styles.buttonPhoto}>
+                  <MaterialCommunityIcons
+                    name="camera"
+                    size={24}
+                    color={commonStyles.vars.colorGray}
+                    onPress={async () => {
+                      if (cameraRef) {
+                        const { uri } = await cameraRef.takePictureAsync();
+                        await MediaLibrary.createAssetAsync(uri);
+                      }
+                    }}
+                  />
+                </View>
+              </Camera>
+            ) : (
+              <ImageBackground
+                source={backgroundPhoto}
+                style={styles.backgroundCamera}
+              >
+                <Text>No access to camera</Text>
+              </ImageBackground>
+            )}
             <Text style={styles.text}>Завантажте фото</Text>
           </View>
           <View style={{ marginTop: 32, marginBottom: 16 }}>
@@ -98,15 +129,16 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "flex-end",
   },
-  imageWrapper: { width: "100%", height: 267 },
-  backgroundPhoto: {
-    width: 343,
+  cameraWrapper: { width: "100%", height: 267 },
+  backgroundCamera: {
+    width: "100%",
     height: 240,
     borderRadius: 8,
     resizeMode: "cover",
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
+    backgroundColor: commonStyles.vars.colorGray,
   },
   buttonPhoto: {
     display: "flex",
@@ -115,6 +147,7 @@ const styles = StyleSheet.create({
     width: 60,
     height: 60,
     borderRadius: 50,
+    backgroundColor: commonStyles.vars.colorWhite,
   },
   text: {
     ...commonStyles.fonts,

@@ -65,7 +65,7 @@ const Home = () => {
               name="log-out"
               size={24}
               color={commonStyles.vars.colorGray}
-              style={{ marginRight: 16 }}
+              style={{ marginRight: 16, padding: 5 }}
               onPress={() => navigation.navigate("Login")}
             />
           ),
@@ -81,7 +81,7 @@ const Home = () => {
               name="arrow-left"
               size={24}
               color={commonStyles.vars.colorGray}
-              style={{ marginLeft: 16 }}
+              style={{ marginLeft: 16, padding: 5 }}
               onPress={() => navigation.navigate("Posts")}
             />
           ),

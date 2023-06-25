@@ -48,7 +48,7 @@ export default function App() {
                 name="arrow-left"
                 size={24}
                 color={commonStyles.vars.colorText}
-                style={{ marginLeft: 16 }}
+                style={{ marginLeft: 16 ,padding: 5 }}
                 onPress={() => navigation.navigate("Posts")}
               />
             ),
