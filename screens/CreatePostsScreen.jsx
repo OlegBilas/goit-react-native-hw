@@ -17,7 +17,6 @@ import { Keyboard } from "react-native";
 
 import { Camera } from "expo-camera";
 import * as MediaLibrary from "expo-media-library";
-import MapView, { Marker } from "react-native-maps";
 import * as Location from "expo-location";
 
 import { useIsFocused, useNavigation } from "@react-navigation/native";
@@ -58,9 +57,7 @@ function CreatePostsScreen() {
 
   const handlePressPublicationButton = async () => {
     //get status of location
-    let { statusLocation } = await Location.requestForegroundPermissionsAsync(
-      "AIzaSyBErmwwjN0uOP_HZf_y-stZZhobANGlTiQ"
-    );
+    let { statusLocation } = await Location.requestForegroundPermissionsAsync();
     if (statusLocation !== "granted") {
       console.log("Permission to access location was denied");
     }
@@ -71,7 +68,7 @@ function CreatePostsScreen() {
       longitude: location.coords.longitude,
     };
     setLocation(coords);
-
+    //console.log(location);
     navigation.navigate("PostsScreen");
   };
 
@@ -84,26 +81,28 @@ function CreatePostsScreen() {
         >
           <View style={styles.cameraWrapper}>
             {hasPermission ? (
-              <Camera
-                style={styles.backgroundCamera}
-                type={type}
-                ref={setCameraRef}
-              >
-                <View style={styles.buttonPhoto}>
-                  <MaterialCommunityIcons
-                    name="camera"
-                    size={24}
-                    color={commonStyles.vars.colorGray}
-                    onPress={async () => {
-                      if (cameraRef) {
-                        const { uri } = await cameraRef.takePictureAsync();
-                        await MediaLibrary.createAssetAsync(uri);
-                        setCameraPhoto(true);
-                      }
-                    }}
-                  />
-                </View>
-              </Camera>
+              focused && (
+                <Camera
+                  style={styles.backgroundCamera}
+                  type={type}
+                  ref={setCameraRef}
+                >
+                  <View style={styles.buttonPhoto}>
+                    <MaterialCommunityIcons
+                      name="camera"
+                      size={24}
+                      color={commonStyles.vars.colorGray}
+                      onPress={async () => {
+                        if (cameraRef) {
+                          const { uri } = await cameraRef.takePictureAsync();
+                          await MediaLibrary.createAssetAsync(uri);
+                          setCameraPhoto(true);
+                        }
+                      }}
+                    />
+                  </View>
+                </Camera>
+              )
             ) : (
               <ImageBackground
                 source={backgroundPhoto}
