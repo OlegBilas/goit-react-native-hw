@@ -10,6 +10,7 @@ import { Octicons } from "@expo/vector-icons";
 import { commonStyles } from "./components/commonStyles";
 import PostCard from "./components/PostCard";
 import MapScreen from "./screens/MapScreen";
+import PostsScreen from "./screens/PostsScreen";
 
 export default function App() {
   const [fontsLoaded] = useFonts({
@@ -41,7 +42,7 @@ export default function App() {
         />
         <MainStack.Screen
           name="PostsScreen"
-          component={PostCard}
+          component={PostsScreen}
           options={{ headerShown: false }}
         />
         <MainStack.Screen

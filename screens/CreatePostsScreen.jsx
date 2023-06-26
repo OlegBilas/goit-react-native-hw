@@ -37,10 +37,10 @@ function CreatePostsScreen() {
   useEffect(() => {
     (async () => {
       //get status Camera
-      const { statusCamera } = await Camera.requestCameraPermissionsAsync();
+      const { status } = await Camera.requestCameraPermissionsAsync();
       await MediaLibrary.requestPermissionsAsync();
 
-      setHasPermission(statusCamera === "granted");
+      setHasPermission(status === "granted");
     })();
   }, []);
 
@@ -57,8 +57,8 @@ function CreatePostsScreen() {
 
   const handlePressPublicationButton = async () => {
     //get status of location
-    let { statusLocation } = await Location.requestForegroundPermissionsAsync();
-    if (statusLocation !== "granted") {
+    let { status } = await Location.requestForegroundPermissionsAsync();
+    if (status !== "granted") {
       console.log("Permission to access location was denied");
     }
 
@@ -68,7 +68,6 @@ function CreatePostsScreen() {
       longitude: location.coords.longitude,
     };
     setLocation(coords);
-    //console.log(location);
     navigation.navigate("PostsScreen");
   };
 
