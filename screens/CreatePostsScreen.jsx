@@ -57,14 +57,13 @@ function CreatePostsScreen() {
 
   const handlePressPublicationButton = async () => {
     //get status of location
-    const { statusLocation } =
-      await Location.requestBackgroundPermissionsAsync();
+    let { statusLocation } = await Location.requestPermissionsAsync();
     if (statusLocation !== "granted") {
       console.log("Permission to access location was denied");
     }
 
-    const location = await Location.getCurrentPositionAsync({});
-    const coords = {
+    let location = await Location.getCurrentPositionAsync({});
+    let coords = {
       latitude: location.coords.latitude,
       longitude: location.coords.longitude,
     };
