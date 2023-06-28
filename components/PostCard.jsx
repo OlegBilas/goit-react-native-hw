@@ -20,7 +20,7 @@ function PostCard({ data: { cameraPhoto, name, place, location } }) {
           color={commonStyles.vars.colorAccent}
           style={{ marginRight: 6 }}
           onPress={() => {
-            navigation.navigate("Comments");
+            navigation.navigate("Comments", { cameraPhoto });
           }}
         />
         <Text style={[styles.text, { marginRight: 24 }]}>8</Text>

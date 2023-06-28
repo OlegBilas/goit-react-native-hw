@@ -1,17 +1,14 @@
 import React from "react";
-import { ImageBackground, Pressable, StyleSheet, View } from "react-native";
-import backgroundPhoto from "../assets/images/background-photo.png";
+import { Image, StyleSheet, View } from "react-native";
 import { commonStyles } from "../components/commonStyles";
 import { TextInput } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 
-function CommentsScreen() {
+function CommentsScreen({ navigation, route }) {
+  const cameraPhoto = route.params.cameraPhoto;
   return (
     <View style={styles.container}>
-      <ImageBackground
-        source={backgroundPhoto}
-        style={styles.backgroundPhoto}
-      />
+      <Image source={{ uri: cameraPhoto }} style={styles.backgroundPhoto} />
       <View style={styles.comments}></View>
       <TextInput
         placeholder="Коментувати..."
@@ -49,6 +46,7 @@ const styles = StyleSheet.create({
     marginRight: "auto",
     marginBottom: 32,
     borderRadius: 8,
+    overflow: "hidden",
     resizeMode: "cover",
     flex: 1,
   },

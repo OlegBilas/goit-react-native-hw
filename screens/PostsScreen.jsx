@@ -45,7 +45,7 @@ const styles = StyleSheet.create({
     paddingRight: 16,
   },
   avatarWrapper: {
-    marginTop: 32,
+    // marginTop: 32,
     marginBottom: 32,
     flexDirection: "row",
     alignItems: "center",
