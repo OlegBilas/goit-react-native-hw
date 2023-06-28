@@ -216,13 +216,12 @@ const styles = StyleSheet.create({
   backgroundCamera: {
     width: "100%",
     height: 240,
-    overflow: "hidden",
-    resizeMode: "cover",
-    borderRadius: 8,
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
-    // backgroundColor: commonStyles.vars.colorGray,
+    overflow: "hidden",
+    resizeMode: "cover",
+    borderRadius: 8,
   },
   buttonPhoto: {
     display: "flex",
