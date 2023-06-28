@@ -107,11 +107,16 @@ function CreatePostsScreen() {
                   style={styles.backgroundCamera}
                   source={{ uri: cameraPhoto }}
                 >
-                  <View style={styles.buttonPhoto}>
+                  <View
+                    style={[
+                      styles.buttonPhoto,
+                      { backgroundColor: "rgba(255, 255, 255,0.3)" },
+                    ]}
+                  >
                     <MaterialCommunityIcons
                       name="camera"
                       size={24}
-                      color={commonStyles.vars.colorGray}
+                      color={commonStyles.vars.colorWhite}
                       onPress={() => {
                         setCameraPhoto(null);
                       }}

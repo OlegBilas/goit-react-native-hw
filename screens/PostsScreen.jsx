@@ -34,8 +34,6 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: "white",
     paddingTop: Platform.OS === "android" ? StatusBar.currentHeight : 0,
-    // marginLeft: "auto",
-    // marginRight: "auto",
   },
   container: {
     flex: 1,
@@ -45,7 +43,6 @@ const styles = StyleSheet.create({
     paddingRight: 16,
   },
   avatarWrapper: {
-    // marginTop: 32,
     marginBottom: 32,
     flexDirection: "row",
     alignItems: "center",
