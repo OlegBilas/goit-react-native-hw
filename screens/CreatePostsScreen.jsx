@@ -82,26 +82,28 @@ function CreatePostsScreen() {
           <View style={styles.cameraWrapper}>
             {hasPermission ? (
               !cameraPhoto ? (
-                <Camera
-                  style={styles.backgroundCamera}
-                  type={type}
-                  ref={setCameraRef}
-                >
-                  <View style={styles.buttonPhoto}>
-                    <MaterialCommunityIcons
-                      name="camera"
-                      size={24}
-                      color={commonStyles.vars.colorGray}
-                      onPress={async () => {
-                        if (cameraRef) {
-                          const { uri } = await cameraRef.takePictureAsync();
-                          await MediaLibrary.createAssetAsync(uri);
-                          setCameraPhoto(uri);
-                        }
-                      }}
-                    />
-                  </View>
-                </Camera>
+                <View style={styles.camera}>
+                  <Camera
+                    style={styles.backgroundCamera}
+                    type={type}
+                    ref={setCameraRef}
+                  >
+                    <View style={styles.buttonPhoto}>
+                      <MaterialCommunityIcons
+                        name="camera"
+                        size={24}
+                        color={commonStyles.vars.colorGray}
+                        onPress={async () => {
+                          if (cameraRef) {
+                            const { uri } = await cameraRef.takePictureAsync();
+                            await MediaLibrary.createAssetAsync(uri);
+                            setCameraPhoto(uri);
+                          }
+                        }}
+                      />
+                    </View>
+                  </Camera>
+                </View>
               ) : (
                 <ImageBackground
                   style={styles.backgroundCamera}
@@ -204,17 +206,23 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   cameraWrapper: { width: "100%", height: 267 },
+  camera: {
+    width: "100%",
+    height: 240,
+    overflow: "hidden",
+    justifyContent: "center",
+    borderRadius: 8,
+  },
   backgroundCamera: {
     width: "100%",
     height: 240,
-    marginBottom: 8,
-    borderRadius: 8,
     overflow: "hidden",
     resizeMode: "cover",
+    borderRadius: 8,
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
-    backgroundColor: commonStyles.vars.colorGray,
+    // backgroundColor: commonStyles.vars.colorGray,
   },
   buttonPhoto: {
     display: "flex",
@@ -227,6 +235,7 @@ const styles = StyleSheet.create({
   },
   text: {
     ...commonStyles.fonts,
+    marginTop: 8,
     color: commonStyles.vars.colorGray,
     height: 19,
   },
