@@ -63,6 +63,8 @@ const styles = StyleSheet.create({
   input: {
     height: 50,
     width: 343,
+    marginLeft: "auto",
+    marginRight: "auto",
     padding: 16,
     color: commonStyles.vars.colorText,
     fontFamily: "Roboto-500",

@@ -40,11 +40,11 @@ export default function App() {
           component={Home}
           options={{ headerShown: false }}
         />
-        <MainStack.Screen
+        {/* <MainStack.Screen
           name="PostsScreen"
           component={PostsScreen}
           options={{ headerShown: false }}
-        />
+        /> */}
         <MainStack.Screen
           name="PostCard"
           component={PostCard}

@@ -10,7 +10,7 @@ function PostCard({ data: { cameraPhoto, name, place, location } }) {
   console.log(cameraPhoto);
   return (
     <View style={styles.container}>
-      <Image sourse={{ uri: cameraPhoto }} style={styles.foto} />
+      <Image source={{ uri: cameraPhoto }} style={styles.foto} />
       <Text style={styles.name}>{name}</Text>
 
       <View style={styles.postDataContainer}>

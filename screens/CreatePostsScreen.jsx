@@ -69,7 +69,7 @@ function CreatePostsScreen() {
       longitude: location.coords.longitude,
     };
     setLocation(coords);
-    navigation.navigate("PostsScreen", { cameraPhoto, name, place, location });
+    navigation.navigate("Posts", { cameraPhoto, name, place, location });
   };
 
   return (
@@ -103,10 +103,21 @@ function CreatePostsScreen() {
                   </View>
                 </Camera>
               ) : (
-                <Image
+                <ImageBackground
                   style={styles.backgroundCamera}
                   source={{ uri: cameraPhoto }}
-                />
+                >
+                  <View style={styles.buttonPhoto}>
+                    <MaterialCommunityIcons
+                      name="camera"
+                      size={24}
+                      color={commonStyles.vars.colorGray}
+                      onPress={() => {
+                        setCameraPhoto(null);
+                      }}
+                    />
+                  </View>
+                </ImageBackground>
               )
             ) : (
               <ImageBackground
@@ -116,7 +127,11 @@ function CreatePostsScreen() {
                 <Text>No access to camera</Text>
               </ImageBackground>
             )}
-            <Text style={styles.text}>Завантажте фото</Text>
+            {!cameraPhoto ? (
+              <Text style={styles.text}>Завантажте фото</Text>
+            ) : (
+              <Text style={styles.text}>Редагувати фото</Text>
+            )}
           </View>
           <View style={{ marginTop: 32, marginBottom: 16 }}>
             <TextInput
@@ -143,7 +158,7 @@ function CreatePostsScreen() {
           <HeroButton
             style={{
               marginTop: 0,
-              marginBottom: 120,
+              marginBottom: "auto",
               ...stylesForHeroButton,
             }}
             onPress={() =>
@@ -182,13 +197,14 @@ const styles = StyleSheet.create({
   },
   keyboardAvoidingViewStyles: {
     flex: 1,
-    justifyContent: "flex-end",
   },
   cameraWrapper: { width: "100%", height: 267 },
   backgroundCamera: {
     width: "100%",
     height: 240,
+    marginBottom: 8,
     borderRadius: 8,
+    overflow: "hidden",
     resizeMode: "cover",
     flex: 1,
     justifyContent: "center",
@@ -221,7 +237,7 @@ const styles = StyleSheet.create({
     position: "absolute",
     top: "50%",
     left: 0,
-    transform: [{ translateY: 12 }],
+    transform: [{ translateY: 8 }],
   },
   buttonWrapper: {
     width: 70,
