@@ -7,10 +7,10 @@ import { useNavigation } from "@react-navigation/native";
 
 function PostCard({ data: { cameraPhoto, name, place, location } }) {
   const navigation = useNavigation();
-  console.log(String(cameraPhoto));
+  console.log(cameraPhoto);
   return (
     <View style={styles.container}>
-      <Image sourse={cameraPhoto} style={styles.foto} />
+      <Image sourse={{ uri: cameraPhoto }} style={styles.foto} />
       <Text style={styles.name}>{name}</Text>
 
       <View style={styles.postDataContainer}>
