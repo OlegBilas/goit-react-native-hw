@@ -8,8 +8,9 @@ import {
   View,
 } from "react-native";
 import Avatar from "../components/Avatar";
+import PostCard from "../components/PostCard";
 
-export default function PostsScreen() {
+export default function PostsScreen({ navigation, route }) {
   return (
     <SafeAreaView style={styles.androidSafeArea}>
       <View style={styles.container}>
@@ -21,6 +22,7 @@ export default function PostsScreen() {
               <Text>email@example.com</Text>
             </View>
           </View>
+          {route.params && <PostCard data={route.params}></PostCard>}
         </View>
       </View>
     </SafeAreaView>
@@ -32,6 +34,8 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: "white",
     paddingTop: Platform.OS === "android" ? StatusBar.currentHeight : 0,
+    marginLeft: "auto",
+    marginRight: "auto",
   },
   container: {
     flex: 1,

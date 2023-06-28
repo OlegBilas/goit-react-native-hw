@@ -1,18 +1,17 @@
 import React from "react";
 import { Image, Text, View } from "react-native";
-import backgroundPhoto from "../assets/images/background-photo.png";
 import { Feather } from "@expo/vector-icons";
 import { commonStyles } from "./commonStyles";
 import { StyleSheet } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 
-function PostCard() {
+function PostCard({ data: { cameraPhoto, name, place, location } }) {
   const navigation = useNavigation();
-
+  console.log(String(cameraPhoto));
   return (
-    <View>
-      <Image sourse={backgroundPhoto} style={styles.foto} />
-      <Text style={styles.name}>Forest</Text>
+    <View style={styles.container}>
+      <Image sourse={cameraPhoto} style={styles.foto} />
+      <Text style={styles.name}>{name}</Text>
 
       <View style={styles.postDataContainer}>
         <Feather
@@ -38,7 +37,7 @@ function PostCard() {
           color={commonStyles.vars.colorGray}
           style={{ marginRight: 4 }}
           onPress={() => {
-            navigation.navigate("Map");
+            navigation.navigate("Map", { location });
           }}
         />
         <Text
@@ -47,7 +46,7 @@ function PostCard() {
             { textDecorationLine: "underline", textDecorationStyle: "solid" },
           ]}
         >
-          Ukraine
+          {place}
         </Text>
       </View>
     </View>

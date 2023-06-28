@@ -20,6 +20,7 @@ import * as MediaLibrary from "expo-media-library";
 import * as Location from "expo-location";
 
 import { useIsFocused, useNavigation } from "@react-navigation/native";
+import { Image } from "react-native";
 
 function CreatePostsScreen() {
   const [hasPermission, setHasPermission] = useState(null);
@@ -27,12 +28,12 @@ function CreatePostsScreen() {
   const [type, setType] = useState(Camera.Constants.Type.back);
   const [location, setLocation] = useState(null);
 
-  const [cameraPhoto, setCameraPhoto] = useState(false);
+  const [cameraPhoto, setCameraPhoto] = useState(null);
   const [name, setName] = useState(null);
   const [place, setPlace] = useState(null);
 
   const navigation = useNavigation();
-  const focused = useIsFocused();
+  // const focused = useIsFocused();
 
   useEffect(() => {
     (async () => {
@@ -68,7 +69,7 @@ function CreatePostsScreen() {
       longitude: location.coords.longitude,
     };
     setLocation(coords);
-    navigation.navigate("PostsScreen");
+    navigation.navigate("PostsScreen", { cameraPhoto, name, place, location });
   };
 
   return (
@@ -80,7 +81,7 @@ function CreatePostsScreen() {
         >
           <View style={styles.cameraWrapper}>
             {hasPermission ? (
-              focused && (
+              !cameraPhoto ? (
                 <Camera
                   style={styles.backgroundCamera}
                   type={type}
@@ -95,12 +96,17 @@ function CreatePostsScreen() {
                         if (cameraRef) {
                           const { uri } = await cameraRef.takePictureAsync();
                           await MediaLibrary.createAssetAsync(uri);
-                          setCameraPhoto(true);
+                          setCameraPhoto(uri);
                         }
                       }}
                     />
                   </View>
                 </Camera>
+              ) : (
+                <Image
+                  style={styles.backgroundCamera}
+                  source={{ uri: cameraPhoto }}
+                />
               )
             ) : (
               <ImageBackground
@@ -154,7 +160,7 @@ function CreatePostsScreen() {
               onPress={() => {
                 setName(null);
                 setPlace(null);
-                setCameraPhoto(false);
+                setCameraPhoto(null);
               }}
             />
           </View>

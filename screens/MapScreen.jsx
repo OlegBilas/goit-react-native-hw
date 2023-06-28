@@ -4,25 +4,12 @@ import MapView, { Marker } from "react-native-maps";
 import * as Location from "expo-location";
 import { PROVIDER_GOOGLE } from "react-native-maps";
 
-const MapScreen = () => {
-  // pass location coords by prop and remove useEffect() and useState()
-  const [location, setLocation] = useState(null);
-
-  useEffect(() => {
-    (async () => {
-      const { status } = await Location.requestForegroundPermissionsAsync();
-      if (status !== "granted") {
-        console.log("Permission to access location was denied");
-      }
-
-      const location = await Location.getCurrentPositionAsync({});
-      const coords = {
-        latitude: location.coords.latitude,
-        longitude: location.coords.longitude,
-      };
-      setLocation(coords);
-    })();
-  }, []);
+const MapScreen = ({ navigation, route }) => {
+  const location = route.params.location;
+  const coords = {
+    latitude: location.coords.latitude,
+    longitude: location.coords.longitude,
+  };
 
   return (
     <View style={styles.container}>
@@ -30,14 +17,14 @@ const MapScreen = () => {
         provider={PROVIDER_GOOGLE}
         style={styles.mapStyle}
         region={{
-          ...location,
+          ...coords,
           latitudeDelta: 0.0922,
           longitudeDelta: 0.0421,
         }}
         showsUserLocation={true}
       >
         {location && (
-          <Marker title="I am here" coordinate={location} description="Hello" />
+          <Marker title="I am here" coordinate={coords} description="Hello" />
         )}
       </MapView>
     </View>
