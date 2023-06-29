@@ -27,7 +27,7 @@ function CreatePostsScreen() {
   const [location, setLocation] = useState(null);
 
   const [cameraPhoto, setCameraPhoto] = useState(null);
-  const [name, setName] = useState(null);
+  const [title, setTitle] = useState(null);
   const [place, setPlace] = useState(null);
 
   const navigation = useNavigation();
@@ -46,7 +46,7 @@ function CreatePostsScreen() {
     return <View />;
   }
   const stylesForHeroButton =
-    name && place && cameraPhoto
+    title && place && cameraPhoto
       ? {
           backgroundColor: commonStyles.vars.colorAccent,
           color: commonStyles.vars.colorWhite,
@@ -66,7 +66,7 @@ function CreatePostsScreen() {
       longitude: location.coords.longitude,
     };
     setLocation(coords);
-    navigation.navigate("Posts", { cameraPhoto, name, place, location });
+    navigation.navigate("Posts", { cameraPhoto, title, place, location });
   };
 
   return (
@@ -142,8 +142,8 @@ function CreatePostsScreen() {
               placeholder="Назва..."
               placeholderTextColor={commonStyles.vars.colorGray}
               style={styles.input}
-              value={name}
-              onChangeText={setName}
+              value={title}
+              onChangeText={setTitle}
             />
             <Feather
               name="map-pin"
@@ -166,7 +166,7 @@ function CreatePostsScreen() {
               ...stylesForHeroButton,
             }}
             onPress={() =>
-              name && place && cameraPhoto && handlePressPublicationButton()
+              title && place && cameraPhoto && handlePressPublicationButton()
             }
           >
             Опублікувати
@@ -177,7 +177,7 @@ function CreatePostsScreen() {
               size={24}
               color={commonStyles.vars.colorGray}
               onPress={() => {
-                setName(null);
+                setTitle(null);
                 setPlace(null);
                 setCameraPhoto(null);
               }}

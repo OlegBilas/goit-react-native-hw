@@ -5,12 +5,12 @@ import { commonStyles } from "./commonStyles";
 import { StyleSheet } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 
-function PostCard({ data: { cameraPhoto, name, place, location } }) {
+function PostCard({ data: { cameraPhoto, title, place, location } }) {
   const navigation = useNavigation();
   return (
     <View style={styles.container}>
       <Image source={{ uri: cameraPhoto }} style={styles.foto} />
-      <Text style={styles.name}>{name}</Text>
+      <Text style={styles.title}>{title}</Text>
 
       <View style={styles.postDataContainer}>
         <Feather
@@ -24,7 +24,7 @@ function PostCard({ data: { cameraPhoto, name, place, location } }) {
         />
         <Text style={[styles.text, { marginRight: 24 }]}>8</Text>
         <Feather
-          name="thumbs-up"
+          title="thumbs-up"
           size={24}
           color={commonStyles.vars.colorAccent}
           style={{ marginRight: 6 }}
@@ -36,7 +36,7 @@ function PostCard({ data: { cameraPhoto, name, place, location } }) {
           color={commonStyles.vars.colorGray}
           style={{ marginRight: 4 }}
           onPress={() => {
-            navigation.navigate("Map", { location });
+            navigation.navigate("Map", { title, place, location });
           }}
         />
         <Text
@@ -67,7 +67,7 @@ const styles = StyleSheet.create({
     resizeMode: "cover",
     backgroundColor: commonStyles.vars.colorGray,
   },
-  name: {
+  title: {
     marginBottom: 8,
     ...commonStyles.fonts,
     fontFamily: "Roboto-500",
