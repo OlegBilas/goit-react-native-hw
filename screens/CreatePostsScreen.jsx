@@ -82,7 +82,7 @@ function CreatePostsScreen() {
           <View style={styles.cameraWrapper}>
             {hasPermission ? (
               !cameraPhoto ? (
-                <View style={styles.camera}>
+                <View style={styles.backgroundCamera}>
                   <Camera
                     style={styles.backgroundCamera}
                     type={type}
@@ -206,13 +206,7 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   cameraWrapper: { width: "100%", height: 267 },
-  camera: {
-    width: "100%",
-    height: 240,
-    overflow: "hidden",
-    justifyContent: "center",
-    borderRadius: 8,
-  },
+
   backgroundCamera: {
     width: "100%",
     height: 240,
