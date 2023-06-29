@@ -1,7 +1,6 @@
 import { configureStore } from "@reduxjs/toolkit";
 import { authReducer } from "./auth/authSlice";
 // import { contactsReducer } from './contacts/contactsSlice';
-// import { filterReducer } from './filter/filterSlice';
 import {
   persistStore,
   persistReducer,
@@ -16,8 +15,8 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const persistConfig = {
   key: "auth",
-  AsyncStorage,
-  whitelist: ["token"],
+  storage: AsyncStorage,
+  whitelist: ["user.id"],
 };
 
 const persistedReducer = persistReducer(persistConfig, authReducer);
@@ -25,8 +24,7 @@ const persistedReducer = persistReducer(persistConfig, authReducer);
 export const store = configureStore({
   reducer: {
     auth: persistedReducer,
-    contacts: contactsReducer,
-    filter: filterReducer,
+    // contacts: contactsReducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({

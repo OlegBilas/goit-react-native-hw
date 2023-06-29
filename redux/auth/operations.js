@@ -1,64 +1,95 @@
-import { createAsyncThunk } from '@reduxjs/toolkit';
-import axios from 'axios';
+import { createAsyncThunk } from "@reduxjs/toolkit";
+import { auth } from "../../config";
+import {
+  createUserWithEmailAndPassword,
+  onAuthStateChanged,
+  signInWithEmailAndPassword,
+  signOut,
+  updateProfile,
+} from "firebase/auth";
+import { useNavigation } from "@react-navigation/native";
 
-axios.defaults.baseURL = 'https://connections-api.herokuapp.com';
+const updateUserProfile = async (dataUser) => {
+  const user = auth.currentUser;
+  // якщо такий користувач знайдений
+  if (user) {
+    // оновлюємо його профайл
+    const update = {
+      displayName: dataUser.login,
+      photoURL: dataUser.photo,
+    };
 
-const setAuthToken = token => {
-  axios.defaults.headers.common.Authorization = `Bearer ${token}`;
-};
-const clearAuthToken = () => {
-  axios.defaults.headers.common.Authorization = '';
+    try {
+      await updateProfile(user, update);
+    } catch (error) {
+      console.log(error);
+      throw error;
+    }
+  }
 };
 
 export const register = createAsyncThunk(
-  'auth/register',
+  "auth/register",
   async (user, thunkAPI) => {
+    const { email, password, ...restUserData } = user;
     try {
-      const response = await axios.post('users/signup', user);
-      setAuthToken(response.data.token);
-      return response.data;
+      const response = await createUserWithEmailAndPassword(
+        auth,
+        email,
+        password
+      );
+      updateUserProfile(restUserData);
+      return {
+        id: response.user.uid,
+        email,
+        password,
+        ...restUserData,
+      };
     } catch (error) {
+      console.log(error);
       return thunkAPI.rejectWithValue(error.message);
     }
   }
 );
 
-export const logIn = createAsyncThunk('auth/login', async (user, thunkAPI) => {
+export const logIn = createAsyncThunk("auth/login", async (user, thunkAPI) => {
+  const { email, password } = user;
   try {
-    const response = await axios.post('users/login', user);
-    setAuthToken(response.data.token);
-    return response.data;
+    const response = await signInWithEmailAndPassword(auth, email, password);
+    return {
+      id: response.user.uid,
+      email,
+      password,
+      login: response.user.displayName,
+      photo: response.user.photoURL,
+    };
   } catch (error) {
     return thunkAPI.rejectWithValue(error.message);
   }
 });
 
-export const logOut = createAsyncThunk(
-  'auth/logout',
-  async (user, thunkAPI) => {
-    try {
-      await axios.post('users/logout', user);
-      clearAuthToken();
-    } catch (error) {
-      return thunkAPI.rejectWithValue(error.message);
-    }
+export const logOut = createAsyncThunk("auth/logout", async (_, thunkAPI) => {
+  try {
+    signOut(auth);
+  } catch (error) {
+    return thunkAPI.rejectWithValue(error.message);
   }
-);
+});
 
 export const refreshUser = createAsyncThunk(
-  'auth/refresh',
+  "auth/refresh",
   async (_, thunkAPI) => {
-    const persistedToken = thunkAPI.getState.auth.token;
-    if (persistedToken === null) {
-      return thunkAPI.rejectWithValue('You are not logged in');
+    const navigation = useNavigation();
+    const persistedId = thunkAPI.getState.auth.id;
+    if (persistedId === null || persistedId !== auth.currentUser?.uid) {
+      navigation.navigate("Login");
+      return thunkAPI.rejectWithValue("You are not logged in");
     }
 
-    try {
-      setAuthToken(persistedToken);
-      const response = await axios.get('users/current');
-      return response.data;
-    } catch (error) {
-      return thunkAPI.rejectWithValue(error.message);
-    }
+    // try {
+    //   logIn(auth.currentUser);
+    // } catch (error) {
+    //   return thunkAPI.rejectWithValue(error.message);
+    // }
   }
 );

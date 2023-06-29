@@ -14,6 +14,7 @@ const firebaseConfig = {
   storageBucket: "mobile-blog-3fcba.appspot.com",
   messagingSenderId: "799003187232",
   appId: "1:799003187232:web:eca0b2e8c21fe38701c445",
+  databaseURL: "https://mobile-blog-3fcba.firebaseio.com",
 };
 
 const app = initializeApp(firebaseConfig);

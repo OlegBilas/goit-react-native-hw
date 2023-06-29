@@ -18,6 +18,9 @@ import { useState } from "react";
 import { commonStyles } from "../components/commonStyles";
 import { Pressable } from "react-native";
 import { useNavigation } from "@react-navigation/native";
+import { logIn } from "../redux/auth/operations";
+import { useDispatch, useSelector } from "react-redux";
+import { selectIsLoggedIn } from "../redux/auth/selectors";
 
 function LoginScreen() {
   const [email, setEmail] = useState("");
@@ -29,20 +32,27 @@ function LoginScreen() {
   };
 
   const navigation = useNavigation();
-  const handleLogin = () => {
+  const dispatch = useDispatch();
+  const isLoggedIn = useSelector(selectIsLoggedIn);
+
+  const handleLogin = async () => {
     if (email === "" || password === "") {
       return Alert.alert(
         "Not corect data",
         `Please, fill all fields with non empty data`
       );
+    } else {
+      await dispatch(logIn({ email, password }));
     }
-    // Alert.alert(
-    //   "Дані логінізації:",
-    //   `
-    //   електронна пошта: ${email}
-    //   пароль: ${password}`
-    // );
-    navigation.navigate("Home");
+
+    if (isLoggedIn) {
+      navigation.navigate("Home");
+    } else {
+      return Alert.alert(
+        "Fail of registration",
+        `Please, fill all fields with correct data`
+      );
+    }
   };
   return (
     <MainBackground>

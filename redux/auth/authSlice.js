@@ -1,27 +1,32 @@
-import { createSlice, isAnyOf } from '@reduxjs/toolkit';
-import { register, logIn, logOut, refreshUser } from 'redux/auth/operations';
+import { createSlice, isAnyOf } from "@reduxjs/toolkit";
+import { register, logIn, logOut, refreshUser } from "./operations";
 
 const STATUS = {
-  FULFILLED: 'fulfilled',
-  PENDING: 'pending',
-  REJECTED: 'rejected',
+  FULFILLED: "fulfilled",
+  PENDING: "pending",
+  REJECTED: "rejected",
 };
 
 const actionGenerators = [register, logIn];
 
-const getActionGeneratorsWithType = status =>
-  actionGenerators.map(generator => generator[status]);
+const getActionGeneratorsWithType = (status) =>
+  actionGenerators.map((generator) => generator[status]);
 
 const authSlice = createSlice({
-  name: 'auth',
+  name: "auth",
   initialState: {
-    user: { name: null, email: null, password: null },
-    token: null,
+    user: {
+      id: null,
+      login: null,
+      email: null,
+      password: null,
+      photo: null,
+    },
     isLoggedIn: false,
     isRefreshing: false,
   },
 
-  extraReducers: builder => {
+  extraReducers: (builder) => {
     builder
       .addCase(refreshUser.pending, handleRefreshUserPending)
       .addCase(refreshUser.fulfilled, handleRefreshUserFulfilled)
@@ -35,14 +40,18 @@ const authSlice = createSlice({
 });
 
 function handleUserLoggingFulfilled(state, action) {
-  state.user = action.payload.user;
-  state.token = action.payload.token;
+  state.user = action.payload;
   state.isLoggedIn = true;
 }
 
 function handleLogOut(state) {
-  state.user = { name: null, email: null, password: null };
-  state.token = null;
+  state.user = {
+    id: null,
+    displayName: null,
+    email: null,
+    password: null,
+    photo: null,
+  };
   state.isLoggedIn = false;
 }
 function handleRefreshUserPending(state) {

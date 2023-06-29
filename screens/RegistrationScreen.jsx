@@ -18,6 +18,9 @@ import MainBackground from "../components/MainBackground";
 import { commonStyles } from "../components/commonStyles";
 import { useState } from "react";
 import { useNavigation } from "@react-navigation/native";
+import { useDispatch, useSelector } from "react-redux";
+import { register } from "../redux/auth/operations";
+import { selectIsLoggedIn } from "../redux/auth/selectors";
 
 function RegistrationScreen() {
   const [login, setLogin] = useState("");
@@ -30,22 +33,27 @@ function RegistrationScreen() {
   };
 
   const navigation = useNavigation();
+  const dispatch = useDispatch();
+  const isLoggedIn = useSelector(selectIsLoggedIn);
+
   const handleLogin = () => {
     if (login === "" || email === "" || password === "") {
       return Alert.alert(
         "Not corect data",
         `Please, fill all fields with non empty data`
       );
+    } else {
+      dispatch(register({ login, email, password, photo: null }));
     }
 
-    // Alert.alert(
-    //   "Реєстраційні дані:",
-    //   `
-    //   логін: ${login}
-    //   електронна пошта: ${email}
-    //   пароль: ${password}`
-    // );
-    navigation.navigate("Home");
+    if (isLoggedIn) {
+      navigation.navigate("Home");
+    } else {
+      return Alert.alert(
+        "Fail of registration",
+        `Please, fill all fields with correct data`
+      );
+    }
   };
 
   return (

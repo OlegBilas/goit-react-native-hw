@@ -1,8 +1,8 @@
-import { StyleSheet, View } from "react-native";
+import { StyleSheet, Image } from "react-native";
 import React from "react";
 
-function Avatar({ customStyles = {} }) {
-  return <View style={[styles.avatar, customStyles]}></View>;
+function Avatar({ customStyles = {}, photo = null }) {
+  return <Image source={photo} style={[styles.avatar, customStyles]}></Image>;
 }
 
 const styles = StyleSheet.create({
