@@ -7,7 +7,6 @@ import { useNavigation } from "@react-navigation/native";
 
 function PostCard({ data: { cameraPhoto, name, place, location } }) {
   const navigation = useNavigation();
-  console.log(cameraPhoto);
   return (
     <View style={styles.container}>
       <Image source={{ uri: cameraPhoto }} style={styles.foto} />

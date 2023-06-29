@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import {
   ImageBackground,
   StyleSheet,
-  Pressable,
   Text,
   View,
   TextInput,
@@ -19,8 +18,7 @@ import { Camera } from "expo-camera";
 import * as MediaLibrary from "expo-media-library";
 import * as Location from "expo-location";
 
-import { useIsFocused, useNavigation } from "@react-navigation/native";
-import { Image } from "react-native";
+import { useNavigation } from "@react-navigation/native";
 
 function CreatePostsScreen() {
   const [hasPermission, setHasPermission] = useState(null);
@@ -33,7 +31,6 @@ function CreatePostsScreen() {
   const [place, setPlace] = useState(null);
 
   const navigation = useNavigation();
-  // const focused = useIsFocused();
 
   useEffect(() => {
     (async () => {
