@@ -19,8 +19,7 @@ import { commonStyles } from "../components/commonStyles";
 import { Pressable } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { logIn } from "../redux/auth/operations";
-import { useDispatch, useSelector } from "react-redux";
-import { selectIsLoggedIn } from "../redux/auth/selectors";
+import { useDispatch } from "react-redux";
 
 function LoginScreen() {
   const [email, setEmail] = useState("");
@@ -33,25 +32,26 @@ function LoginScreen() {
 
   const navigation = useNavigation();
   const dispatch = useDispatch();
-  const isLoggedIn = useSelector(selectIsLoggedIn);
 
-  const handleLogin = async () => {
+  const handleLogin = () => {
     if (email === "" || password === "") {
       return Alert.alert(
-        "Not corect data",
-        `Please, fill all fields with non empty data`
+        "Не коректні дані",
+        "Будь ласка, заповнітьвсі поля непустими даними"
       );
     } else {
-      await dispatch(logIn({ email, password }));
-    }
-
-    if (isLoggedIn) {
-      navigation.navigate("Home");
-    } else {
-      return Alert.alert(
-        "Fail of registration",
-        `Please, fill all fields with correct data`
-      );
+      dispatch(logIn({ email, password })).then((res) => {
+        if (res.type === "auth/login/fulfilled") {
+          setEmail("");
+          setPassword("");
+          navigation.navigate("Home");
+        } else {
+          return Alert.alert(
+            "Помилка входу",
+            `Будь ласка, заповніть всі поля коректними даними. Опис помилки із сервера: ${res.payload}`
+          );
+        }
+      });
     }
   };
   return (

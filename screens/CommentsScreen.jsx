@@ -5,10 +5,10 @@ import { TextInput } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 
 function CommentsScreen({ navigation, route }) {
-  const cameraPhoto = route.params.cameraPhoto;
+  const photo = route.params.photo;
   return (
     <View style={styles.container}>
-      <Image source={{ uri: cameraPhoto }} style={styles.backgroundPhoto} />
+      <Image source={{ uri: photo }} style={styles.backgroundPhoto} />
       <View style={styles.comments}></View>
       <TextInput
         placeholder="Коментувати..."

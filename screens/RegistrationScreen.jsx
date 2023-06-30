@@ -18,9 +18,8 @@ import MainBackground from "../components/MainBackground";
 import { commonStyles } from "../components/commonStyles";
 import { useState } from "react";
 import { useNavigation } from "@react-navigation/native";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { register } from "../redux/auth/operations";
-import { selectIsLoggedIn } from "../redux/auth/selectors";
 
 function RegistrationScreen() {
   const [login, setLogin] = useState("");
@@ -34,25 +33,27 @@ function RegistrationScreen() {
 
   const navigation = useNavigation();
   const dispatch = useDispatch();
-  const isLoggedIn = useSelector(selectIsLoggedIn);
 
   const handleLogin = () => {
-    if (login === "" || email === "" || password === "") {
+    if (email === "" || password === "") {
       return Alert.alert(
-        "Not corect data",
-        `Please, fill all fields with non empty data`
+        "Не коректні дані",
+        "Будь ласка, заповнітьвсі поля непустими даними"
       );
     } else {
-      dispatch(register({ login, email, password, photo: null }));
-    }
-
-    if (isLoggedIn) {
-      navigation.navigate("Home");
-    } else {
-      return Alert.alert(
-        "Fail of registration",
-        `Please, fill all fields with correct data`
-      );
+      dispatch(register({ login, email, password })).then((res) => {
+        if (res.type === "auth/register/fulfilled") {
+          setLogin("");
+          setEmail("");
+          setPassword("");
+          navigation.navigate("Home");
+        } else {
+          return Alert.alert(
+            "Помилка реєстрації",
+            `Будь ласка, заповніть всі поля коректними даними. Опис помилки із сервера: ${res.payload}`
+          );
+        }
+      });
     }
   };
 

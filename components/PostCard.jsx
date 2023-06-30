@@ -5,11 +5,11 @@ import { commonStyles } from "./commonStyles";
 import { StyleSheet } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 
-function PostCard({ data: { cameraPhoto, title, place, location } }) {
+function PostCard({ data: { photo, title, place, coords, likes, comments } }) {
   const navigation = useNavigation();
   return (
     <View style={styles.container}>
-      <Image source={{ uri: cameraPhoto }} style={styles.foto} />
+      <Image source={{ uri: photo }} style={styles.foto} />
       <Text style={styles.title}>{title}</Text>
 
       <View style={styles.postDataContainer}>
@@ -19,24 +19,26 @@ function PostCard({ data: { cameraPhoto, title, place, location } }) {
           color={commonStyles.vars.colorAccent}
           style={{ marginRight: 6 }}
           onPress={() => {
-            navigation.navigate("Comments", { cameraPhoto });
+            navigation.navigate("Comments", { photo });
           }}
         />
-        <Text style={[styles.text, { marginRight: 24 }]}>8</Text>
+        <Text style={[styles.text, { marginRight: 24 }]}>
+          {comments.length}
+        </Text>
         <Feather
           title="thumbs-up"
           size={24}
           color={commonStyles.vars.colorAccent}
           style={{ marginRight: 6 }}
         />
-        <Text style={[styles.text, { marginRight: "auto" }]}>153</Text>
+        <Text style={[styles.text, { marginRight: "auto" }]}>{likes}</Text>
         <Feather
           name="map-pin"
           size={24}
           color={commonStyles.vars.colorGray}
           style={{ marginRight: 4 }}
           onPress={() => {
-            navigation.navigate("Map", { title, place, location });
+            navigation.navigate("Map", { title, place, coords });
           }}
         />
         <Text
@@ -56,6 +58,7 @@ const styles = StyleSheet.create({
   container: {
     width: 343,
     height: 299,
+    marginBottom: 32,
     color: commonStyles.vars.colorText,
     backgroundColor: commonStyles.vars.colorWhite,
   },

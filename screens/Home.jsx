@@ -8,6 +8,7 @@ import { commonStyles } from "../components/commonStyles";
 import PostsScreen from "./PostsScreen";
 import CreatePostsScreen from "./CreatePostsScreen";
 import ProfileScreen from "./ProfileScreen";
+import { logOut } from "../redux/auth/operations";
 
 const Tabs = createBottomTabNavigator();
 const Home = () => {
@@ -66,7 +67,10 @@ const Home = () => {
               size={24}
               color={commonStyles.vars.colorGray}
               style={{ marginRight: 16, padding: 5 }}
-              onPress={() => navigation.navigate("Login")}
+              onPress={() => {
+                logOut();
+                navigation.navigate("Login");
+              }}
             />
           ),
         })}

@@ -9,8 +9,16 @@ import {
 } from "react-native";
 import Avatar from "../components/Avatar";
 import PostCard from "../components/PostCard";
+import { useSelector } from "react-redux";
+import { selectUser } from "../redux/auth/selectors";
+import { selectPosts } from "../redux/posts/selectors";
+import { FlatList } from "react-native";
+import { fetchPosts } from "../redux/posts/operations";
 
-export default function PostsScreen({ navigation, route }) {
+export default function PostsScreen() {
+  const user = useSelector(selectUser);
+  const posts = useSelector(selectPosts);
+
   return (
     <SafeAreaView style={styles.androidSafeArea}>
       <View style={styles.container}>
@@ -18,11 +26,16 @@ export default function PostsScreen({ navigation, route }) {
           <View style={styles.avatarWrapper}>
             <Avatar customStyles={{ width: 60, height: 60, marginRight: 8 }} />
             <View>
-              <Text>Natali Romanova</Text>
-              <Text>email@example.com</Text>
+              <Text>{user.login}</Text>
+              <Text>{user.email}</Text>
             </View>
           </View>
-          {route.params && <PostCard data={route.params}></PostCard>}
+          <FlatList
+            data={posts}
+            renderItem={({ item }) => <PostCard data={item}></PostCard>}
+            keyExtractor={(item) => item.id}
+            slyle={styles.postsList}
+          />
         </View>
       </View>
     </SafeAreaView>

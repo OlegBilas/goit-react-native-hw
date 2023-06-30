@@ -6,9 +6,13 @@ import Title from "../components/Title";
 import { Feather } from "@expo/vector-icons";
 import { commonStyles } from "../components/commonStyles";
 import { useNavigation } from "@react-navigation/native";
+import { useSelector } from "react-redux";
+import { selectUser } from "../redux/auth/selectors";
+import { logOut } from "../redux/auth/operations";
 
 function ProfileScreen() {
   const navigation = useNavigation();
+  const user = useSelector(selectUser);
   return (
     <MainBackground>
       <View style={styles.background}>
@@ -25,7 +29,10 @@ function ProfileScreen() {
           size={24}
           color={commonStyles.vars.colorGray}
           style={styles.logOut}
-          onPress={() => navigation.navigate("Login")}
+          onPress={() => {
+            logOut();
+            navigation.navigate("Login");
+          }}
         />
         <Title
           customStyles={{
@@ -33,7 +40,7 @@ function ProfileScreen() {
             marginBottom: 32,
           }}
         >
-          Natali Romanova
+          {user.login}
         </Title>
       </View>
     </MainBackground>

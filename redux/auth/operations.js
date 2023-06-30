@@ -7,7 +7,6 @@ import {
   signOut,
   updateProfile,
 } from "firebase/auth";
-import { useNavigation } from "@react-navigation/native";
 
 const updateUserProfile = async (dataUser) => {
   const user = auth.currentUser;
@@ -22,7 +21,6 @@ const updateUserProfile = async (dataUser) => {
     try {
       await updateProfile(user, update);
     } catch (error) {
-      console.log(error);
       throw error;
     }
   }
@@ -46,7 +44,6 @@ export const register = createAsyncThunk(
         ...restUserData,
       };
     } catch (error) {
-      console.log(error);
       return thunkAPI.rejectWithValue(error.message);
     }
   }
@@ -79,10 +76,8 @@ export const logOut = createAsyncThunk("auth/logout", async (_, thunkAPI) => {
 export const refreshUser = createAsyncThunk(
   "auth/refresh",
   async (_, thunkAPI) => {
-    const navigation = useNavigation();
     const persistedId = thunkAPI.getState.auth.id;
     if (persistedId === null || persistedId !== auth.currentUser?.uid) {
-      navigation.navigate("Login");
       return thunkAPI.rejectWithValue("You are not logged in");
     }
 
@@ -93,3 +88,20 @@ export const refreshUser = createAsyncThunk(
     // }
   }
 );
+
+// onAuthStateChanged(auth, (user) => {
+//   // const navigation = useNavigation();
+//   if (user) {
+//     // User is signed in, see docs for a list of available properties
+//     // https://firebase.google.com/docs/reference/js/auth.user
+//     const uid = user.uid;
+//     // ...
+//   } else {
+//     // User is signed out
+//     // navigation.navigate("Login");
+//   }
+// });
+export const authStateChanged = onAuthStateChanged(auth, async (user) => {
+  if (user) {
+  }
+});

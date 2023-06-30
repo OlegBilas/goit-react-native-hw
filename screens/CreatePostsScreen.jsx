@@ -5,6 +5,7 @@ import {
   Text,
   View,
   TextInput,
+  Alert,
 } from "react-native";
 import { commonStyles } from "../components/commonStyles";
 import backgroundPhoto from "../assets/images/background-photo.png";
@@ -19,18 +20,21 @@ import * as MediaLibrary from "expo-media-library";
 import * as Location from "expo-location";
 
 import { useNavigation } from "@react-navigation/native";
+import { useDispatch } from "react-redux";
+import { createPost } from "../redux/posts/operations";
 
 function CreatePostsScreen() {
   const [hasPermission, setHasPermission] = useState(null);
   const [cameraRef, setCameraRef] = useState(null);
   const [type, setType] = useState(Camera.Constants.Type.back);
-  const [location, setLocation] = useState(null);
+  // const [location, setLocation] = useState(null);
 
   const [cameraPhoto, setCameraPhoto] = useState(null);
   const [title, setTitle] = useState(null);
   const [place, setPlace] = useState(null);
 
   const navigation = useNavigation();
+  const dispatch = useDispatch();
 
   useEffect(() => {
     (async () => {
@@ -65,8 +69,29 @@ function CreatePostsScreen() {
       latitude: location.coords.latitude,
       longitude: location.coords.longitude,
     };
-    setLocation(coords);
-    navigation.navigate("Posts", { cameraPhoto, title, place, location });
+    // setLocation(coords);
+    dispatch(
+      createPost({
+        photo: cameraPhoto,
+        title,
+        comments: [],
+        likes: 0,
+        coords,
+        place,
+      })
+    ).then((res) => {
+      if (res.type === "posts/createPost/fulfilled") {
+        setCameraPhoto(null);
+        setTitle(null);
+        setPlace(null);
+        navigation.navigate("Posts");
+      } else {
+        return Alert.alert(
+          "Помилка створення публікації",
+          `Опис помилки із сервера: ${res.payload}`
+        );
+      }
+    });
   };
 
   return (
