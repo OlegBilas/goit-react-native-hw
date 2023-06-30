@@ -59,7 +59,6 @@ function handleFetchPosts(state, action) {
 }
 
 function handleCreatePost(state, action) {
-  console.log("333333", action.payload);
   state.items = [action.payload, ...state.items];
 }
 function handleAddComment(state, action) {
@@ -68,6 +67,8 @@ function handleAddComment(state, action) {
   const comments = [{ id, date, text }, ...post.comments];
   post.comments = comments;
 }
+
+//addLike;
 
 function handlePending(state, action) {
   state.isLoading = true;

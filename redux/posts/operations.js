@@ -43,7 +43,23 @@ export const addComment = createAsyncThunk(
         comments: arrayUnion(restPostData),
       });
 
-      return response.data;
+      return comment;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.message);
+    }
+  }
+);
+
+export const addLike = createAsyncThunk(
+  "posts/addLike",
+  async (idPost, thunkAPI) => {
+    try {
+      const postRef = doc(db, "posts", idPost);
+      await updateDoc(postRef, {
+        likes: increment(1),
+      });
+
+      return idPost;
     } catch (error) {
       return thunkAPI.rejectWithValue(error.message);
     }
