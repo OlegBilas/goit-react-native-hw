@@ -48,6 +48,7 @@ const postsSlice = createSlice({
 });
 
 function handleFetchPosts(state, action) {
+  console.log(action.payload);
   state.items = action.payload;
   //   state.id = action.payload.id;
   // state.photo = action.payload.photo;

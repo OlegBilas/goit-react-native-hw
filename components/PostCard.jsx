@@ -26,7 +26,7 @@ function PostCard({ data: { photo, title, place, coords, likes, comments } }) {
           {comments.length}
         </Text>
         <Feather
-          title="thumbs-up"
+          name="thumbs-up"
           size={24}
           color={commonStyles.vars.colorAccent}
           style={{ marginRight: 6 }}
@@ -56,7 +56,7 @@ function PostCard({ data: { photo, title, place, coords, likes, comments } }) {
 
 const styles = StyleSheet.create({
   container: {
-    width: 343,
+    width: "100%",
     height: 299,
     marginBottom: 32,
     color: commonStyles.vars.colorText,

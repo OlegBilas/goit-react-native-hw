@@ -17,7 +17,7 @@ const firebaseConfig = {
   databaseURL: "https://mobile-blog-3fcba.firebaseio.com",
 };
 
-const app = initializeApp(firebaseConfig);
+export const app = initializeApp(firebaseConfig);
 
 export const auth = getAuth(app);
 export const db = getFirestore(app);

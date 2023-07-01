@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import {
   Platform,
   SafeAreaView,
@@ -9,15 +9,20 @@ import {
 } from "react-native";
 import Avatar from "../components/Avatar";
 import PostCard from "../components/PostCard";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { selectUser } from "../redux/auth/selectors";
 import { selectPosts } from "../redux/posts/selectors";
 import { FlatList } from "react-native";
 import { fetchPosts } from "../redux/posts/operations";
 
 export default function PostsScreen() {
+  const dispatch = useDispatch();
   const user = useSelector(selectUser);
   const posts = useSelector(selectPosts);
+
+  useEffect(() => {
+    dispatch(fetchPosts());
+  }, [dispatch]);
 
   return (
     <SafeAreaView style={styles.androidSafeArea}>
