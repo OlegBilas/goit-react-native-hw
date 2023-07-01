@@ -1,12 +1,19 @@
 import React from "react";
 import { Image, Text, View } from "react-native";
-import { Feather } from "@expo/vector-icons";
+import { Feather, Ionicons } from "@expo/vector-icons";
 import { commonStyles } from "./commonStyles";
 import { StyleSheet } from "react-native";
 import { useNavigation } from "@react-navigation/native";
+import { addLike } from "../redux/posts/operations";
+import { auth } from "../config";
+import { useDispatch } from "react-redux";
 
-function PostCard({ data: { photo, title, place, coords, likes, comments } }) {
+function PostCard({
+  data: { id, photo, title, place, coords, likes, comments },
+}) {
   const navigation = useNavigation();
+  const dispatch = useDispatch();
+
   return (
     <View style={styles.container}>
       <Image source={{ uri: photo }} style={styles.foto} />
@@ -17,21 +24,33 @@ function PostCard({ data: { photo, title, place, coords, likes, comments } }) {
           name="message-circle"
           size={24}
           color={commonStyles.vars.colorAccent}
-          style={{ marginRight: 6 }}
+          style={[
+            { marginRight: 6 },
+            comments.length > 0 && {
+              backgroundColor: commonStyles.vars.colorAccent,
+            },
+          ]}
           onPress={() => {
-            navigation.navigate("Comments", { photo });
+            navigation.navigate("Comments", { photo, comments });
           }}
         />
         <Text style={[styles.text, { marginRight: 24 }]}>
           {comments.length}
         </Text>
-        <Feather
-          name="thumbs-up"
-          size={24}
-          color={commonStyles.vars.colorAccent}
-          style={{ marginRight: 6 }}
-        />
-        <Text style={[styles.text, { marginRight: "auto" }]}>{likes}</Text>
+        {
+          <Feather
+            name="thumbs-up"
+            size={24}
+            color={commonStyles.vars.colorAccent}
+            style={{ marginRight: 6 }}
+            onPress={() => {
+              dispatch(addLike({ idPost: id, idUser: auth.currentUser.uid }));
+            }}
+          />
+        }
+        <Text style={[styles.text, { marginRight: "auto" }]}>
+          {likes.length}
+        </Text>
         <Feather
           name="map-pin"
           size={24}

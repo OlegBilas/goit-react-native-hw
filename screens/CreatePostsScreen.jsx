@@ -75,7 +75,7 @@ function CreatePostsScreen() {
         photo: cameraPhoto,
         title,
         comments: [],
-        likes: 0,
+        likes: [],
         coords,
         place,
       })

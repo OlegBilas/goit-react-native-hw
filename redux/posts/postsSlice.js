@@ -1,11 +1,18 @@
 import { createSlice, isAnyOf } from "@reduxjs/toolkit";
-import { createPost, addComment, fetchPosts } from "./operations";
+import { createPost, addComment, addLike, fetchPosts } from "./operations";
 
-// const initialItems = [
-//   { id: 'id-4', name: 'Annie Copeland', phone: '227-91-26' },
-//   { id: 'id-3', name: 'Eden Clements', phone: '645-17-79' },
-//   { id: 'id-2', name: 'Hermione Kline', phone: '443-89-12' },
-//   { id: 'id-1', name: 'Rosie Simpson', phone: '459-12-56' },
+// Structure of state
+// items = [
+//   {
+//     id: "Firebase id",
+//     photo: "https://firebasestorage.googleapis.com/...",
+//     title: "post's title",
+//     comments: [{ id: "user id", date: "date of comment's create", text: "comment's next" }, { ...}],
+//     likes: [{ "user id", "user id", ...}],
+//     coords: { latitude: number, longitude: number },
+//     place: "post's location"
+//   },
+//   {...},
 // ];
 
 const STATUS = {
@@ -14,7 +21,7 @@ const STATUS = {
   REJECTED: "rejected",
 };
 
-const actionGenerators = [fetchPosts, createPost, addComment];
+const actionGenerators = [fetchPosts, createPost, addComment, addLike];
 
 const getActionGeneratorsWithType = (status) =>
   actionGenerators.map((generator) => generator[status]);
@@ -32,6 +39,7 @@ const postsSlice = createSlice({
       .addCase(fetchPosts.fulfilled, handleFetchPosts)
       .addCase(createPost.fulfilled, handleCreatePost)
       .addCase(addComment.fulfilled, handleAddComment)
+      .addCase(addLike.fulfilled, handleAddLike)
       .addMatcher(
         isAnyOf(...getActionGeneratorsWithType(STATUS.PENDING)),
         handlePending
@@ -48,15 +56,7 @@ const postsSlice = createSlice({
 });
 
 function handleFetchPosts(state, action) {
-  console.log(action.payload);
   state.items = action.payload;
-  //   state.id = action.payload.id;
-  // state.photo = action.payload.photo;
-  // state.title = action.payload.title;
-  // state.comments = action.payload.comments;
-  // state.likes = action.payload.likes;
-  // state.coords = action.payload.coords;
-  // state.place = action.payload.place;
 }
 
 function handleCreatePost(state, action) {
@@ -69,7 +69,15 @@ function handleAddComment(state, action) {
   post.comments = comments;
 }
 
-//addLike;
+function handleAddLike(state, action) {
+  const { idPost, idUser, typeOfDoing } = action.payload;
+  const post = state.items.find((item) => item.id === idPost);
+  if (typeOfDoing === "increase") {
+    post.likes = [...post.likes, idUser];
+  } else if (typeOfDoing === "reduce") {
+    post.likes = post.likes.filter((id) => id !== idUser);
+  }
+}
 
 function handlePending(state, action) {
   state.isLoading = true;

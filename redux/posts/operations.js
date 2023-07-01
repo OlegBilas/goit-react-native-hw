@@ -2,7 +2,10 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 import { db, storage } from "../../config";
 import {
   addDoc,
+  arrayRemove,
+  arrayUnion,
   collection,
+  doc,
   getDocs,
   query,
   updateDoc,
@@ -64,6 +67,7 @@ export const addComment = createAsyncThunk(
 
       return comment;
     } catch (error) {
+      // console.log(error);
       return thunkAPI.rejectWithValue(error.message);
     }
   }
@@ -71,14 +75,24 @@ export const addComment = createAsyncThunk(
 
 export const addLike = createAsyncThunk(
   "posts/addLike",
-  async (idPost, thunkAPI) => {
+  async ({ idPost, idUser }, thunkAPI) => {
     try {
-      const postRef = doc(db, "posts", idPost);
-      await updateDoc(postRef, {
-        likes: increment(1),
-      });
-
-      return idPost;
+      const state = thunkAPI.getState();
+      const posts = state.posts.items;
+      const post = posts.find((post) => post.id === idPost);
+      if (!post.likes.find((id) => idUser === id)) {
+        const postRef = doc(db, "posts", idPost);
+        await updateDoc(postRef, {
+          likes: arrayUnion(idUser),
+        });
+        return { idPost, idUser, typeOfDoing: "increase" };
+      } else {
+        const postRef = doc(db, "posts", idPost);
+        await updateDoc(postRef, {
+          likes: arrayRemove(idUser),
+        });
+        return { idPost, idUser, typeOfDoing: "reduce" };
+      }
     } catch (error) {
       return thunkAPI.rejectWithValue(error.message);
     }
@@ -86,7 +100,6 @@ export const addLike = createAsyncThunk(
 );
 
 async function upLoadFile(file, path) {
-  // Upload file and metadata to the object 'images/mountains.jpg'
   const storageRef = ref(storage, path);
   const uploadTask = await uploadBytes(storageRef, file);
   return await getDownloadURL(uploadTask.ref);
