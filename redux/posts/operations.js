@@ -23,9 +23,7 @@ export const fetchPosts = createAsyncThunk(
       const posts = await getDocs(collection(db, "posts"));
       const array = [];
       posts.forEach((doc) => {
-        // const { photo, ...rest } = doc.data();
         array.push({ id: doc.id, ...doc.data() });
-        // array.push({ id: doc.id, photo: realURLPhoto, ...rest });
       });
       return array;
     } catch (error) {
@@ -42,20 +40,17 @@ export const createPost = createAsyncThunk(
       const { photo, ...rest } = post;
       const response = await fetch(photo);
       const file = await response.blob();
-
       const fileName = photo.slice(photo.lastIndexOf("/") + 1);
       const path = `images/${fileName}`;
-      // const storageRef = ref(storage, path);
-      // await uploadBytes(storageRef, file);
+
       //Отримання реального шляху для фото та запис у Redux
-      upLoadFile(file, path);
-      console.log("after");
-      post = { photo, ...rest };
+      const realPhotoURL = await upLoadFile(file, path);
+      post = { photo: realPhotoURL, ...rest };
 
       //Додавання посту в Firebase
       const docRef = await addDoc(collection(db, "posts"), post);
 
-      return { id: docRef.id, photo, ...rest };
+      return { id: docRef.id, ...post };
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
     }
@@ -95,61 +90,11 @@ export const addLike = createAsyncThunk(
   }
 );
 
-function upLoadFile(file, path) {
-  // Create the file metadata
-  /** @type {any} */
-  const metadata = {
-    contentType: "image/jpeg",
-  };
-
+async function upLoadFile(file, path) {
   // Upload file and metadata to the object 'images/mountains.jpg'
   const storageRef = ref(storage, path);
-  const uploadTask = uploadBytesResumable(storageRef, file, metadata);
-
-  // Listen for state changes, errors, and completion of the upload.
-  uploadTask.on(
-    "state_changed",
-    (snapshot) => {
-      // Get task progress, including the number of bytes uploaded and the total number of bytes to be uploaded
-      const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-      console.log("Upload is " + progress + "% done");
-      // switch (snapshot.state) {
-      //   case "paused":
-      //     console.log("Upload is paused");
-      //     break;
-      //   case "running":
-      //     console.log("Upload is running");
-      //     break;
-      // }
-    },
-    (error) => {
-      // A full list of error codes is available at
-      // https://firebase.google.com/docs/storage/web/handle-errors
-      switch (error.code) {
-        case "storage/unauthorized":
-          // User doesn't have permission to access the object
-          console.log(1);
-          break;
-        case "storage/canceled":
-          // User canceled the upload
-          console.log(2);
-          break;
-
-        // ...
-
-        case "storage/unknown":
-          // Unknown error occurred, inspect error.serverResponse
-          console.log(3);
-          break;
-      }
-    },
-    () => {
-      // Upload completed successfully, now we can get the download URL
-      getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
-        console.log("File available at", downloadURL);
-      });
-    }
-  );
+  const uploadTask = await uploadBytesResumable(storageRef, file);
+  return await getDownloadURL(uploadTask.ref);
 }
 
 // async function getRealURLPhoto(photo) {
