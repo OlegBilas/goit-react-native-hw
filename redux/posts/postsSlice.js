@@ -63,10 +63,9 @@ function handleCreatePost(state, action) {
   state.items = [action.payload, ...state.items];
 }
 function handleAddComment(state, action) {
-  const { idPost, id, date, text } = action.payload;
+  const { idPost, idUser, date, text } = action.payload;
   const post = state.items.find((item) => item.id === idPost);
-  const comments = [{ id, date, text }, ...post.comments];
-  post.comments = comments;
+  post.comments = [{ id: idUser, date, text }, ...post.comments];
 }
 
 function handleAddLike(state, action) {

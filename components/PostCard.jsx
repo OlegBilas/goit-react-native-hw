@@ -31,7 +31,7 @@ function PostCard({
             },
           ]}
           onPress={() => {
-            navigation.navigate("Comments", { photo, comments });
+            navigation.navigate("Comments", { idPost: id, photo, comments });
           }}
         />
         <Text style={[styles.text, { marginRight: 24 }]}>

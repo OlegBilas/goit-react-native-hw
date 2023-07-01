@@ -58,16 +58,18 @@ export const createPost = createAsyncThunk(
 export const addComment = createAsyncThunk(
   "posts/addComment",
   async (comment, thunkAPI) => {
-    const { idPost, ...restPostData } = comment;
     try {
+      const { idPost, date, ...restCommentData } = comment;
+      const dateString = formatDate(date);
+      console.log(idPost);
       const postRef = doc(db, "posts", idPost);
+      console.log({ date: dateString, ...restCommentData });
       await updateDoc(postRef, {
-        comments: arrayUnion(restPostData),
+        comments: arrayUnion({ date: dateString, ...restCommentData }),
       });
 
-      return comment;
+      return { idPost, date: dateString, ...restCommentData };
     } catch (error) {
-      // console.log(error);
       return thunkAPI.rejectWithValue(error.message);
     }
   }
@@ -103,4 +105,48 @@ async function upLoadFile(file, path) {
   const storageRef = ref(storage, path);
   const uploadTask = await uploadBytes(storageRef, file);
   return await getDownloadURL(uploadTask.ref);
+}
+
+function formatDate(dateObject) {
+  const date = stringifyNumber(dateObject.getDate());
+  let month = dateObject.getMonth();
+  month = localeMonth(month);
+  const year = dateObject.getFullYear();
+  const hours = stringifyNumber(dateObject.getHours());
+  const minutes = stringifyNumber(dateObject.getMinutes());
+
+  return `${date} ${month}, ${year} | ${hours}:${minutes}`;
+}
+
+function stringifyNumber(number) {
+  return String(number).padStart(2, "0");
+}
+
+function localeMonth(month) {
+  switch (month) {
+    case 0:
+      return "січня";
+    case 1:
+      return "лютого";
+    case 2:
+      return "березня";
+    case 3:
+      return "квітня";
+    case 4:
+      return "травня";
+    case 5:
+      return "червня";
+    case 6:
+      return "липня";
+    case 7:
+      return "серпня";
+    case 8:
+      return "вересня";
+    case 9:
+      return "жовтня";
+    case 10:
+      return "листопада";
+    case 11:
+      return "грудня";
+  }
 }

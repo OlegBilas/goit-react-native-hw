@@ -1,36 +1,65 @@
-import React from "react";
+import React, { useState } from "react";
 import { Image, StyleSheet, View } from "react-native";
 import { commonStyles } from "../components/commonStyles";
 import { TextInput } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { FlatList } from "react-native";
+import { useDispatch, useSelector } from "react-redux";
+import { addComment } from "../redux/posts/operations";
+import { auth } from "../config";
+import { Alert } from "react-native";
 
 function CommentsScreen({ navigation, route }) {
-  const { photo, comments } = route.params.photo;
+  const { idPost, photo, comments } = route.params;
+  const [comment, setComment] = useState("");
+
+  const dispatch = useDispatch();
+
   return (
     <View style={styles.container}>
       <Image source={{ uri: photo }} style={styles.backgroundPhoto} />
       <View style={styles.comments}>
-        {/* <FlatList
+        <FlatList
           data={comments}
           renderItem={({ item }) => <Comment data={item}></Comment>}
           keyExtractor={(item) => item.id}
           slyle={styles.postsList}
-        /> */}
+        />
       </View>
       <TextInput
+        value={comment}
         placeholder="Коментувати..."
         placeholderTextColor={{
           color: commonStyles.vars.colorGray,
         }}
         style={styles.input}
         multiline={true}
+        onChangeText={setComment}
       />
       <Ionicons
         name="arrow-up-circle"
         size={34}
         color={commonStyles.vars.colorAccent}
         style={styles.arrowUpButton}
+        onPress={() => {
+          dispatch(
+            addComment({
+              idPost,
+              idUser: auth.currentUser.uid,
+              date: new Date(),
+              text: comment,
+            })
+          ).then((res) => {
+            if (res.type === "posts/addComment/fulfilled") {
+              setComment("");
+            } else {
+              return Alert.alert(
+                "Помилка створення коментаря",
+                `Опис помилки із сервера: ${res.payload}`
+              );
+            }
+          });
+        }}
       />
     </View>
   );
