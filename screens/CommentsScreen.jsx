@@ -3,13 +3,21 @@ import { Image, StyleSheet, View } from "react-native";
 import { commonStyles } from "../components/commonStyles";
 import { TextInput } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
+import { FlatList } from "react-native";
 
 function CommentsScreen({ navigation, route }) {
-  const photo = route.params.photo;
+  const { photo, comments } = route.params.photo;
   return (
     <View style={styles.container}>
       <Image source={{ uri: photo }} style={styles.backgroundPhoto} />
-      <View style={styles.comments}></View>
+      <View style={styles.comments}>
+        {/* <FlatList
+          data={comments}
+          renderItem={({ item }) => <Comment data={item}></Comment>}
+          keyExtractor={(item) => item.id}
+          slyle={styles.postsList}
+        /> */}
+      </View>
       <TextInput
         placeholder="Коментувати..."
         placeholderTextColor={{
@@ -40,7 +48,7 @@ const styles = StyleSheet.create({
     backgroundColor: commonStyles.vars.colorWhite,
   },
   backgroundPhoto: {
-    width: 343,
+    width: "100%",
     height: 240,
     marginLeft: "auto",
     marginRight: "auto",
@@ -60,7 +68,7 @@ const styles = StyleSheet.create({
   },
   input: {
     height: 50,
-    width: 343,
+    width: "100%",
     marginLeft: "auto",
     marginRight: "auto",
     padding: 16,
