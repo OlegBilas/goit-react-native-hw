@@ -1,5 +1,5 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import { app, db, storage } from "../../config";
+import { db, storage } from "../../config";
 import {
   addDoc,
   collection,
@@ -8,12 +8,7 @@ import {
   updateDoc,
   where,
 } from "firebase/firestore";
-import {
-  getDownloadURL,
-  ref,
-  uploadBytes,
-  uploadBytesResumable,
-} from "@firebase/storage";
+import { getDownloadURL, ref, uploadBytes } from "@firebase/storage";
 
 export const fetchPosts = createAsyncThunk(
   "posts/fetchPosts",
@@ -93,10 +88,6 @@ export const addLike = createAsyncThunk(
 async function upLoadFile(file, path) {
   // Upload file and metadata to the object 'images/mountains.jpg'
   const storageRef = ref(storage, path);
-  const uploadTask = await uploadBytesResumable(storageRef, file);
+  const uploadTask = await uploadBytes(storageRef, file);
   return await getDownloadURL(uploadTask.ref);
 }
-
-// async function getRealURLPhoto(photo) {
-//   return await getDownloadURL(ref(storage, photo));
-// }
