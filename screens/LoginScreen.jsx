@@ -14,24 +14,30 @@ import RegistrationInput from "../components/RegistrationInput";
 import HeroButton from "../components/HeroButton";
 import RegistrationLink from "../components/RegistrationLink";
 import MainBackground from "../components/MainBackground";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { commonStyles } from "../components/commonStyles";
 import { Pressable } from "react-native";
 import { useNavigation } from "@react-navigation/native";
-import { logIn } from "../redux/auth/operations";
+import { authStateChanged, logIn } from "../redux/auth/operations";
 import { useDispatch } from "react-redux";
+import { auth } from "../config";
 
 function LoginScreen() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
 
+  const navigation = useNavigation();
+  const dispatch = useDispatch();
+
+  // useEffect(() => {
+  //   const id = authStateChanged();
+  //   id === auth.currentUser?.uid && navigation.navigate("Home");
+  // }, []);
+
   const handlePressShowButton = () => {
     setShowPassword((prevState) => !prevState);
   };
-
-  const navigation = useNavigation();
-  const dispatch = useDispatch();
 
   const handleLogin = () => {
     if (email === "" || password === "") {

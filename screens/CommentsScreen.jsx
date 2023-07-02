@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Image,
   Keyboard,
@@ -17,14 +17,30 @@ import { addComment } from "../redux/posts/operations";
 import { auth } from "../config";
 import { Alert } from "react-native";
 import Comment from "../components/Comment";
-import { selectPosts } from "../redux/posts/selectors";
+import {
+  selectComments,
+  selectFilter,
+  selectPosts,
+} from "../redux/posts/selectors";
+import { setFilter } from "../redux/posts/postsSlice";
 
 function CommentsScreen({ navigation, route }) {
   const { idPost, photo, comments } = route.params;
   const [comment, setComment] = useState("");
-  posts = useSelector(selectPosts);
 
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    const sendFilter = async () => {
+      await dispatch(setFilter(idPost));
+    };
+    sendFilter();
+  }, []);
+
+  const filter = useSelector(selectFilter);
+  console.log("filter", filter);
+  // const comments = useSelector(selectComments);
+  // console.log(comments);
 
   return (
     <View style={{ flex: 1 }}>
@@ -33,14 +49,13 @@ function CommentsScreen({ navigation, route }) {
           style={styles.keyboardAvoidingViewStyles}
           behavior={Platform.OS === "ios" ? "padding" : "height"}
         >
-          <View style={styles.container}>
+          <ScrollView style={styles.container}>
             <Image source={{ uri: photo }} style={styles.backgroundPhoto} />
             <View style={styles.comments}>
-              <ScrollView>
-                {comments.map((item, index) => (
-                  <Comment key={index} data={item} />
-                ))}
-              </ScrollView>
+              {comments.map((item, index) => (
+                <Comment key={index} data={item} />
+              ))}
+
               {/* <FlatList
                 data={comments}
                 renderItem={({ item }) => <Comment data={item}></Comment>}
@@ -48,6 +63,8 @@ function CommentsScreen({ navigation, route }) {
                 slyle={styles.postsList}
               /> */}
             </View>
+          </ScrollView>
+          <View>
             <TextInput
               value={comment}
               placeholder="Коментувати..."

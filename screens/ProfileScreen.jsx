@@ -1,22 +1,34 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { StyleSheet, View } from "react-native";
 import MainBackground from "../components/MainBackground";
 import AvatarWrapper from "../components/AvatarWrapper";
 import Title from "../components/Title";
 import { Feather } from "@expo/vector-icons";
 import { commonStyles } from "../components/commonStyles";
-import { useNavigation } from "@react-navigation/native";
-import { useSelector } from "react-redux";
+import { useNavigation, useRoute } from "@react-navigation/native";
+import { useDispatch, useSelector } from "react-redux";
 import { selectUser } from "../redux/auth/selectors";
-import { logOut } from "../redux/auth/operations";
+import { logOut, updateUserData } from "../redux/auth/operations";
 
-function ProfileScreen() {
-  const navigation = useNavigation();
+function ProfileScreen(navigation, route) {
+  const photo = route.params?.photo;
+
+  console.log("photo", photo);
+
   const user = useSelector(selectUser);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    if (photo && photo !== user.photo) {
+      dispatch(updateUserData({ ...user, photo }));
+    }
+  }, [dispatch, user, photo]);
+
   return (
     <MainBackground>
       <View style={styles.background}>
         <AvatarWrapper
+          photo={photo}
           customStyles={{
             top: -60,
             left: "50%",

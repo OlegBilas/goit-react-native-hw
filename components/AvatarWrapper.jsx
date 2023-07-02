@@ -2,22 +2,36 @@ import { StyleSheet, View } from "react-native";
 import React from "react";
 import Avatar from "./Avatar";
 import { Ionicons } from "@expo/vector-icons";
+import { useNavigation, useRoute } from "@react-navigation/native";
+import { useDispatch } from "react-redux";
+import { removeAvatar } from "../redux/auth/operations";
 
-function AvatarWrapper({ add, customStyles = {} }) {
+function AvatarWrapper({ photo = {}, add, customStyles = {} }) {
+  const navigation = useNavigation();
+  const dispatch = useDispatch();
+  const routePrev = useRoute().name;
+  console.log("Роут з обгортки Аватара ", routePrev);
+
   return (
     <View style={[styles.avatarWrapper, customStyles]}>
-      <Avatar />
+      <Avatar photo={photo} />
       {add ? (
         <Ionicons
           name="add-circle-outline"
           size={25}
           style={[styles.icon, { color: "#FF6C00" }]}
+          onPress={() => {
+            navigation.navigate("CreateAvatar", { routePrev });
+          }}
         />
       ) : (
         <Ionicons
           name="close-circle-outline"
           size={25}
           style={[styles.icon, { color: "#BDBDBD" }]}
+          onPress={() => {
+            navigation.navigate("CreateAvatar", { routePrev });
+          }}
         />
       )}
     </View>

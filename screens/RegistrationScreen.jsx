@@ -17,21 +17,26 @@ import RegistrationLink from "../components/RegistrationLink";
 import MainBackground from "../components/MainBackground";
 import { commonStyles } from "../components/commonStyles";
 import { useState } from "react";
-import { useNavigation } from "@react-navigation/native";
+import { useNavigation, useRoute } from "@react-navigation/native";
 import { useDispatch } from "react-redux";
 import { register } from "../redux/auth/operations";
 
-function RegistrationScreen() {
+function RegistrationScreen(navigation, route) {
+  let photoFromRoute = "";
+  if (route.params?.photo) {
+    photoFromRoute = route.params?.photo;
+  }
+
   const [login, setLogin] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [photo, setPhoto] = useState(photoFromRoute);
   const [showPassword, setShowPassword] = useState(false);
 
   const handlePressShowButton = () => {
     setShowPassword((prevState) => !prevState);
   };
 
-  const navigation = useNavigation();
   const dispatch = useDispatch();
 
   const handleLogin = () => {
@@ -41,11 +46,12 @@ function RegistrationScreen() {
         "Будь ласка, заповніть всі поля непустими даними"
       );
     } else {
-      dispatch(register({ login, email, password })).then((res) => {
+      dispatch(register({ login, email, password, photo })).then((res) => {
         if (res.type === "auth/register/fulfilled") {
           setLogin("");
           setEmail("");
           setPassword("");
+          setPhoto("");
           navigation.navigate("Home");
         } else {
           return Alert.alert(

@@ -13,6 +13,7 @@ import MapScreen from "./screens/MapScreen";
 import { Provider } from "react-redux";
 import { persistor, store } from "./redux/store";
 import { PersistGate } from "redux-persist/integration/react";
+import CreateAvatar from "./screens/CreateAvatar";
 
 export default function App() {
   const [fontsLoaded] = useFonts({
@@ -69,6 +70,23 @@ export default function App() {
                     color={commonStyles.vars.colorText}
                     style={{ marginLeft: 16, padding: 5 }}
                     onPress={() => navigation.navigate("Posts")}
+                  />
+                ),
+              })}
+            />
+            <MainStack.Screen
+              name="CreateAvatar"
+              component={CreateAvatar}
+              options={({ navigation }) => ({
+                title: "Створення фото користувача",
+                headerTitleAlign: "center",
+                headerLeft: () => (
+                  <Octicons
+                    name="arrow-left"
+                    size={24}
+                    color={commonStyles.vars.colorText}
+                    style={{ marginLeft: 16, padding: 5 }}
+                    onPress={() => navigation.navigate.goBack()}
                   />
                 ),
               })}

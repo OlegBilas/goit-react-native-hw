@@ -9,7 +9,7 @@ import { selectUser } from "../redux/auth/selectors";
 function Comment({ data }) {
   const { idUser, date, text } = data;
   const user = useSelector(selectUser);
-  console.log(user.id, idUser);
+
   return user.id === idUser ? (
     <View style={styles.container}>
       <View

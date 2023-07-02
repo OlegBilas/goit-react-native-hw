@@ -1,5 +1,11 @@
 import { createSlice, isAnyOf } from "@reduxjs/toolkit";
-import { register, logIn, logOut, refreshUser } from "./operations";
+import {
+  register,
+  logIn,
+  logOut,
+  updateUserData,
+  refreshUser,
+} from "./operations";
 
 const STATUS = {
   FULFILLED: "fulfilled",
@@ -7,7 +13,7 @@ const STATUS = {
   REJECTED: "rejected",
 };
 
-const actionGenerators = [register, logIn];
+const actionGenerators = [register, logIn, updateUserData];
 
 const getActionGeneratorsWithType = (status) =>
   actionGenerators.map((generator) => generator[status]);
