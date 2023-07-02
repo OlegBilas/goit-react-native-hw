@@ -61,9 +61,7 @@ export const addComment = createAsyncThunk(
     try {
       const { idPost, date, ...restCommentData } = comment;
       const dateString = formatDate(date);
-      console.log(idPost);
       const postRef = doc(db, "posts", idPost);
-      console.log({ date: dateString, ...restCommentData });
       await updateDoc(postRef, {
         comments: arrayUnion({ date: dateString, ...restCommentData }),
       });

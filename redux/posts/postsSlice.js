@@ -62,6 +62,7 @@ function handleFetchPosts(state, action) {
 function handleCreatePost(state, action) {
   state.items = [action.payload, ...state.items];
 }
+
 function handleAddComment(state, action) {
   const { idPost, idUser, date, text } = action.payload;
   const post = state.items.find((item) => item.id === idPost);
