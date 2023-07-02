@@ -24,12 +24,7 @@ function PostCard({
           name="message-circle"
           size={24}
           color={commonStyles.vars.colorAccent}
-          style={[
-            { marginRight: 6 },
-            comments.length > 0 && {
-              backgroundColor: commonStyles.vars.colorAccent,
-            },
-          ]}
+          style={{ marginRight: 6 }}
           onPress={() => {
             navigation.navigate("Comments", { idPost: id, photo, comments });
           }}

@@ -5,14 +5,23 @@ import { StyleSheet } from "react-native";
 import { auth } from "../config";
 import { useSelector } from "react-redux";
 import { selectUser } from "../redux/auth/selectors";
-import ellipse from "../assets/images/ellipse";
 
-function Comment({ navigation, route }) {
-  const { id: idUser, date, text } = route.params.data;
+function Comment({ data }) {
+  const { idUser, date, text } = data;
   const user = useSelector(selectUser);
-  return auth.currentUser.uid === idUser ? (
+  console.log(user.id, idUser);
+  return user.id === idUser ? (
     <View style={styles.container}>
-      <View style={styles.commentContainer}>
+      <View
+        style={[
+          styles.commentContainer,
+          {
+            borderTopLeftRadius: 6,
+            borderBottomLeftRadius: 6,
+            borderBottomRightRadius: 6,
+          },
+        ]}
+      >
         <Text style={styles.text}>{text}</Text>
         <Text style={styles.date}>{date}</Text>
       </View>
@@ -20,8 +29,20 @@ function Comment({ navigation, route }) {
     </View>
   ) : (
     <View style={styles.container}>
-      <Image source={ellipse} style={styles.avatar} />
-      <View style={styles.commentContainer}>
+      <Image
+        source={require("../assets/images/ellipse.png")}
+        style={styles.avatar}
+      />
+      <View
+        style={[
+          styles.commentContainer,
+          {
+            borderTopRightRadius: 6,
+            borderBottomLeftRadius: 6,
+            borderBottomRightRadius: 6,
+          },
+        ]}
+      >
         <Text style={styles.text}>{text}</Text>
         <Text style={styles.date}>{date}</Text>
       </View>
@@ -32,25 +53,38 @@ function Comment({ navigation, route }) {
 const styles = StyleSheet.create({
   container: {
     width: "100%",
-    height: 299,
-    marginBottom: 32,
-    color: commonStyles.vars.colorText,
-    backgroundColor: commonStyles.vars.colorWhite,
+    marginBottom: 24,
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "flex-start",
+    // backgroundColor: commonStyles.vars.colorWhite,
   },
   avatar: {
-    width: "100%",
-    height: 240,
-    marginBottom: 8,
-    borderRadius: 8,
+    width: 28,
+    height: 28,
+    borderRadius: 28,
+    overflow: "hidden",
     resizeMode: "cover",
     backgroundColor: commonStyles.vars.colorGray,
   },
-
   commentContainer: {
-    flexDirection: "row",
-    alignItems: "baseline",
+    width: 299,
+    padding: 16,
+    backgroundColor: "rgba(0, 0, 0, 0.03)",
   },
-  text: { ...commonStyles.fonts },
+  text: {
+    marginBottom: 8,
+    ...commonStyles.fonts,
+    fontSize: 13,
+    lineHeight: 18,
+    color: commonStyles.vars.colorText,
+  },
+  date: {
+    ...commonStyles.fonts,
+    fontSize: 10,
+    color: commonStyles.vars.colorGray,
+    textAlign: "right",
+  },
 });
 
 export default Comment;

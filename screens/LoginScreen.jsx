@@ -37,7 +37,7 @@ function LoginScreen() {
     if (email === "" || password === "") {
       return Alert.alert(
         "Не коректні дані",
-        "Будь ласка, заповнітьвсі поля непустими даними"
+        "Будь ласка, заповніть всі поля непустими даними"
       );
     } else {
       dispatch(logIn({ email, password })).then((res) => {

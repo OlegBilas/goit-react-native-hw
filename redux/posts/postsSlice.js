@@ -7,7 +7,7 @@ import { createPost, addComment, addLike, fetchPosts } from "./operations";
 //     id: "Firebase id",
 //     photo: "https://firebasestorage.googleapis.com/...",
 //     title: "post's title",
-//     comments: [{ id: "user id", date: "date of comment's create", text: "comment's next" }, { ...}],
+//     comments: [{ idUser: "user id", date: "date of comment's create", text: "comment's next" }, { ...}],
 //     likes: [{ "user id", "user id", ...}],
 //     coords: { latitude: number, longitude: number },
 //     place: "post's location"
@@ -66,7 +66,7 @@ function handleCreatePost(state, action) {
 function handleAddComment(state, action) {
   const { idPost, idUser, date, text } = action.payload;
   const post = state.items.find((item) => item.id === idPost);
-  post.comments = [{ id: idUser, date, text }, ...post.comments];
+  post.comments = [{ idUser, date, text }, ...post.comments];
 }
 
 function handleAddLike(state, action) {

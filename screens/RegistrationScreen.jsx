@@ -38,7 +38,7 @@ function RegistrationScreen() {
     if (email === "" || password === "") {
       return Alert.alert(
         "Не коректні дані",
-        "Будь ласка, заповнітьвсі поля непустими даними"
+        "Будь ласка, заповніть всі поля непустими даними"
       );
     } else {
       dispatch(register({ login, email, password })).then((res) => {
