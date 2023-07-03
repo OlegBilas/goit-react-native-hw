@@ -25,7 +25,7 @@ import {
 import { setFilter } from "../redux/posts/postsSlice";
 
 function CommentsScreen({ navigation, route }) {
-  const { idPost, photo } = route.params;
+  const { idPost, photo, comments } = route.params;
   const [comment, setComment] = useState("");
 
   const dispatch = useDispatch();
@@ -38,7 +38,7 @@ function CommentsScreen({ navigation, route }) {
   const filter = useSelector(selectFilter);
   console.log("filter", filter);
   // const comments = useSelector(selectComments);
-  console.log(comments);
+  // console.log(comments);
 
   const handleSendComment = () => {
     dispatch(
