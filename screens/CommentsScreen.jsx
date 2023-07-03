@@ -37,7 +37,7 @@ function CommentsScreen({ navigation, route }) {
 
   const filter = useSelector(selectFilter);
   console.log("filter", filter);
-  const comments = useSelector(selectComments);
+  // const comments = useSelector(selectComments);
   console.log(comments);
 
   const handleSendComment = () => {
