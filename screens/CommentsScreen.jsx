@@ -30,10 +30,14 @@ function CommentsScreen({ navigation, route }) {
 
   const dispatch = useDispatch();
 
-  const sendFilter = async () => {
-    await dispatch(setFilter(idPost));
-  };
-  sendFilter();
+  useEffect(() => {
+    const sendFilter = async () => {
+      await dispatch(setFilter(idPost));
+    };
+    sendFilter();
+
+    console.log(idPost);
+  });
 
   const filter = useSelector(selectFilter);
   console.log("filter", filter);
