@@ -69,7 +69,7 @@ function CreatePostsScreen() {
       latitude: location.coords.latitude,
       longitude: location.coords.longitude,
     };
-    // setLocation(coords);
+
     dispatch(
       createPost({
         photo: cameraPhoto,

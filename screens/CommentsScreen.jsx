@@ -30,93 +30,92 @@ function CommentsScreen({ navigation, route }) {
 
   const dispatch = useDispatch();
 
-  useEffect(() => {
-    const sendFilter = async () => {
-      await dispatch(setFilter(idPost));
-    };
-    sendFilter();
-  }, []);
+  // useEffect(() => {
+  //   const sendFilter = async () => {
+  //     await dispatch(setFilter(idPost));
+  //   };
+  //   sendFilter();
+  // }, []);
 
-  const filter = useSelector(selectFilter);
-  console.log("filter", filter);
+  // const filter = useSelector(selectFilter);
+  // console.log("filter", filter);
   // const comments = useSelector(selectComments);
   // console.log(comments);
 
-  return (
-    <View style={{ flex: 1 }}>
-      <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-        <KeyboardAvoidingView
-          style={styles.keyboardAvoidingViewStyles}
-          behavior={Platform.OS === "ios" ? "padding" : "height"}
-        >
-          <ScrollView style={styles.container}>
-            <Image source={{ uri: photo }} style={styles.backgroundPhoto} />
-            <View style={styles.comments}>
-              {comments.map((item, index) => (
-                <Comment key={index} data={item} />
-              ))}
+  const handleSendComment = () => {
+    dispatch(
+      addComment({
+        idPost,
+        idUser: auth.currentUser.uid,
+        date: new Date(),
+        text: comment,
+      })
+    ).then((res) => {
+      if (res.type === "posts/addComment/fulfilled") {
+        setComment("");
+      } else {
+        return Alert.alert(
+          "Помилка створення коментаря",
+          `Опис помилки із сервера: ${res.payload}`
+        );
+      }
+    });
+  };
 
-              {/* <FlatList
-                data={comments}
-                renderItem={({ item }) => <Comment data={item}></Comment>}
-                keyExtractor={(item) => item.index}
-                slyle={styles.postsList}
-              /> */}
+  return (
+    <View>
+      <ScrollView>
+        <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+          <KeyboardAvoidingView
+            style={styles.keyboardAvoidingViewStyles}
+            behavior={Platform.OS === "ios" ? "padding" : "height"}
+          >
+            <View style={styles.container}>
+              <Image source={{ uri: photo }} style={styles.backgroundPhoto} />
+              <View style={styles.comments}>
+                {comments.map((item, index) => (
+                  <Comment key={index} data={item} />
+                ))}
+              </View>
             </View>
-          </ScrollView>
-          <View>
-            <TextInput
-              value={comment}
-              placeholder="Коментувати..."
-              placeholderTextColor={{
-                color: commonStyles.vars.colorGray,
-              }}
-              style={styles.input}
-              multiline={true}
-              onChangeText={setComment}
-            />
-            <Ionicons
-              name="arrow-up-circle"
-              size={34}
-              color={commonStyles.vars.colorAccent}
-              style={styles.arrowUpButton}
-              onPress={() => {
-                dispatch(
-                  addComment({
-                    idPost,
-                    idUser: auth.currentUser.uid,
-                    date: new Date(),
-                    text: comment,
-                  })
-                ).then((res) => {
-                  if (res.type === "posts/addComment/fulfilled") {
-                    setComment("");
-                  } else {
-                    return Alert.alert(
-                      "Помилка створення коментаря",
-                      `Опис помилки із сервера: ${res.payload}`
-                    );
-                  }
-                });
-              }}
-            />
-          </View>
-        </KeyboardAvoidingView>
-      </TouchableWithoutFeedback>
+          </KeyboardAvoidingView>
+        </TouchableWithoutFeedback>
+      </ScrollView>
+      <View
+        style={{
+          position: "absolute",
+          bottom: 10,
+          paddingLeft: 16,
+          paddingRight: 16,
+          width: "100%",
+        }}
+      >
+        <TextInput
+          value={comment}
+          placeholder="Коментувати..."
+          placeholderTextColor={{
+            color: commonStyles.vars.colorGray,
+          }}
+          style={styles.input}
+          multiline={true}
+          onChangeText={setComment}
+        />
+        <Ionicons
+          name="arrow-up-circle"
+          size={34}
+          color={commonStyles.vars.colorAccent}
+          style={styles.arrowUpButton}
+          onPress={handleSendComment}
+        />
+      </View>
     </View>
   );
 }
 const styles = StyleSheet.create({
   keyboardAvoidingViewStyles: {
     flex: 1,
-    // width: "100%",
-    // minHeight: 712,
-    // justifyContent: "flex-end",
-    // alignItems: "center",
   },
   container: {
-    // width: "100%",
-    // height: 812,
     flex: 1,
     paddingTop: 32,
     paddingBottom: 16,
@@ -155,6 +154,6 @@ const styles = StyleSheet.create({
     borderColor: commonStyles.vars.colorGray,
     borderWidth: 1,
   },
-  arrowUpButton: { position: "absolute", bottom: 24, right: 36 },
+  arrowUpButton: { position: "absolute", bottom: 8, right: 24 },
 });
 export default CommentsScreen;

@@ -5,15 +5,12 @@ import AvatarWrapper from "../components/AvatarWrapper";
 import Title from "../components/Title";
 import { Feather } from "@expo/vector-icons";
 import { commonStyles } from "../components/commonStyles";
-import { useNavigation, useRoute } from "@react-navigation/native";
 import { useDispatch, useSelector } from "react-redux";
 import { selectUser } from "../redux/auth/selectors";
 import { logOut, updateUserData } from "../redux/auth/operations";
 
-function ProfileScreen(navigation, route) {
+function ProfileScreen({ navigation, route }) {
   const photo = route.params?.photo;
-
-  console.log("photo", photo);
 
   const user = useSelector(selectUser);
   const dispatch = useDispatch();
@@ -21,6 +18,7 @@ function ProfileScreen(navigation, route) {
   useEffect(() => {
     if (photo && photo !== user.photo) {
       dispatch(updateUserData({ ...user, photo }));
+      // console.log("From profile", { ...user, photo });
     }
   }, [dispatch, user, photo]);
 

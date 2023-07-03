@@ -14,6 +14,7 @@ import { Provider } from "react-redux";
 import { persistor, store } from "./redux/store";
 import { PersistGate } from "redux-persist/integration/react";
 import CreateAvatar from "./screens/CreateAvatar";
+import ProfileScreen from "./screens/ProfileScreen";
 
 export default function App() {
   const [fontsLoaded] = useFonts({
@@ -86,7 +87,7 @@ export default function App() {
                     size={24}
                     color={commonStyles.vars.colorText}
                     style={{ marginLeft: 16, padding: 5 }}
-                    onPress={() => navigation.navigate.goBack()}
+                    onPress={() => navigation.navigate("Profile")}
                   />
                 ),
               })}

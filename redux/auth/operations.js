@@ -7,6 +7,7 @@ import {
   signOut,
   updateProfile,
 } from "firebase/auth";
+import { getRealPhotoURL } from "../utils/utils";
 
 const updateUserProfile = async (dataUser) => {
   const user = auth.currentUser;
@@ -17,7 +18,7 @@ const updateUserProfile = async (dataUser) => {
       displayName: dataUser.login,
       photoURL: getRealPhotoURL(dataUser.photo),
     };
-
+    console.log("Object in operation", update);
     try {
       await updateProfile(user, update);
     } catch (error) {

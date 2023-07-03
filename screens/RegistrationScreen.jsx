@@ -21,8 +21,8 @@ import { useNavigation, useRoute } from "@react-navigation/native";
 import { useDispatch } from "react-redux";
 import { register } from "../redux/auth/operations";
 
-function RegistrationScreen(navigation, route) {
-  let photoFromRoute = "";
+function RegistrationScreen({ navigation, route }) {
+  let photoFromRoute = null;
   if (route.params?.photo) {
     photoFromRoute = route.params?.photo;
   }
@@ -79,6 +79,7 @@ function RegistrationScreen(navigation, route) {
                   transform: [{ translateX: -50 }, { translateY: 50 }],
                 }}
                 add={true}
+                photo={photoFromRoute}
               />
               <Title
                 customStyles={{

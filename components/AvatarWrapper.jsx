@@ -10,7 +10,11 @@ function AvatarWrapper({ photo = {}, add, customStyles = {} }) {
   const navigation = useNavigation();
   const dispatch = useDispatch();
   const routePrev = useRoute().name;
-  console.log("Роут з обгортки Аватара ", routePrev);
+  // console.log("Роут з обгортки Аватара ", routePrev);
+
+  const handlePress = () => {
+    navigation.navigate("CreateAvatar", { routePrev });
+  };
 
   return (
     <View style={[styles.avatarWrapper, customStyles]}>
@@ -20,18 +24,14 @@ function AvatarWrapper({ photo = {}, add, customStyles = {} }) {
           name="add-circle-outline"
           size={25}
           style={[styles.icon, { color: "#FF6C00" }]}
-          onPress={() => {
-            navigation.navigate("CreateAvatar", { routePrev });
-          }}
+          onPress={handlePress}
         />
       ) : (
         <Ionicons
           name="close-circle-outline"
           size={25}
           style={[styles.icon, { color: "#BDBDBD" }]}
-          onPress={() => {
-            navigation.navigate("CreateAvatar", { routePrev });
-          }}
+          onPress={handlePress}
         />
       )}
     </View>
