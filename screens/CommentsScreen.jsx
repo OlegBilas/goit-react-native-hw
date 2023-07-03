@@ -25,22 +25,20 @@ import {
 import { setFilter } from "../redux/posts/postsSlice";
 
 function CommentsScreen({ navigation, route }) {
-  const { idPost, photo, comments } = route.params;
+  const { idPost, photo } = route.params;
   const [comment, setComment] = useState("");
 
   const dispatch = useDispatch();
 
-  // useEffect(() => {
-  //   const sendFilter = async () => {
-  //     await dispatch(setFilter(idPost));
-  //   };
-  //   sendFilter();
-  // }, []);
+  const sendFilter = async () => {
+    await dispatch(setFilter(idPost));
+  };
+  sendFilter();
 
-  // const filter = useSelector(selectFilter);
-  // console.log("filter", filter);
-  // const comments = useSelector(selectComments);
-  // console.log(comments);
+  const filter = useSelector(selectFilter);
+  console.log("filter", filter);
+  const comments = useSelector(selectComments);
+  console.log(comments);
 
   const handleSendComment = () => {
     dispatch(
