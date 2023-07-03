@@ -31,15 +31,9 @@ const postsSlice = createSlice({
   initialState: {
     items: [],
     isLoading: false,
-    filter: null,
     error: null,
   },
-  reducers: {
-    setFilter(state, action) {
-      console.log("action.payload", action.payload);
-      state.filter = action.payload;
-    },
-  },
+
   extraReducers: (builder) => {
     builder
       .addCase(fetchPosts.fulfilled, handleFetchPosts)
@@ -100,5 +94,4 @@ function handleRejected(state, action) {
   state.error = action.payload;
 }
 
-export const setFilter = postsSlice.actions;
 export const postsReducer = postsSlice.reducer;

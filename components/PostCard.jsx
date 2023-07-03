@@ -26,7 +26,7 @@ function PostCard({
           color={commonStyles.vars.colorAccent}
           style={{ marginRight: 6 }}
           onPress={() => {
-            navigation.navigate("Comments", { idPost: id, photo, comments });
+            navigation.navigate("Comments", { idPost: id, photo });
           }}
         />
         <Text style={[styles.text, { marginRight: 24 }]}>
