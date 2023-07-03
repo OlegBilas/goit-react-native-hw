@@ -6,7 +6,7 @@ import { useNavigation, useRoute } from "@react-navigation/native";
 import { useDispatch } from "react-redux";
 import { removeAvatar } from "../redux/auth/operations";
 
-function AvatarWrapper({ photo = {}, add, customStyles = {} }) {
+function AvatarWrapper({ photo = null, add, customStyles = {} }) {
   const navigation = useNavigation();
   const dispatch = useDispatch();
   const routePrev = useRoute().name;
