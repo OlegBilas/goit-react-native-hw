@@ -14,12 +14,11 @@ const updateUserProfile = async (dataUser) => {
   // якщо такий користувач знайдений
   if (user) {
     // оновлюємо його профайл
-    const update = {
-      displayName: dataUser.login,
-      photoURL: getRealPhotoURL(dataUser.photo),
-    };
-    console.log("Object in operation", update);
     try {
+      const update = {
+        displayName: dataUser.login,
+        photoURL: await getRealPhotoURL(dataUser.photo),
+      };
       await updateProfile(user, update);
     } catch (error) {
       throw error;

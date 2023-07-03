@@ -12,18 +12,18 @@ import { auth } from "../config";
 
 function ProfileScreen({ navigation, route }) {
   const photo = route.params?.photo;
-  console.log("From base", auth.currentUser.photoURL);
+  // console.log("From base", auth.currentUser.photoURL);
 
   const user = useSelector(selectUser);
-  console.log("From redux", user.photo);
+  // console.log("From redux", user.photo);
   const dispatch = useDispatch();
 
-  // useEffect(() => {
-  //   if (photo && photo !== user.photo) {
-  //     dispatch(updateUserData({ ...user, photo }));
-  //     console.log("From profile", { ...user, photo });
-  //   }
-  // }, [dispatch, user, photo]);
+  useEffect(() => {
+    if (photo && photo !== user.photo) {
+      dispatch(updateUserData({ ...user, photo }));
+      console.log("From profile", { ...user, photo });
+    }
+  }, [dispatch, user, photo]);
 
   return (
     <MainBackground>
