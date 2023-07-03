@@ -29,7 +29,10 @@ export default function PostsScreen() {
       <View style={styles.container}>
         <View style={styles.posts}>
           <View style={styles.avatarWrapper}>
-            <Avatar customStyles={{ width: 60, height: 60, marginRight: 8 }} />
+            <Avatar
+              customStyles={{ width: 60, height: 60, marginRight: 8 }}
+              photo={user.photo}
+            />
             <View>
               <Text>{user.login}</Text>
               <Text>{user.email}</Text>

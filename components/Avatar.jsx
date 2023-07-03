@@ -2,7 +2,6 @@ import { StyleSheet, Image } from "react-native";
 import React from "react";
 
 function Avatar({ customStyles = {}, photo = null }) {
-  // console.log("Foto in  Avatar", photo);
   return (
     <Image
       source={{ uri: photo }}
