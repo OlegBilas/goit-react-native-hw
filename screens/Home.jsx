@@ -8,10 +8,11 @@ import { commonStyles } from "../components/commonStyles";
 import PostsScreen from "./PostsScreen";
 import CreatePostsScreen from "./CreatePostsScreen";
 import ProfileScreen from "./ProfileScreen";
-import { logOut } from "../redux/auth/operations";
+import { AuthStateChanged, logOut } from "../redux/auth/operations";
 
 const Tabs = createBottomTabNavigator();
 const Home = () => {
+  AuthStateChanged();
   return (
     <Tabs.Navigator
       initialRouteName="Posts"

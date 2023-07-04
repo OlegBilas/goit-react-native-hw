@@ -4,17 +4,26 @@ import RegistrationScreen from "./screens/RegistrationScreen";
 import LoginScreen from "./screens/LoginScreen";
 import Home from "./screens/Home";
 import { createStackNavigator } from "@react-navigation/stack";
-import { NavigationContainer } from "@react-navigation/native";
+import {
+  NavigationContainer,
+  getFocusedRouteNameFromRoute,
+  useNavigation,
+  useRoute,
+} from "@react-navigation/native";
 import CommentsScreen from "./screens/CommentsScreen";
 import { Octicons } from "@expo/vector-icons";
 import { commonStyles } from "./components/commonStyles";
 import PostCard from "./components/PostCard";
 import MapScreen from "./screens/MapScreen";
-import { Provider } from "react-redux";
+import { Provider, useDispatch, useSelector } from "react-redux";
 import { persistor, store } from "./redux/store";
 import { PersistGate } from "redux-persist/integration/react";
 import CreateAvatar from "./screens/CreateAvatar";
-import ProfileScreen from "./screens/ProfileScreen";
+// import Loader from "./components/Loader";
+import { selectIsRefreshing } from "./redux/auth/selectors";
+import { AuthStateChanged, refreshUser } from "./redux/auth/operations";
+import { onAuthStateChanged } from "firebase/auth";
+import { auth } from "./config";
 
 export default function App() {
   const [fontsLoaded] = useFonts({
@@ -25,6 +34,13 @@ export default function App() {
   if (!fontsLoaded) {
     return null;
   }
+
+  // const isRefreshing = useSelector(selectIsRefreshing);
+  // const dispatch = useDispatch();
+
+  // useEffect(() => {
+  //   dispatch(refreshUser());
+  // }, [dispatch]);
 
   const MainStack = createStackNavigator();
   return (

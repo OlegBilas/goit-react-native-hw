@@ -1,5 +1,5 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import { db, storage } from "../../config";
+import { db } from "../../config";
 import {
   addDoc,
   arrayRemove,
@@ -7,9 +7,7 @@ import {
   collection,
   doc,
   getDocs,
-  query,
   updateDoc,
-  where,
 } from "firebase/firestore";
 import { formatDate } from "../utils/utils";
 import { getRealPhotoURL } from "../utils/utils";

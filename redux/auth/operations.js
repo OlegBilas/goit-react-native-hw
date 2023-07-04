@@ -8,6 +8,7 @@ import {
   updateProfile,
 } from "firebase/auth";
 import { getRealPhotoURL } from "../utils/utils";
+import { useNavigation, useRoute } from "@react-navigation/native";
 
 const updateUserProfile = async (dataUser) => {
   const user = auth.currentUser;
@@ -95,6 +96,7 @@ export const refreshUser = createAsyncThunk(
   "auth/refresh",
   async (_, thunkAPI) => {
     const persistedId = thunkAPI.getState.auth.id;
+    console.log(persistedId, auth.currentUser?.uid);
     if (persistedId === null || persistedId !== auth.currentUser?.uid) {
       return thunkAPI.rejectWithValue("You are not logged in");
     }
@@ -119,11 +121,15 @@ export const refreshUser = createAsyncThunk(
 //     // navigation.navigate("Login");
 //   }
 // });
-export const authStateChanged = onAuthStateChanged(auth, async (user) => {
-  if (user) {
-    return user.uid;
-  }
-});
+
+export const AuthStateChanged = async () => {
+  const navigation = useNavigation();
+  onAuthStateChanged(auth, async (user) => {
+    if (!user || user.uid !== auth.currentUser?.uid) {
+      navigation.navigate("Login");
+    }
+  });
+};
 
 // export const createAvatar = createAsyncThunk(
 //   "auth/createAvatar",
