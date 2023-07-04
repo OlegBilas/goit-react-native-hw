@@ -1,28 +1,20 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import {
   Image,
-  Keyboard,
   KeyboardAvoidingView,
   ScrollView,
   StyleSheet,
-  TouchableWithoutFeedback,
   View,
 } from "react-native";
 import { commonStyles } from "../components/commonStyles";
 import { TextInput } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
-import { FlatList } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
 import { addComment } from "../redux/posts/operations";
 import { auth } from "../config";
 import { Alert } from "react-native";
 import Comment from "../components/Comment";
-import {
-  selectComments,
-  selectFilter,
-  selectPosts,
-} from "../redux/posts/selectors";
-import { setFilter } from "../redux/posts/postsSlice";
+import { selectPosts } from "../redux/posts/selectors";
 
 function CommentsScreen({ navigation, route }) {
   const { idPost, photo } = route.params;
@@ -32,7 +24,7 @@ function CommentsScreen({ navigation, route }) {
 
   const posts = useSelector(selectPosts);
   const comments = posts.find(({ id }) => id === idPost).comments;
-  
+
   const handleSendComment = () => {
     dispatch(
       addComment({
@@ -54,23 +46,23 @@ function CommentsScreen({ navigation, route }) {
   };
 
   return (
-    <View>
-      <ScrollView>
-        <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-          <KeyboardAvoidingView
-            style={styles.keyboardAvoidingViewStyles}
-            behavior={Platform.OS === "ios" ? "padding" : "height"}
-          >
-            <View style={styles.container}>
-              <Image source={{ uri: photo }} style={styles.backgroundPhoto} />
-              <View style={styles.comments}>
-                {comments.map((item, index) => (
-                  <Comment key={index} data={item} />
-                ))}
-              </View>
-            </View>
-          </KeyboardAvoidingView>
-        </TouchableWithoutFeedback>
+    <KeyboardAvoidingView
+      style={styles.keyboardAvoidingViewStyles}
+      behavior={Platform.OS === "ios" ? "padding" : undefined}
+    >
+      <ScrollView
+        contentContainerStyle={styles.scrollContainer}
+        keyboardDismissMode="interactive"
+        keyboardShouldPersistTaps="handled"
+      >
+        <View style={styles.container}>
+          <Image source={{ uri: photo }} style={styles.backgroundPhoto} />
+          <View style={styles.comments}>
+            {comments.map((item, index) => (
+              <Comment key={index} data={item} />
+            ))}
+          </View>
+        </View>
       </ScrollView>
       <View
         style={{
@@ -99,9 +91,10 @@ function CommentsScreen({ navigation, route }) {
           onPress={handleSendComment}
         />
       </View>
-    </View>
+    </KeyboardAvoidingView>
   );
 }
+
 const styles = StyleSheet.create({
   keyboardAvoidingViewStyles: {
     flex: 1,
@@ -130,6 +123,10 @@ const styles = StyleSheet.create({
     flex: 1,
     marginBottom: 32,
   },
+  scrollContainer: {
+    flexGrow: 1,
+    paddingBottom: 10,
+  },
   input: {
     height: 50,
     width: "100%",
@@ -147,4 +144,5 @@ const styles = StyleSheet.create({
   },
   arrowUpButton: { position: "absolute", bottom: 8, right: 24 },
 });
+
 export default CommentsScreen;
