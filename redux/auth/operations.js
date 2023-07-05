@@ -16,9 +16,9 @@ const updateUserProfile = async (dataUser) => {
   if (user) {
     // оновлюємо його профайл
     try {
-      console.log("dataUser.photo", dataUser.photo);
+      // console.log("dataUser.photo", dataUser.photo);
       const photoURL = await getRealPhotoURL(dataUser.photo);
-      console.log("photoURL", photoURL);
+      // console.log("photoURL", photoURL);
       const update = {
         displayName: dataUser.login,
         photoURL,

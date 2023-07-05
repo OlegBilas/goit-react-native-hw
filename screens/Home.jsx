@@ -36,6 +36,7 @@ const Home = () => {
       overlayColor="rgba(255,255,255,0.75)"
       animationStyle={styles.lottie}
       speed={1}
+      style={{ flex: 1 }}
     />
   ) : (
     <Tabs.Navigator
