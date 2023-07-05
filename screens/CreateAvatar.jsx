@@ -15,7 +15,7 @@ import * as Location from "expo-location";
 import { useNavigation } from "@react-navigation/native";
 import { Platform } from "react-native";
 
-function CreateAvatar({ route }) {
+function CreateAvatar({ navigation, route }) {
   const routePrev = route.params.routePrev;
 
   const [hasPermission, setHasPermission] = useState(null);
@@ -23,8 +23,6 @@ function CreateAvatar({ route }) {
   const [type] = useState(Camera.Constants.Type.front);
 
   const [cameraPhoto, setCameraPhoto] = useState(null);
-
-  const navigation = useNavigation();
 
   useEffect(() => {
     (async () => {
@@ -55,7 +53,6 @@ function CreateAvatar({ route }) {
 
     if (routePrev === "Profile") {
     }
-    console.log("фото з Create Avatar", cameraPhoto);
     navigation.navigate(routePrev, { photo: cameraPhoto });
     setCameraPhoto(null);
   };

@@ -17,12 +17,13 @@ import { fetchPosts } from "../redux/posts/operations";
 
 export default function PostsScreen() {
   const dispatch = useDispatch();
-  const user = useSelector(selectUser);
   const posts = useSelector(selectPosts);
 
   useEffect(() => {
     dispatch(fetchPosts());
   }, [dispatch]);
+
+  const user = useSelector(selectUser);
 
   return (
     <SafeAreaView style={styles.androidSafeArea}>

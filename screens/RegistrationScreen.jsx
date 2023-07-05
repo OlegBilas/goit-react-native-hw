@@ -21,17 +21,16 @@ import { useDispatch } from "react-redux";
 import { register } from "../redux/auth/operations";
 import { useRoute } from "@react-navigation/native";
 
-function RegistrationScreen({ navigation }) {
-  const route = useRoute();
+function RegistrationScreen({ navigation, route }) {
   let photoFromRoute = null;
   if (route.params?.photo) {
     photoFromRoute = route.params?.photo;
   }
+  console.log("photoFromRoute", photoFromRoute);
 
   const [login, setLogin] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [photo, setPhoto] = useState(photoFromRoute);
   const [showPassword, setShowPassword] = useState(false);
 
   const handlePressShowButton = () => {
@@ -47,13 +46,14 @@ function RegistrationScreen({ navigation }) {
         "Будь ласка, заповніть всі поля непустими даними"
       );
     } else {
-      console.log("photo Register", photo);
-      dispatch(register({ login, email, password, photo })).then((res) => {
+      dispatch(
+        register({ login, email, password, photo: photoFromRoute })
+      ).then((res) => {
         if (res.type === "auth/register/fulfilled") {
           setLogin("");
           setEmail("");
           setPassword("");
-          setPhoto("");
+
           navigation.navigate("Home");
         } else {
           return Alert.alert(
