@@ -50,12 +50,6 @@ function handleUserLoggingFulfilled(state, action) {
   state.isLoggedIn = true;
 }
 
-// function handleUserLoggingRejected(state, action) {
-//   // console.log(action.payload);
-//   state.error = action.payload;
-//   state.isLoggedIn = false;
-// }
-
 function handleLogOut(state) {
   state.user = {
     id: null,

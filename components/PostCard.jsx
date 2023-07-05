@@ -6,22 +6,15 @@ import { StyleSheet } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { addLike } from "../redux/posts/operations";
 import { auth } from "../config";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { selectUser } from "../redux/auth/selectors";
 
 function PostCard({
-  data: {
-    id,
-    photo,
-    title,
-    place,
-    coords,
-    likes,
-    comments,
-    fromProfile = null,
-  },
+  data: { id, photo, title, place, coords, likes, comments, idUser },
 }) {
   const navigation = useNavigation();
   const dispatch = useDispatch();
+  const user = useSelector(selectUser);
 
   return (
     <View style={styles.container}>
@@ -41,20 +34,22 @@ function PostCard({
         <Text style={[styles.text, { marginRight: 24 }]}>
           {comments.length}
         </Text>
-        {fromProfile && (
-          <View style={{ flexDirection: "row", alignItems: "baseline" }}>
-            <Feather
-              name="thumbs-up"
-              size={24}
-              color={commonStyles.vars.colorAccent}
-              style={{ marginRight: 6 }}
-              onPress={() => {
-                dispatch(addLike({ idPost: id, idUser: auth.currentUser.uid }));
-              }}
-            />
-            <Text>{likes.length}</Text>
-          </View>
-        )}
+
+        <View style={{ flexDirection: "row", alignItems: "baseline" }}>
+          <Feather
+            name="thumbs-up"
+            size={24}
+            color={commonStyles.vars.colorAccent}
+            style={{ marginRight: 6 }}
+            onPress={() => {
+              if (user.id !== idUser) {
+                dispatch(addLike({ idPost: id, idUser: user.id }));
+              }
+            }}
+          />
+          <Text>{likes.length}</Text>
+        </View>
+
         <Feather
           name="map-pin"
           size={24}

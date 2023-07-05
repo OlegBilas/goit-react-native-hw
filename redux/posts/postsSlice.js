@@ -5,6 +5,7 @@ import { createPost, addComment, addLike, fetchPosts } from "./operations";
 // items = [
 //   {
 //     id: "Firebase id",
+//     idUser: "user id",
 //     photo: "https://firebasestorage.googleapis.com/...",
 //     title: "post's title",
 //     comments: [{ idUser: "user id", date: "date of comment's create", text: "comment's next" }, { ...}],

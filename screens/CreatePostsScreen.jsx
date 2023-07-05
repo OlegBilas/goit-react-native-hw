@@ -20,15 +20,15 @@ import * as MediaLibrary from "expo-media-library";
 import * as Location from "expo-location";
 
 import { useNavigation } from "@react-navigation/native";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { createPost } from "../redux/posts/operations";
 import { Platform } from "react-native";
+import { selectUser } from "../redux/auth/selectors";
 
 function CreatePostsScreen() {
   const [hasPermission, setHasPermission] = useState(null);
   const [cameraRef, setCameraRef] = useState(null);
   const [type] = useState(Camera.Constants.Type.back);
-  // const [location, setLocation] = useState(null);
 
   const [cameraPhoto, setCameraPhoto] = useState(null);
   const [title, setTitle] = useState(null);
@@ -37,6 +37,7 @@ function CreatePostsScreen() {
   const navigation = useNavigation();
   const dispatch = useDispatch();
 
+  const user = useSelector(selectUser);
   useEffect(() => {
     (async () => {
       //get status Camera
@@ -79,6 +80,7 @@ function CreatePostsScreen() {
         likes: [],
         coords,
         place,
+        idUser: user.id,
       })
     ).then((res) => {
       if (res.type === "posts/createPost/fulfilled") {

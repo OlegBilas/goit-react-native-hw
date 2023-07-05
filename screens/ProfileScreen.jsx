@@ -29,10 +29,13 @@ function ProfileScreen({ navigation, route }) {
     }
   });
 
-  const posts = useSelector(selectPosts);
   useEffect(() => {
     dispatch(fetchPosts());
   }, [dispatch]);
+
+  const posts = useSelector(selectPosts).filter(
+    (item) => item.idUser === user.id
+  );
 
   return (
     <MainBackground>
@@ -65,9 +68,9 @@ function ProfileScreen({ navigation, route }) {
           >
             {user.login}
           </Title>
-          <View>
+          <View style={{ height: 400 }}>
             {posts.map((item) => (
-              <PostCard key={item.id} data={{ ...item, fromProfile: true }} />
+              <PostCard key={item.id} data={item} />
             ))}
           </View>
         </View>
