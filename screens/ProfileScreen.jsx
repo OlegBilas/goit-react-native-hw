@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { StyleSheet, View, ScrollView } from "react-native";
 import MainBackground from "../components/MainBackground";
 import AvatarWrapper from "../components/AvatarWrapper";
@@ -8,7 +8,7 @@ import { commonStyles } from "../components/commonStyles";
 import { useDispatch, useSelector } from "react-redux";
 import { selectUser } from "../redux/auth/selectors";
 import { logOut, updateUserData } from "../redux/auth/operations";
-import { auth } from "../config";
+
 import { selectPosts } from "../redux/posts/selectors";
 import { fetchPosts } from "../redux/posts/operations";
 
@@ -17,17 +17,17 @@ import PostCard from "../components/PostCard";
 function ProfileScreen({ navigation, route }) {
   const dispatch = useDispatch();
 
-  const user = useSelector(selectUser);
+  let user = useSelector(selectUser);
   let photo = user.photo;
   if (route.params?.photo) {
     photo = route.params?.photo;
   }
 
   useEffect(() => {
-    if (photo && photo !== user.photo) {
+    if (photo !== user.photo) {
       dispatch(updateUserData({ ...user, photo }));
     }
-  }, [dispatch, user, photo]);
+  });
 
   const posts = useSelector(selectPosts);
   useEffect(() => {

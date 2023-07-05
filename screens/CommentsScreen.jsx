@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import {
   Image,
   KeyboardAvoidingView,
+  Platform,
   ScrollView,
   StyleSheet,
   View,
@@ -16,7 +17,7 @@ import { Alert } from "react-native";
 import Comment from "../components/Comment";
 import { selectPosts } from "../redux/posts/selectors";
 
-function CommentsScreen({ navigation, route }) {
+function CommentsScreen({ route }) {
   const { idPost, photo } = route.params;
   const [comment, setComment] = useState("");
 

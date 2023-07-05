@@ -1,15 +1,8 @@
 import React, { useEffect, useState } from "react";
-import {
-  ImageBackground,
-  StyleSheet,
-  Text,
-  View,
-  TextInput,
-  Alert,
-} from "react-native";
+import { ImageBackground, StyleSheet, Text, View } from "react-native";
 import { commonStyles } from "../components/commonStyles";
 import backgroundPhoto from "../assets/images/background-photo.png";
-import { MaterialCommunityIcons, Feather } from "@expo/vector-icons";
+import { MaterialCommunityIcons } from "@expo/vector-icons";
 import HeroButton from "../components/HeroButton";
 import { KeyboardAvoidingView } from "react-native";
 import { TouchableWithoutFeedback } from "react-native";
@@ -20,21 +13,18 @@ import * as MediaLibrary from "expo-media-library";
 import * as Location from "expo-location";
 
 import { useNavigation } from "@react-navigation/native";
-import { useDispatch } from "react-redux";
-import { createPost } from "../redux/posts/operations";
-import { createAvatar } from "../redux/auth/operations";
+import { Platform } from "react-native";
 
-function CreateAvatar({ navigatin, route }) {
+function CreateAvatar({ route }) {
   const routePrev = route.params.routePrev;
 
   const [hasPermission, setHasPermission] = useState(null);
   const [cameraRef, setCameraRef] = useState(null);
-  const [type, setType] = useState(Camera.Constants.Type.front);
+  const [type] = useState(Camera.Constants.Type.front);
 
   const [cameraPhoto, setCameraPhoto] = useState(null);
 
   const navigation = useNavigation();
-  const dispatch = useDispatch();
 
   useEffect(() => {
     (async () => {
@@ -63,6 +53,9 @@ function CreateAvatar({ navigatin, route }) {
       console.log("Permission to access location was denied");
     }
 
+    if (routePrev === "Profile") {
+    }
+    console.log("фото з Create Avatar", cameraPhoto);
     navigation.navigate(routePrev, { photo: cameraPhoto });
     setCameraPhoto(null);
   };

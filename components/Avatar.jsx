@@ -1,7 +1,14 @@
 import { StyleSheet, Image } from "react-native";
 import React from "react";
+import { useSelector } from "react-redux";
+import { selectUser } from "../redux/auth/selectors";
 
 function Avatar({ customStyles = {}, photo = null }) {
+  const user = useSelector(selectUser);
+
+  if (user.photo && photo === null) {
+    photo = user.photo;
+  }
   return (
     <Image
       source={{ uri: photo }}

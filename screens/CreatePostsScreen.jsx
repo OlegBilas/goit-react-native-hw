@@ -22,11 +22,12 @@ import * as Location from "expo-location";
 import { useNavigation } from "@react-navigation/native";
 import { useDispatch } from "react-redux";
 import { createPost } from "../redux/posts/operations";
+import { Platform } from "react-native";
 
 function CreatePostsScreen() {
   const [hasPermission, setHasPermission] = useState(null);
   const [cameraRef, setCameraRef] = useState(null);
-  const [type, setType] = useState(Camera.Constants.Type.back);
+  const [type] = useState(Camera.Constants.Type.back);
   // const [location, setLocation] = useState(null);
 
   const [cameraPhoto, setCameraPhoto] = useState(null);

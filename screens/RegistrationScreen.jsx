@@ -17,11 +17,12 @@ import RegistrationLink from "../components/RegistrationLink";
 import MainBackground from "../components/MainBackground";
 import { commonStyles } from "../components/commonStyles";
 import { useState } from "react";
-import { useNavigation, useRoute } from "@react-navigation/native";
 import { useDispatch } from "react-redux";
 import { register } from "../redux/auth/operations";
+import { useRoute } from "@react-navigation/native";
 
-function RegistrationScreen({ navigation, route }) {
+function RegistrationScreen({ navigation }) {
+  const route = useRoute();
   let photoFromRoute = null;
   if (route.params?.photo) {
     photoFromRoute = route.params?.photo;
@@ -46,6 +47,7 @@ function RegistrationScreen({ navigation, route }) {
         "Будь ласка, заповніть всі поля непустими даними"
       );
     } else {
+      console.log("photo Register", photo);
       dispatch(register({ login, email, password, photo })).then((res) => {
         if (res.type === "auth/register/fulfilled") {
           setLogin("");
