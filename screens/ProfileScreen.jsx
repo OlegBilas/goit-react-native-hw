@@ -68,7 +68,7 @@ function ProfileScreen({ navigation, route }) {
           >
             {user.login}
           </Title>
-          <View style={{ height: 400 }}>
+          <View style={{ flex: 1 }}>
             {posts.map((item) => (
               <PostCard key={item.id} data={item} />
             ))}
