@@ -9,9 +9,9 @@ import { useDispatch, useSelector } from "react-redux";
 import { selectUser } from "../redux/auth/selectors";
 import { logOut, updateUserData } from "../redux/auth/operations";
 
-import { selectPosts } from "../redux/posts/selectors";
+import { selectIsLoading, selectPosts } from "../redux/posts/selectors";
 import { fetchPosts } from "../redux/posts/operations";
-
+import AnimatedLoader from "react-native-animated-loader";
 import PostCard from "../components/PostCard";
 
 function ProfileScreen({ navigation, route }) {
@@ -37,7 +37,16 @@ function ProfileScreen({ navigation, route }) {
     (item) => item.idUser === user.id
   );
 
-  return (
+  const isLoading = useSelector(selectIsLoading);
+  return isLoading ? (
+    <AnimatedLoader
+      source={require("../assets/loader/98195-loader.json")}
+      visible={true}
+      overlayColor="rgba(255,255,255,0.75)"
+      speed={1}
+      style={{ flex: 1 }}
+    />
+  ) : (
     <MainBackground>
       <ScrollView>
         <View style={styles.background}>

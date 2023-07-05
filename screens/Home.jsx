@@ -17,12 +17,14 @@ import {
 
 import { useDispatch, useSelector } from "react-redux";
 import { selectIsRefreshing } from "../redux/auth/selectors";
+import { selectIsLoading } from "../redux/posts/selectors";
 
 const Tabs = createBottomTabNavigator();
 const Home = () => {
   AuthStateChanged();
 
   const isRefreshing = useSelector(selectIsRefreshing);
+
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -34,7 +36,6 @@ const Home = () => {
       source={require("../assets/loader/98195-loader.json")}
       visible={true}
       overlayColor="rgba(255,255,255,0.75)"
-      animationStyle={styles.lottie}
       speed={1}
       style={{ flex: 1 }}
     />
@@ -130,10 +131,6 @@ const Home = () => {
 };
 
 const styles = StyleSheet.create({
-  lottie: {
-    width: 300,
-    height: 300,
-  },
   buttonWrapperActive: {
     width: 70,
     height: 40,
