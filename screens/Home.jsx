@@ -1,19 +1,43 @@
-import React from "react";
-import { View, StyleSheet } from "react-native";
+import React, { useEffect, useState } from "react";
+import { View, StyleSheet, Text } from "react-native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 
 import { Octicons, Feather } from "@expo/vector-icons";
 import { commonStyles } from "../components/commonStyles";
+import AnimatedLoader from "react-native-animated-loader";
 
 import PostsScreen from "./PostsScreen";
 import CreatePostsScreen from "./CreatePostsScreen";
 import ProfileScreen from "./ProfileScreen";
-import { AuthStateChanged, logOut } from "../redux/auth/operations";
+import {
+  AuthStateChanged,
+  logOut,
+  refreshUser,
+} from "../redux/auth/operations";
+
+import { useDispatch, useSelector } from "react-redux";
+import { selectIsRefreshing } from "../redux/auth/selectors";
 
 const Tabs = createBottomTabNavigator();
 const Home = () => {
   AuthStateChanged();
-  return (
+
+  const isRefreshing = useSelector(selectIsRefreshing);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(refreshUser());
+  }, [dispatch]);
+
+  return isRefreshing ? (
+    <AnimatedLoader
+      source={require("../assets/loader/98195-loader.json")}
+      visible={true}
+      overlayColor="rgba(255,255,255,0.75)"
+      animationStyle={styles.lottie}
+      speed={1}
+    />
+  ) : (
     <Tabs.Navigator
       initialRouteName="Posts"
       screenOptions={({ route }) => ({
@@ -105,6 +129,10 @@ const Home = () => {
 };
 
 const styles = StyleSheet.create({
+  lottie: {
+    width: 300,
+    height: 300,
+  },
   buttonWrapperActive: {
     width: 70,
     height: 40,

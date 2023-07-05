@@ -19,7 +19,6 @@ import { Provider, useDispatch, useSelector } from "react-redux";
 import { persistor, store } from "./redux/store";
 import { PersistGate } from "redux-persist/integration/react";
 import CreateAvatar from "./screens/CreateAvatar";
-// import Loader from "./components/Loader";
 import { selectIsRefreshing } from "./redux/auth/selectors";
 import { AuthStateChanged, refreshUser } from "./redux/auth/operations";
 import { onAuthStateChanged } from "firebase/auth";
@@ -34,13 +33,6 @@ export default function App() {
   if (!fontsLoaded) {
     return null;
   }
-
-  // const isRefreshing = useSelector(selectIsRefreshing);
-  // const dispatch = useDispatch();
-
-  // useEffect(() => {
-  //   dispatch(refreshUser());
-  // }, [dispatch]);
 
   const MainStack = createStackNavigator();
   return (

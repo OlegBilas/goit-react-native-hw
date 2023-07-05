@@ -30,7 +30,6 @@ const authSlice = createSlice({
     },
     isLoggedIn: false,
     isRefreshing: false,
-    // error: null,
   },
 
   extraReducers: (builder) => {
@@ -49,7 +48,6 @@ const authSlice = createSlice({
 function handleUserLoggingFulfilled(state, action) {
   state.user = action.payload;
   state.isLoggedIn = true;
-  // state.error = null;
 }
 
 // function handleUserLoggingRejected(state, action) {
@@ -67,23 +65,19 @@ function handleLogOut(state) {
     photo: null,
   };
   state.isLoggedIn = false;
-  // state.error = null;
 }
 function handleRefreshUserPending(state) {
   state.isRefreshing = true;
-  // state.error = null;
 }
 
 function handleRefreshUserFulfilled(state, action) {
   state.user = action.payload;
   state.isLoggedIn = true;
   state.isRefreshing = false;
-  // state.error = null;
 }
 
 function handleRefreshUserRejected(state, action) {
   state.isRefreshing = false;
-  // state.error = action.payload;
 }
 
 export const authReducer = authSlice.reducer;

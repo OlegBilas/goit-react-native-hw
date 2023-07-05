@@ -9,7 +9,16 @@ import { auth } from "../config";
 import { useDispatch } from "react-redux";
 
 function PostCard({
-  data: { id, photo, title, place, coords, likes, comments },
+  data: {
+    id,
+    photo,
+    title,
+    place,
+    coords,
+    likes,
+    comments,
+    fromProfile = null,
+  },
 }) {
   const navigation = useNavigation();
   const dispatch = useDispatch();
@@ -32,25 +41,25 @@ function PostCard({
         <Text style={[styles.text, { marginRight: 24 }]}>
           {comments.length}
         </Text>
-        {
-          <Feather
-            name="thumbs-up"
-            size={24}
-            color={commonStyles.vars.colorAccent}
-            style={{ marginRight: 6 }}
-            onPress={() => {
-              dispatch(addLike({ idPost: id, idUser: auth.currentUser.uid }));
-            }}
-          />
-        }
-        <Text style={[styles.text, { marginRight: "auto" }]}>
-          {likes.length}
-        </Text>
+        {fromProfile && (
+          <View style={{ flexDirection: "row", alignItems: "baseline" }}>
+            <Feather
+              name="thumbs-up"
+              size={24}
+              color={commonStyles.vars.colorAccent}
+              style={{ marginRight: 6 }}
+              onPress={() => {
+                dispatch(addLike({ idPost: id, idUser: auth.currentUser.uid }));
+              }}
+            />
+            <Text>{likes.length}</Text>
+          </View>
+        )}
         <Feather
           name="map-pin"
           size={24}
           color={commonStyles.vars.colorGray}
-          style={{ marginRight: 4 }}
+          style={{ marginLeft: "auto", marginRight: 4 }}
           onPress={() => {
             navigation.navigate("Map", { title, place, coords });
           }}

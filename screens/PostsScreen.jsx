@@ -42,7 +42,6 @@ export default function PostsScreen() {
             data={posts}
             renderItem={({ item }) => <PostCard data={item}></PostCard>}
             keyExtractor={(item) => item.id}
-            slyle={styles.postsList}
           />
         </View>
       </View>
