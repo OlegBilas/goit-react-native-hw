@@ -24,6 +24,7 @@ const updateUserProfile = async (dataUser) => {
         photoURL,
       };
       await updateProfile(user, update);
+      return { ...dataUser, photo: photoURL };
     } catch (error) {
       throw error;
     }
@@ -40,12 +41,12 @@ export const register = createAsyncThunk(
         email,
         password
       );
-      await updateUserProfile(restUserData);
+      const newRestUserData = await updateUserProfile(restUserData);
       return {
+        ...newRestUserData,
         id: response.user.uid,
         email,
         password,
-        ...restUserData,
       };
     } catch (error) {
       return thunkAPI.rejectWithValue(error.message);
@@ -82,12 +83,11 @@ export const updateUserData = createAsyncThunk(
   async (user, thunkAPI) => {
     const { email, password, ...restUserData } = user;
     try {
-      await updateUserProfile(restUserData);
+      const newRestUserData = await updateUserProfile(restUserData);
       return {
-        id: response.user.uid,
+        ...newRestUserData,
         email,
         password,
-        ...restUserData,
       };
     } catch (error) {
       return thunkAPI.rejectWithValue(error.message);

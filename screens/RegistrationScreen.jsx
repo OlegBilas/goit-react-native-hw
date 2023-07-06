@@ -26,7 +26,6 @@ function RegistrationScreen({ navigation, route }) {
   if (route.params?.photo) {
     photoFromRoute = route.params?.photo;
   }
-  console.log("photoFromRoute", photoFromRoute);
 
   const [login, setLogin] = useState("");
   const [email, setEmail] = useState("");

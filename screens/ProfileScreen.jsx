@@ -17,7 +17,7 @@ import PostCard from "../components/PostCard";
 function ProfileScreen({ navigation, route }) {
   const dispatch = useDispatch();
 
-  let user = useSelector(selectUser);
+  const user = useSelector(selectUser);
   let photo = user.photo;
   if (route.params?.photo) {
     photo = route.params?.photo;
@@ -27,7 +27,7 @@ function ProfileScreen({ navigation, route }) {
     if (photo !== user.photo) {
       dispatch(updateUserData({ ...user, photo }));
     }
-  });
+  }, [dispatch, photo]);
 
   useEffect(() => {
     dispatch(fetchPosts());
@@ -51,7 +51,7 @@ function ProfileScreen({ navigation, route }) {
       <ScrollView>
         <View style={styles.background}>
           <AvatarWrapper
-            photo={photo}
+            photo={user.photo}
             customStyles={{
               top: -60,
               left: "50%",
