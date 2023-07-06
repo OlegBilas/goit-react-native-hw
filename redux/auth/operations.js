@@ -99,18 +99,23 @@ export const refreshUser = createAsyncThunk(
   "auth/refresh",
   async (_, thunkAPI) => {
     const persistedId = thunkAPI.getState.auth.id;
-
+    console.log("persistedId", persistedId);
     if (persistedId === null || persistedId !== auth.currentUser?.uid) {
       return thunkAPI.rejectWithValue("You are not logged in");
     }
   }
 );
 
-export const AuthStateChanged = async () => {
-  const navigation = useNavigation();
-  onAuthStateChanged(auth, async (user) => {
-    if (!user || user.uid !== auth.currentUser?.uid) {
-      navigation.navigate("Login");
-    }
-  });
-};
+// export const AuthStateChanged = async () => {
+//   const navigation = useNavigation();
+//   onAuthStateChanged(auth, async (user) => {
+//     if (!user || user.uid !== auth.currentUser?.uid) {
+//       console.log(user.uid);
+//       console.log(auth.currentUser?.uid);
+
+//       navigation.navigate("Login");
+//     } else {
+//       navigation.navigate("Home");
+//     }
+//   });
+// };

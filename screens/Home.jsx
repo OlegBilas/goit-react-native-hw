@@ -17,28 +17,31 @@ import {
 
 import { useDispatch, useSelector } from "react-redux";
 import { selectIsRefreshing } from "../redux/auth/selectors";
+import { onAuthStateChanged } from "firebase/auth";
+import { auth } from "../config";
 
 const Tabs = createBottomTabNavigator();
 const Home = () => {
-  AuthStateChanged();
+  //AuthStateChanged();
 
-  const isRefreshing = useSelector(selectIsRefreshing);
+  // const isRefreshing = useSelector(selectIsRefreshing);
 
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
 
-  useEffect(() => {
-    dispatch(refreshUser());
-  }, [dispatch]);
+  // useEffect(() => {
+  //   dispatch(refreshUser());
+  // }, [dispatch]);
 
-  return isRefreshing ? (
-    <AnimatedLoader
-      source={require("../assets/loader/98195-loader.json")}
-      visible={true}
-      overlayColor="rgba(255,255,255,0.75)"
-      speed={1}
-      style={{ flex: 1 }}
-    />
-  ) : (
+  // return isRefreshing ? (
+  //   <AnimatedLoader
+  //     source={require("../assets/loader/98195-loader.json")}
+  //     visible={true}
+  //     overlayColor="rgba(255,255,255,0.75)"
+  //     speed={1}
+  //     style={{ flex: 1 }}
+  //   />
+  // ) : (
+  return (
     <Tabs.Navigator
       initialRouteName="Posts"
       screenOptions={({ route }) => ({

@@ -24,8 +24,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { createPost } from "../redux/posts/operations";
 import { Platform } from "react-native";
 import { selectUser } from "../redux/auth/selectors";
-import { selectIsLoading } from "../redux/posts/selectors";
-import AnimatedLoader from "react-native-animated-loader";
 
 function CreatePostsScreen() {
   const [hasPermission, setHasPermission] = useState(null);
@@ -39,7 +37,6 @@ function CreatePostsScreen() {
   const navigation = useNavigation();
   const dispatch = useDispatch();
 
-  const isLoading = useSelector(selectIsLoading);
   const user = useSelector(selectUser);
   useEffect(() => {
     (async () => {
@@ -100,15 +97,7 @@ function CreatePostsScreen() {
     });
   };
 
-  return isLoading ? (
-    <AnimatedLoader
-      source={require("../assets/loader/98195-loader.json")}
-      visible={true}
-      overlayColor="rgba(255,255,255,0.75)"
-      speed={1}
-      style={{ flex: 1 }}
-    />
-  ) : (
+  return (
     <View style={styles.container}>
       <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
         <KeyboardAvoidingView

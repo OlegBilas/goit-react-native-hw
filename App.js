@@ -33,7 +33,6 @@ export default function App() {
   if (!fontsLoaded) {
     return null;
   }
-
   const MainStack = createStackNavigator();
   return (
     <Provider store={store}>

@@ -14,12 +14,16 @@ import RegistrationInput from "../components/RegistrationInput";
 import HeroButton from "../components/HeroButton";
 import RegistrationLink from "../components/RegistrationLink";
 import MainBackground from "../components/MainBackground";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { commonStyles } from "../components/commonStyles";
 import { Pressable } from "react-native";
 import { useNavigation } from "@react-navigation/native";
-import { logIn } from "../redux/auth/operations";
-import { useDispatch } from "react-redux";
+import { logIn, refreshUser } from "../redux/auth/operations";
+import { useDispatch, useSelector } from "react-redux";
+import { selectIsRefreshing, selectUser } from "../redux/auth/selectors";
+import AnimatedLoader from "react-native-animated-loader";
+import { onAuthStateChanged } from "firebase/auth";
+import { auth } from "../config";
 
 function LoginScreen() {
   const [email, setEmail] = useState("");
@@ -28,6 +32,26 @@ function LoginScreen() {
 
   const navigation = useNavigation();
   const dispatch = useDispatch();
+
+  const persistedId = useSelector(selectUser).id;
+  console.log("persistedId", persistedId);
+
+  const [loggedIn, setLoggedIn] = useState(false);
+  auth.onAuthStateChanged((user) => {
+    if (user && persistedId) {
+      setLoggedIn(true);
+    }
+  });
+
+  useEffect(() => {
+    if (loggedIn === true) {
+      navigation.navigate("Home");
+    }
+  }, [loggedIn]);
+
+  useEffect(() => {
+    dispatch(refreshUser());
+  }, [dispatch]);
 
   const handlePressShowButton = () => {
     setShowPassword((prevState) => !prevState);
@@ -54,7 +78,18 @@ function LoginScreen() {
       });
     }
   };
-  return (
+
+  const isRefreshing = useSelector(selectIsRefreshing);
+  return isRefreshing ? (
+    <AnimatedLoader
+      source={require("../assets/loader/98195-loader.json")}
+      visible={true}
+      overlayColor="rgba(255,255,255,0.75)"
+      speed={1}
+      style={{ flex: 1 }}
+    />
+  ) : (
+    // return (
     <MainBackground>
       <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
         <KeyboardAvoidingView
