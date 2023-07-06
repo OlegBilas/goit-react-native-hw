@@ -17,7 +17,6 @@ import {
 
 import { useDispatch, useSelector } from "react-redux";
 import { selectIsRefreshing } from "../redux/auth/selectors";
-import { selectIsLoading } from "../redux/posts/selectors";
 
 const Tabs = createBottomTabNavigator();
 const Home = () => {
