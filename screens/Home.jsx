@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { View, StyleSheet } from "react-native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { useDispatch, useSelector } from "react-redux";
-import { selectIsRefreshing } from "../redux/auth/selectors";
+import { selectIsLoggedIn, selectIsRefreshing } from "../redux/auth/selectors";
 
 import { Octicons, Feather } from "@expo/vector-icons";
 import { commonStyles } from "../components/commonStyles";
@@ -14,10 +14,12 @@ import ProfileScreen from "./ProfileScreen";
 import { logOut, refreshUser } from "../redux/auth/operations";
 
 const Tabs = createBottomTabNavigator();
-const Home = () => {
+const Home = ({ navigation }) => {
   const isRefreshing = useSelector(selectIsRefreshing);
 
   const dispatch = useDispatch();
+
+  const isLoggedIn = useSelector(selectIsLoggedIn);
 
   useEffect(() => {
     dispatch(refreshUser());

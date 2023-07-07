@@ -13,7 +13,11 @@ import { Pressable } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { logIn } from "../redux/auth/operations";
 import { useDispatch, useSelector } from "react-redux";
-import { selectIsRefreshing } from "../redux/auth/selectors";
+import {
+  selectIsLoggedIn,
+  selectIsRefreshing,
+  selectUser,
+} from "../redux/auth/selectors";
 
 import Title from "../components/Title";
 import RegistrationInput from "../components/RegistrationInput";

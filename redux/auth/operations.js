@@ -108,11 +108,15 @@ export const refreshUser = createAsyncThunk(
     if (!auth.currentUser) {
       return thunkAPI.rejectWithValue("You are not logged in");
     }
-    return {
-      id: auth.currentUser.uid,
-      login: auth.currentUser.displayName,
-      email: auth.currentUser.email,
-      photo: auth.currentUser.photoURL,
-    };
+    try {
+      return {
+        id: auth.currentUser.uid,
+        login: auth.currentUser.displayName,
+        email: auth.currentUser.email,
+        photo: auth.currentUser.photoURL,
+      };
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.message);
+    }
   }
 );
