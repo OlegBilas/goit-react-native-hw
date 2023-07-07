@@ -116,17 +116,3 @@ export const refreshUser = createAsyncThunk(
     };
   }
 );
-
-// export const AuthStateChanged = async () => {
-//   const navigation = useNavigation();
-//   onAuthStateChanged(auth, async (user) => {
-//     if (!user || user.uid !== auth.currentUser?.uid) {
-//       console.log(user.uid);
-//       console.log(auth.currentUser?.uid);
-
-//       navigation.navigate("Login");
-//     } else {
-//       navigation.navigate("Home");
-//     }
-//   });
-// };
