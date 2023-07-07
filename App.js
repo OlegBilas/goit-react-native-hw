@@ -28,7 +28,7 @@ export default function App() {
   const [initialRoute, setInitialRoute] = useState(null);
   useEffect(() => {
     auth.onAuthStateChanged((user) => {
-      console.log(user.uid);
+      console.log("user.uid", user.uid);
       setInitialRoute(user ? "Home" : "Login");
     });
   }, []);
