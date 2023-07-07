@@ -1,12 +1,13 @@
 import React from "react";
-import { Image, Text, View } from "react-native";
-import { Feather, Ionicons } from "@expo/vector-icons";
-import { commonStyles } from "./commonStyles";
 import { StyleSheet } from "react-native";
-import { useNavigation } from "@react-navigation/native";
-import { addLike } from "../redux/posts/operations";
-import { auth } from "../config";
+import { Image, Text, View } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
+import { useNavigation } from "@react-navigation/native";
+
+import { Feather } from "@expo/vector-icons";
+import { commonStyles } from "./commonStyles";
+
+import { addLike } from "../redux/posts/operations";
 import { selectUser } from "../redux/auth/selectors";
 
 function PostCard({

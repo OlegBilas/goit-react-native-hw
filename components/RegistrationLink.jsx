@@ -1,7 +1,8 @@
-import { StyleSheet, Pressable, Text } from "react-native";
 import React from "react";
-import { commonStyles } from "./commonStyles";
+import { StyleSheet, Pressable, Text } from "react-native";
 import { useNavigation } from "@react-navigation/native";
+
+import { commonStyles } from "./commonStyles";
 
 function RegistrationLink({ children }) {
   const navigation = useNavigation();

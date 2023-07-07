@@ -1,3 +1,5 @@
+import { useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
 import {
   StyleSheet,
   View,
@@ -16,16 +18,16 @@ import HeroButton from "../components/HeroButton";
 import RegistrationLink from "../components/RegistrationLink";
 import MainBackground from "../components/MainBackground";
 import { commonStyles } from "../components/commonStyles";
-import { useState } from "react";
-import { useDispatch } from "react-redux";
 import { register } from "../redux/auth/operations";
-import { useRoute } from "@react-navigation/native";
 
 function RegistrationScreen({ navigation, route }) {
-  let photoFromRoute = null;
-  if (route.params?.photo) {
-    photoFromRoute = route.params?.photo;
-  }
+  const [photoFromRoute, setPhotoFromRoute] = useState(null);
+
+  useEffect(() => {
+    if (route.params?.photo) {
+      setPhotoFromRoute(route.params?.photo);
+    }
+  }, [route.params]);
 
   const [login, setLogin] = useState("");
   const [email, setEmail] = useState("");
@@ -52,7 +54,7 @@ function RegistrationScreen({ navigation, route }) {
           setLogin("");
           setEmail("");
           setPassword("");
-
+          setPhotoFromRoute(null);
           navigation.navigate("Home");
         } else {
           return Alert.alert(

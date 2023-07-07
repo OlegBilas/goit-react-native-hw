@@ -1,9 +1,9 @@
 import React from "react";
 import { Image, Text, View } from "react-native";
-import { commonStyles } from "./commonStyles";
 import { StyleSheet } from "react-native";
-import { auth } from "../config";
 import { useSelector } from "react-redux";
+
+import { commonStyles } from "./commonStyles";
 import { selectUser } from "../redux/auth/selectors";
 
 function Comment({ data }) {

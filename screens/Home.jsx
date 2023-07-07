@@ -1,6 +1,8 @@
 import React, { useEffect } from "react";
 import { View, StyleSheet } from "react-native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+import { useDispatch, useSelector } from "react-redux";
+import { selectIsRefreshing } from "../redux/auth/selectors";
 
 import { Octicons, Feather } from "@expo/vector-icons";
 import { commonStyles } from "../components/commonStyles";
@@ -9,39 +11,27 @@ import AnimatedLoader from "react-native-animated-loader";
 import PostsScreen from "./PostsScreen";
 import CreatePostsScreen from "./CreatePostsScreen";
 import ProfileScreen from "./ProfileScreen";
-import {
-  AuthStateChanged,
-  logOut,
-  refreshUser,
-} from "../redux/auth/operations";
-
-import { useDispatch, useSelector } from "react-redux";
-import { selectIsRefreshing } from "../redux/auth/selectors";
-import { onAuthStateChanged } from "firebase/auth";
-import { auth } from "../config";
+import { logOut, refreshUser } from "../redux/auth/operations";
 
 const Tabs = createBottomTabNavigator();
 const Home = () => {
-  //AuthStateChanged();
+  const isRefreshing = useSelector(selectIsRefreshing);
 
-  // const isRefreshing = useSelector(selectIsRefreshing);
+  const dispatch = useDispatch();
 
-  // const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(refreshUser());
+  }, []);
 
-  // useEffect(() => {
-  //   dispatch(refreshUser());
-  // }, [dispatch]);
-
-  // return isRefreshing ? (
-  //   <AnimatedLoader
-  //     source={require("../assets/loader/98195-loader.json")}
-  //     visible={true}
-  //     overlayColor="rgba(255,255,255,0.75)"
-  //     speed={1}
-  //     style={{ flex: 1 }}
-  //   />
-  // ) : (
-  return (
+  return isRefreshing ? (
+    <AnimatedLoader
+      source={require("../assets/loader/98195-loader.json")}
+      visible={true}
+      overlayColor="rgba(255,255,255,0.75)"
+      speed={1}
+      style={{ flex: 1 }}
+    />
+  ) : (
     <Tabs.Navigator
       initialRouteName="Posts"
       screenOptions={({ route }) => ({

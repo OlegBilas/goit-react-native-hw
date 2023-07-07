@@ -1,5 +1,6 @@
-import { ImageBackground, StyleSheet } from "react-native";
 import React from "react";
+import { ImageBackground, StyleSheet } from "react-native";
+
 import Mountains from "../assets/images/mountains.png";
 
 function MainBackground({ children }) {

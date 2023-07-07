@@ -73,6 +73,13 @@ export const logIn = createAsyncThunk("auth/login", async (user, thunkAPI) => {
 export const logOut = createAsyncThunk("auth/logout", async (_, thunkAPI) => {
   try {
     signOut(auth);
+    return {
+      id: null,
+      email: null,
+      password: null,
+      login: null,
+      photo: null,
+    };
   } catch (error) {
     return thunkAPI.rejectWithValue(error.message);
   }
@@ -98,11 +105,15 @@ export const updateUserData = createAsyncThunk(
 export const refreshUser = createAsyncThunk(
   "auth/refresh",
   async (_, thunkAPI) => {
-    const persistedId = thunkAPI.getState.auth.id;
-    console.log("persistedId", persistedId);
-    if (persistedId === null || persistedId !== auth.currentUser?.uid) {
+    if (!auth.currentUser) {
       return thunkAPI.rejectWithValue("You are not logged in");
     }
+    return {
+      id: auth.currentUser.uid,
+      login: auth.currentUser.displayName,
+      email: auth.currentUser.email,
+      photo: auth.currentUser.photoURL,
+    };
   }
 );
 

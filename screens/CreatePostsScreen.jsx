@@ -7,22 +7,23 @@ import {
   TextInput,
   Alert,
 } from "react-native";
-import { commonStyles } from "../components/commonStyles";
-import backgroundPhoto from "../assets/images/background-photo.png";
-import { MaterialCommunityIcons, Feather } from "@expo/vector-icons";
-import HeroButton from "../components/HeroButton";
-import { KeyboardAvoidingView } from "react-native";
 import { TouchableWithoutFeedback } from "react-native";
 import { Keyboard } from "react-native";
+import { KeyboardAvoidingView } from "react-native";
+import { Platform } from "react-native";
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigation } from "@react-navigation/native";
 
 import { Camera } from "expo-camera";
 import * as MediaLibrary from "expo-media-library";
 import * as Location from "expo-location";
 
-import { useNavigation } from "@react-navigation/native";
-import { useDispatch, useSelector } from "react-redux";
+import { commonStyles } from "../components/commonStyles";
+import backgroundPhoto from "../assets/images/background-photo.png";
+import { MaterialCommunityIcons, Feather } from "@expo/vector-icons";
+import HeroButton from "../components/HeroButton";
+
 import { createPost } from "../redux/posts/operations";
-import { Platform } from "react-native";
 import { selectUser } from "../redux/auth/selectors";
 
 function CreatePostsScreen() {

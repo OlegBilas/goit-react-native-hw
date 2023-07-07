@@ -7,14 +7,15 @@ import {
   StyleSheet,
   View,
 } from "react-native";
-import { commonStyles } from "../components/commonStyles";
 import { TextInput } from "react-native";
-import { Ionicons } from "@expo/vector-icons";
 import { useDispatch, useSelector } from "react-redux";
-import { addComment } from "../redux/posts/operations";
-import { auth } from "../config";
 import { Alert } from "react-native";
+
+import { auth } from "../config";
+import { Ionicons } from "@expo/vector-icons";
+import { commonStyles } from "../components/commonStyles";
 import Comment from "../components/Comment";
+import { addComment } from "../redux/posts/operations";
 import { selectPosts } from "../redux/posts/selectors";
 
 function CommentsScreen({ route }) {

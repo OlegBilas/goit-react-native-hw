@@ -1,8 +1,9 @@
 import React from "react";
+import { useSelector } from "react-redux";
 import { View, StyleSheet, Dimensions } from "react-native";
 import MapView, { Marker } from "react-native-maps";
+
 import AnimatedLoader from "react-native-animated-loader";
-import { useSelector } from "react-redux";
 import { selectIsLoading } from "../redux/posts/selectors";
 
 const MapScreen = ({ route }) => {

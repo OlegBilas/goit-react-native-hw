@@ -50,16 +50,11 @@ function handleUserLoggingFulfilled(state, action) {
   state.isLoggedIn = true;
 }
 
-function handleLogOut(state) {
-  state.user = {
-    id: null,
-    displayName: null,
-    email: null,
-    password: null,
-    photo: null,
-  };
+function handleLogOut(state, action) {
+  state.user = action.payload;
   state.isLoggedIn = false;
 }
+
 function handleRefreshUserPending(state) {
   state.isRefreshing = true;
 }

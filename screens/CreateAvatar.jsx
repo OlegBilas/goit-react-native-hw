@@ -1,19 +1,18 @@
 import React, { useEffect, useState } from "react";
 import { ImageBackground, StyleSheet, Text, View } from "react-native";
-import { commonStyles } from "../components/commonStyles";
-import backgroundPhoto from "../assets/images/background-photo.png";
-import { MaterialCommunityIcons } from "@expo/vector-icons";
-import HeroButton from "../components/HeroButton";
 import { KeyboardAvoidingView } from "react-native";
 import { TouchableWithoutFeedback } from "react-native";
 import { Keyboard } from "react-native";
+import { Platform } from "react-native";
+
+import { commonStyles } from "../components/commonStyles";
+import backgroundPhoto from "../assets/images/background-photo.png";
+import HeroButton from "../components/HeroButton";
+import { MaterialCommunityIcons } from "@expo/vector-icons";
 
 import { Camera } from "expo-camera";
 import * as MediaLibrary from "expo-media-library";
 import * as Location from "expo-location";
-
-import { useNavigation } from "@react-navigation/native";
-import { Platform } from "react-native";
 
 function CreateAvatar({ navigation, route }) {
   const routePrev = route.params.routePrev;

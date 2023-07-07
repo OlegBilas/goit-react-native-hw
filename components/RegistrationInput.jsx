@@ -1,6 +1,6 @@
+import React from "react";
 import { StyleSheet, TextInput } from "react-native";
 
-import React from "react";
 import { commonStyles } from "./commonStyles";
 
 function RegistrationInput({

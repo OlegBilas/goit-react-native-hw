@@ -7,13 +7,14 @@ import {
   Text,
   View,
 } from "react-native";
-import Avatar from "../components/Avatar";
-import PostCard from "../components/PostCard";
 import { useDispatch, useSelector } from "react-redux";
 import { selectUser } from "../redux/auth/selectors";
 import { selectIsLoading, selectPosts } from "../redux/posts/selectors";
 import { FlatList } from "react-native";
 import { fetchPosts } from "../redux/posts/operations";
+
+import Avatar from "../components/Avatar";
+import PostCard from "../components/PostCard";
 import AnimatedLoader from "react-native-animated-loader";
 
 export default function PostsScreen() {
@@ -25,17 +26,8 @@ export default function PostsScreen() {
   }, [dispatch]);
 
   const user = useSelector(selectUser);
-  const isLoading = useSelector(selectIsLoading);
 
-  return isLoading ? (
-    <AnimatedLoader
-      source={require("../assets/loader/98195-loader.json")}
-      visible={true}
-      overlayColor="rgba(255,255,255,0.75)"
-      speed={1}
-      style={{ flex: 1 }}
-    />
-  ) : (
+  return (
     <SafeAreaView style={styles.androidSafeArea}>
       <View style={styles.container}>
         <View style={styles.posts}>
