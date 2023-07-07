@@ -19,8 +19,6 @@ const Home = ({ navigation }) => {
 
   const dispatch = useDispatch();
 
-  const isLoggedIn = useSelector(selectIsLoggedIn);
-
   useEffect(() => {
     dispatch(refreshUser());
   }, []);
