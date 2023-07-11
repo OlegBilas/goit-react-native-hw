@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { View, StyleSheet } from "react-native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { useDispatch, useSelector } from "react-redux";
-import { selectIsLoggedIn, selectIsRefreshing } from "../redux/auth/selectors";
+import { selectIsRefreshing } from "../redux/auth/selectors";
 
 import { Octicons, Feather } from "@expo/vector-icons";
 import { commonStyles } from "../components/commonStyles";
@@ -12,6 +12,8 @@ import PostsScreen from "./PostsScreen";
 import CreatePostsScreen from "./CreatePostsScreen";
 import ProfileScreen from "./ProfileScreen";
 import { logOut, refreshUser } from "../redux/auth/operations";
+import { signOut } from "firebase/auth";
+import { auth } from "../config";
 
 const Tabs = createBottomTabNavigator();
 const Home = ({ navigation }) => {
@@ -86,9 +88,14 @@ const Home = ({ navigation }) => {
               size={24}
               color={commonStyles.vars.colorGray}
               style={{ marginRight: 16, padding: 5 }}
-              onPress={() => {
-                logOut();
-                navigation.navigate("Login");
+              onPress={async () => {
+                try {
+                  await signOut(auth);
+                  logOut();
+                  navigation.navigate("Login");
+                } catch (error) {
+                  console.log(error);
+                }
               }}
             />
           ),

@@ -16,9 +16,7 @@ const updateUserProfile = async (dataUser) => {
   if (user) {
     // оновлюємо його профайл
     try {
-      // console.log("dataUser.photo", dataUser.photo);
       const photoURL = await getRealPhotoURL(dataUser.photo);
-      // console.log("photoURL", photoURL);
       const update = {
         displayName: dataUser.login,
         photoURL,
@@ -72,7 +70,7 @@ export const logIn = createAsyncThunk("auth/login", async (user, thunkAPI) => {
 
 export const logOut = createAsyncThunk("auth/logout", async (_, thunkAPI) => {
   try {
-    await signOut(auth);
+    // await signOut(auth);
     return {
       id: null,
       email: null,

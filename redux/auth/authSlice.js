@@ -37,7 +37,7 @@ const authSlice = createSlice({
       .addCase(refreshUser.pending, handleRefreshUserPending)
       .addCase(refreshUser.fulfilled, handleRefreshUserFulfilled)
       .addCase(refreshUser.rejected, handleRefreshUserRejected)
-      .addCase(logOut.fulfilled, handleLogOut)
+      .addCase(logOut.fulfilled, handleLogOutFulfilled)
       .addMatcher(
         isAnyOf(...getActionGeneratorsWithType(STATUS.FULFILLED)),
         handleUserLoggingFulfilled
@@ -50,7 +50,7 @@ function handleUserLoggingFulfilled(state, action) {
   state.isLoggedIn = true;
 }
 
-function handleLogOut(state, action) {
+function handleLogOutFulfilled(state, action) {
   state.user = action.payload;
   state.isLoggedIn = false;
 }

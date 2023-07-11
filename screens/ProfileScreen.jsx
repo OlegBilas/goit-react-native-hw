@@ -14,6 +14,8 @@ import AnimatedLoader from "react-native-animated-loader";
 
 import { selectIsLoading, selectPosts } from "../redux/posts/selectors";
 import { fetchPosts } from "../redux/posts/operations";
+import { signOut } from "firebase/auth";
+import { auth } from "../config";
 
 function ProfileScreen({ navigation, route }) {
   const dispatch = useDispatch();
@@ -65,9 +67,14 @@ function ProfileScreen({ navigation, route }) {
             size={24}
             color={commonStyles.vars.colorGray}
             style={styles.logOut}
-            onPress={() => {
-              logOut();
-              navigation.navigate("Login");
+            onPress={async () => {
+              try {
+                await signOut(auth);
+                logOut();
+                navigation.navigate("Login");
+              } catch (error) {
+                console.log(error);
+              }
             }}
           />
           <Title
